@@ -111,6 +111,15 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     }
     
     #endregion
+    
+    public void StartGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+         
+            PhotonNetwork.LoadLevel(1);
+        }
+    }
 
     void Start()
     {
