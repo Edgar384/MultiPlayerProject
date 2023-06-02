@@ -9,6 +9,7 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
 {
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
+    private const string UPDATE_PLAYER_READY_STAT_RPC = nameof(OnPlayerSetReadyStat);
     
     [SerializeField] private float _gameCountDownTime;
 
@@ -119,9 +120,29 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         }
     }
 
+    private void OnPlayerSetReadyStat(int playerId, bool isReady)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            object[] dataToSend = new object[]
+            {
+                playerId,
+                isReady
+            };
+            
+            photonView.RPC(UPDATE_PLAYER_READY_STAT_RPC, RpcTarget.AllViaServer,dataToSend);
+        }
+    }
+
     #endregion
     
     #region RPCS
+
+    [PunRPC]
+    private void UpdatePlayerReadyList(int playerId, bool isReady)
+    {
+        
+    }
     
     [PunRPC]
     void CountdownStarted(int countdownTime)

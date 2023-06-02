@@ -43,6 +43,7 @@ MonoBehaviour:
   - CountdownStarted
   - AskForRandomSpawnPoint
   - SpawnPlayer
+  - UpdatePlayerReadyList
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

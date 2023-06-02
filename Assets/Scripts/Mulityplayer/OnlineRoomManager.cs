@@ -12,7 +12,16 @@ namespace Managers
         public static event Action OnJoinRoomEvent;
         public static event Action<short,string> OnCreateRoomFailedEvent;
         public static event Action<List<RoomInfo>> OnRoomListUpdateEvent;
-        
+
+        private List<RoomInfo> _roomList;
+
+        public List<RoomInfo> RoomList => _roomList;
+
+        private void Awake()
+        {
+            _roomList = new List<RoomInfo>();
+        }
+
 #if UNITY_EDITOR
         [ContextMenu("CreateRoom")]
         public void CreateRoom()
@@ -80,9 +89,18 @@ namespace Managers
         
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            Debug.Log("Got room list");
             base.OnRoomListUpdate(roomList);
+            Debug.Log("Got room list");
             OnRoomListUpdateEvent?.Invoke(roomList);
+
+            foreach (var room in roomList)
+            {
+                if (_roomList.Contains(room))
+                    continue;   
+                
+                _roomList.Add(room);
+                Debug.Log($"Room add to room list room name: {room.Name}");
+            }
         }
 
         #endregion
