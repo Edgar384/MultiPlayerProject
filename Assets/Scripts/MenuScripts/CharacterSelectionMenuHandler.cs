@@ -10,7 +10,7 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
 {
     public event Action<CarSelectionStatus> OnCarSelected;
 
-    [SerializeField] GameObject _carSelection;
+    [SerializeField] GameObject _carSelectionPreview;
     [SerializeField] CarSelectionStatus[] _cars;
     [SerializeField] Button _selecteCarButton;
 
@@ -19,17 +19,24 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
     private void OnEnable()
     {
         ResetCarsStatus();
+        _carSelectionPreview.SetActive(true);
+        _selectedCharacterIndex = 0;
+    }
+
+    private void OnDisable()
+    {
+        _carSelectionPreview.SetActive(false);
     }
 
     private void ResetCarsStatus()
     {
         for (int i = 0; i < _cars.Length; i++)
         {
-            _cars[i].ChangeCarAvailability(true);
+            _cars[i].ChangeCarAvailability(false);
         }
     }
 
-    public void NextCharacter()
+    public void NextCar()
     {
         _cars[_selectedCharacterIndex].gameObject.SetActive(false);
         _selectedCharacterIndex = (_selectedCharacterIndex + 1) % _cars.Length; //For making a loop
@@ -37,7 +44,7 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
         CheckCarAvailability();
     }
 
-    public void PreviousCharacter()
+    public void PreviousCar()
     {
         _cars[_selectedCharacterIndex].gameObject.SetActive(false);
         _selectedCharacterIndex--;
@@ -63,7 +70,7 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
 
     public void ConfirmSelection()
     {
-        _cars[_selectedCharacterIndex].ChangeCarAvailability(false);
+        _cars[_selectedCharacterIndex].ChangeCarAvailability(true);
         OnCarSelected?.Invoke(_cars[_selectedCharacterIndex]);
     }
 }

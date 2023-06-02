@@ -7,7 +7,6 @@ public class CarSelectionStatus : MonoBehaviour
 {
     [SerializeField] Image _notvaiAvailableImage;
     private bool _isTaken;
-    private Image _takenImage;
 
     private void OnEnable()
     {
@@ -20,13 +19,13 @@ public class CarSelectionStatus : MonoBehaviour
 
     public bool CheckIfCarIsFree() { return _isTaken; }
 
-    public void ChangeCarAvailability(bool isAvailable)
+    public void ChangeCarAvailability(bool isTaken)
     {
-        _isTaken = isAvailable;
+        _isTaken = isTaken;
         if(_isTaken)
-            _takenImage.gameObject.SetActive(true);
+            _notvaiAvailableImage.gameObject.SetActive(true);
 
         else
-            _takenImage.gameObject.SetActive(false);
+            _notvaiAvailableImage.gameObject.SetActive(false);
     }
 }

@@ -13,13 +13,13 @@ public class OnlineMenuManager : MonoBehaviour
     [Header("Canvases")]
     [SerializeField] EnterNameHandler _enterNameMenu;
     [SerializeField] LobbyMenuHandler _lobbyMenu;
-    [SerializeField] RoomMenuHandler _roomMenuHandler;
     [SerializeField] CharacterSelectionMenuHandler _characterSelectionMenu;
 
     public CharacterSelectionMenuHandler CharacterSelectionMenu => _characterSelectionMenu;
 
     private void OnEnable()
     {
+        CloseAllCanvases();
         ChangeEnterNameCanvasStatus(true);
     }
 
@@ -42,8 +42,8 @@ public class OnlineMenuManager : MonoBehaviour
     {
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
         _enterNameMenu.OnNicknameEntered += MoveToLobbyMenu;
-        _lobbyMenu.OnJoinedLobby += MoveToRoomMenu;
-        _lobbyMenu.OnRoomCreated += MoveToRoomMenu;
+        _lobbyMenu.OnJoinedLobby += MoveToCarSelectionMenu;
+        _lobbyMenu.OnRoomCreated += MoveToCarSelectionMenu;
 
     }
 
@@ -51,16 +51,20 @@ public class OnlineMenuManager : MonoBehaviour
     {
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
         _enterNameMenu.OnNicknameEntered -= MoveToLobbyMenu;
-        _lobbyMenu.OnJoinedLobby -= MoveToRoomMenu;
-        _lobbyMenu.OnRoomCreated -= MoveToRoomMenu;
+        _lobbyMenu.OnJoinedLobby -= MoveToCarSelectionMenu;
+        _lobbyMenu.OnRoomCreated -= MoveToCarSelectionMenu;
+    }
+
+    private void CloseAllCanvases()
+    {
+        ChangeEnterNameCanvasStatus(false);
+        ChangeLobbyCanvasStatus(false);
+        ChangeCharacterSelectioStatus(false);
     }
 
     public void MoveToMainMenu()
     {
-        ChangeEnterNameCanvasStatus(false);
-        ChangeLobbyCanvasStatus(false);
-        ChangeRoomCanvasStatus(false);
-        ChangeCharacterSelectioStatus(false);
+        CloseAllCanvases();
         OnReturnToMainMenu?.Invoke();
         MainMenuManager.Instance.ReturnToMainMenu(false);
     }
@@ -71,11 +75,12 @@ public class OnlineMenuManager : MonoBehaviour
         ChangeLobbyCanvasStatus(true);
     }
 
-    private void MoveToRoomMenu()
+    private void MoveToCarSelectionMenu()
     {
-        ChangeEnterNameCanvasStatus(false);
-        ChangeLobbyCanvasStatus(true);
+        ChangeLobbyCanvasStatus(false);
+        ChangeCharacterSelectioStatus(true);
     }
+
 
     private void ChangeEnterNameCanvasStatus(bool _toActivate)
     {
@@ -85,11 +90,6 @@ public class OnlineMenuManager : MonoBehaviour
     private void ChangeLobbyCanvasStatus(bool _toActivate)
     {
         _lobbyMenu.gameObject.SetActive(_toActivate);
-    }
-
-    private void ChangeRoomCanvasStatus(bool _toActivate)
-    {
-        _roomMenuHandler.gameObject.SetActive(_toActivate);
     }
 
     private void ChangeCharacterSelectioStatus(bool _toActivate)
