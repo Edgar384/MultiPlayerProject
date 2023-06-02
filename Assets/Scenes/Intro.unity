@@ -891,6 +891,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403203357}
   m_CullTransparentMesh: 1
+--- !u!1 &413862292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 413862293}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &413862293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413862292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 111.85605, y: -0.8515154, z: -2.207093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &544421780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,6 +1397,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775332772}
   m_CullTransparentMesh: 1
+--- !u!1 &796776750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 796776752}
+  - component: {fileID: 796776751}
+  m_Layer: 0
+  m_Name: RoomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &796776751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796776750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4331060b8141eb86e0576647871f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &796776752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796776750}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 111.85605, y: -0.8515154, z: -2.207093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &907836611
 GameObject:
   m_ObjectHideFlags: 0
@@ -3926,6 +4001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2056720668}
   - component: {fileID: 2056720669}
+  - component: {fileID: 2056720670}
   m_Layer: 0
   m_Name: MultiplayerManager
   m_TagString: Untagged
@@ -3960,18 +4036,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9db49050fb56b314f829085b005c3ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nicknameInputField: {fileID: 1944896977}
-  createRoomButton: {fileID: 1749113437}
-  roomNameToCreate: HalotzuAshem
-  leaveRoomButton: {fileID: 1784338345}
-  startGameButton: {fileID: 907836613}
-  serverDebugTextUI: {fileID: 306076097}
-  isConnectedToRoomDebugTextUI: {fileID: 1236678968}
-  currentRoomNameDebugTextUI: {fileID: 552084887}
-  currentRoomPlayersCountTextUI: {fileID: 403203359}
-  playerListText: {fileID: 1158975213}
-  roomsListText: {fileID: 282269605}
-  scoreInputField: {fileID: 1739646480}
+--- !u!114 &2056720670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056720667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659b6a4a8e9efa942a4126d49f1bfdf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameCountDownTime: 0
+  hasGameStarted: 0
 --- !u!1 &2058822008
 GameObject:
   m_ObjectHideFlags: 0
