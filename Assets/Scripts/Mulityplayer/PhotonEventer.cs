@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -8,15 +7,17 @@ public class PhotonEventer : MonoBehaviourPunCallbacks
 {
     #region Events
 //may need to be ststic
-    public event Action OnConnectedToMasterEvent;
-    public event Action<List<RoomInfo>> OnRoomListUpdateEvent;
-    public event Action OnCreatedRoomEvent;
-    public event Action<Player> OnPlayerEnteredRoomEvent;
-    public event Action<Player> OnPlayerLeftRoomEvent;
-    public event Action<short,string> OnCreateRoomFailedEvent;
+    public static event Action OnConnectedToMasterEvent;
+    public static event Action<Player> OnPlayerEnteredRoomEvent;
+    public static event Action<Player> OnPlayerLeftRoomEvent;
     
     #endregion
-    
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
+
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
@@ -24,26 +25,7 @@ public class PhotonEventer : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
         OnConnectedToMasterEvent?.Invoke();
     }
-
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        Debug.Log("Got room list");
-        base.OnRoomListUpdate(roomList);
-        OnRoomListUpdateEvent?.Invoke(roomList);
-    }
     
-    public override void OnCreatedRoom()
-    {
-        base.OnCreatedRoom();
-        OnCreatedRoomEvent?.Invoke();
-    }
-
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        Debug.Log("Joined Room!");
-    }
-
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
@@ -56,12 +38,12 @@ public class PhotonEventer : MonoBehaviourPunCallbacks
         OnPlayerLeftRoomEvent?.Invoke(otherPlayer);
        
     }
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
+    
+    public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        base.OnCreateRoomFailed(returnCode, message);
-        Debug.LogError("Create failed..." + Environment.NewLine + message);
-        OnCreateRoomFailedEvent?.Invoke(returnCode, message);
+        base.OnMasterClientSwitched(newMasterClient);
+        Debug.Log("Masterclient has been switched \n " +
+                  "Masterclient is now actor number: " + newMasterClient.ActorNumber);
     }
 
     private void Start()

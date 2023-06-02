@@ -1,201 +1,174 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
+using SpawnSystem;
 using UnityEngine;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
-public class OnlineGameManager : MonoBehaviourPunCallbacks
+public class OnlineGameManager : MonoBehaviourPun , IPunObservable
 {
-    public const string NETWORK_PLAYER_PREFAB_NAME = "NetworkPlayerObject";
- 
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
-    private const string ASK_FOR_RANDOM_SPAWN_POINT_RPC = nameof(AskForRandomSpawnPoint);
-    private const string SPAWN_PLAYER_CLIENT_RPC = nameof(SpawnPlayer);
+    
+    [SerializeField] private float _gameCountDownTime;
 
-    private int someVariable;
+    private bool _isCountingForStartGame;
+    private float _timeLeftForStartGame = 0;
+
+    private SpawnManager _spawnManager;
+    private bool _isGameStarted;
+
+    public Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
+
     public bool hasGameStarted = false;
-
-    [SerializeField] private TextMeshProUGUI gameModeText;
-    [SerializeField] private TextMeshProUGUI playersScoreText;
-    [SerializeField] private TextMeshProUGUI currentSpawnPointsInfoText;
-    [SerializeField] private TextMeshProUGUI countdownText;
-    [SerializeField] private Button startGameButtonUI;
-    [SerializeField] private SpawnPoint[] spawnPoints;
     
-    private PlayerController localPlayerController;
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        
+        _spawnManager = new SpawnManager();
+        ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
 
-    private bool isCountingForStartGame;
-    private float timeLeftForStartGame = 0;
+        PhotonEventer.OnPlayerEnteredRoomEvent += PlayerEnteredRoom;
+        PhotonEventer.OnPlayerLeftRoomEvent += PlayerLeftRoom;
+    }
+
+    private void Start()
+    {
+        _isGameStarted = false;
+
+        // foreach (var keyValuePair in PhotonNetwork.CurrentRoom.Players)
+        // {
+        //     ConnectedPlayers.Add(keyValuePair.Key, new OnlinePlayer(keyValuePair.Value));
+        // }
+    }
+
+    private void Update()
+    {
+        if (!_isGameStarted)
+        {
+            if (_isCountingForStartGame)
+            {
+                _timeLeftForStartGame -= Time.deltaTime;
+                if (_timeLeftForStartGame <= 0)
+                {
+                    _isCountingForStartGame = false;
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        photonView.RPC(GAME_STARTED_RPC, RpcTarget.AllViaServer);
+                    }
+                }
+            }  
+        }
+    }
+
+    private void OnDestroy()
+    {
+        PhotonEventer.OnPlayerEnteredRoomEvent -= PlayerEnteredRoom;
+        PhotonEventer.OnPlayerLeftRoomEvent -= PlayerLeftRoom;
+    }
+
+    #region OnlineManager
+
+#if UNITY_EDITOR
+    [ContextMenu("ConnectedToMaster")]
+    public void ConnectedToMaster()
+    {
+        PhotonNetwork.NickName = "nickname";
+        Debug.Log("Player nickname is " + PhotonNetwork.NickName);
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+#endif
     
+    public void ConnectedToMaster(string nickname)
+    {
+        PhotonNetwork.NickName = nickname;
+        Debug.Log("Player nickname is " + PhotonNetwork.NickName);
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    private void PlayerEnteredRoom(Player player)
+    {
+        ConnectedPlayers.Add(player.ActorNumber, new OnlinePlayer(player));
+    }
+    
+    private void PlayerLeftRoom(Player  player)
+    {
+        ConnectedPlayers.Remove(player.ActorNumber);
+    }
+
+    #endregion
+
+    #region GameManagnet
+
     public void StartGameCountdown()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            int countdownRandomTime = Random.Range(3, 8);
             photonView.RPC(COUNTDOWN_STARTED_RPC,
-                RpcTarget.AllViaServer, countdownRandomTime );
-            startGameButtonUI.interactable = false;
+                RpcTarget.AllViaServer, _gameCountDownTime );
         }
     }
     
-    public override void OnMasterClientSwitched(Player newMasterClient)
+    public void LoadGameLevel()
     {
-        base.OnMasterClientSwitched(newMasterClient);
-        Debug.Log("Masterclient has been switched!" + Environment.NewLine
-        + "Masterclient is now actor number " + newMasterClient.ActorNumber);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(1);
+        }
     }
+
+    #endregion
     
     #region RPCS
-
+    
     [PunRPC]
     void CountdownStarted(int countdownTime)
     {
-        isCountingForStartGame = true;
-        timeLeftForStartGame = countdownTime;
-        countdownText.gameObject.SetActive(true);
+        _isCountingForStartGame = true;
+        _timeLeftForStartGame = countdownTime;
     }
     
     [PunRPC]
     void GameStarted()
     {
         hasGameStarted = true;
-        localPlayerController.canControl = true;
-        isCountingForStartGame = false;
+        _isCountingForStartGame = false;
+        _isGameStarted = true;
         Debug.Log("Game Started!!! WHOW");
-    }
-
-    [PunRPC]
-    void AskForRandomSpawnPoint(PhotonMessageInfo messageInfo)
-    {
-        List<SpawnPoint> availableSpawnPoints = new List<SpawnPoint>();
-        foreach (SpawnPoint spawnPoint in spawnPoints)
-        {
-            if(!spawnPoint.taken)
-             availableSpawnPoints.Add(spawnPoint);
-        }
-
-        SpawnPoint chosenSpawnPoint =
-            availableSpawnPoints[Random.Range(0, availableSpawnPoints.Count)];
-        chosenSpawnPoint.taken = true;
-        
-        bool[] takenSpawnPoints = new bool[spawnPoints.Length];
-        for (int i = 0; i < spawnPoints.Length; i++)
-        {
-            takenSpawnPoints[i] = spawnPoints[i].taken;
-        }
-        photonView.RPC(SPAWN_PLAYER_CLIENT_RPC,
-            messageInfo.Sender, chosenSpawnPoint.ID,
-            takenSpawnPoints);
-    }
-
-    [PunRPC]
-    void SpawnPlayer(int spawnPointID, bool[] takenSpawnPoints)
-    {
-        SpawnPoint spawnPoint = GetSpawnPointByID(spawnPointID);
-        localPlayerController =
-            PhotonNetwork.Instantiate(NETWORK_PLAYER_PREFAB_NAME, 
-                    spawnPoint.transform.position, 
-                    spawnPoint.transform.rotation)
-                .GetComponent<PlayerController>();
-        
-        for (int i = 0; i < takenSpawnPoints.Length; i++)
-        {
-            spawnPoints[i].taken = takenSpawnPoints[i];
-        }
-        
     }
     
     #endregion
     
-    public void StartGame()
+    
+    // void Start()
+    // {
+    //     if (PhotonNetwork.IsConnectedAndReady)
+    //     {
+    //         photonView.RPC(ASK_FOR_RANDOM_SPAWN_POINT_RPC, RpcTarget.MasterClient);
+    //         if (PhotonNetwork.IsMasterClient)
+    //         {
+    //             startGameButtonUI.interactable = true;
+    //         }
+    //
+    //         gameModeText.text = PhotonNetwork.CurrentRoom.CustomProperties[Constants.GAME_MODE].ToString();
+    //         foreach (KeyValuePair<int, Player>
+    //                      player in PhotonNetwork.CurrentRoom.Players)
+    //         {
+    //             if (player.Value.CustomProperties
+    //                 .ContainsKey(Constants.PLAYER_STRENGTH_SCORE_PROPERTY_KEY))
+    //             {
+    //                 playersScoreText.text +=
+    //                     player.Value.CustomProperties[Constants.PLAYER_STRENGTH_SCORE_PROPERTY_KEY]
+    //                         += Environment.NewLine;
+    //             }
+    //         }
+    //     }
+    // }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-         
-            PhotonNetwork.LoadLevel(1);
-        }
+        throw new System.NotImplementedException();
     }
-
-    void Start()
-    {
-        if (PhotonNetwork.IsConnectedAndReady)
-        {
-            // localPlayerController =
-            //     PhotonNetwork.Instantiate(NETWORK_PLAYER_PREFAB_NAME, 
-            //             spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, 
-            //             spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].rotation)
-            //         .GetComponent<PlayerController>();
-            photonView.RPC(ASK_FOR_RANDOM_SPAWN_POINT_RPC, RpcTarget.MasterClient);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                startGameButtonUI.interactable = true;
-            }
-
-            gameModeText.text = PhotonNetwork.CurrentRoom.CustomProperties[Constants.GAME_MODE].ToString();
-            foreach (KeyValuePair<int, Player>
-                         player in PhotonNetwork.CurrentRoom.Players)
-            {
-                if (player.Value.CustomProperties
-                    .ContainsKey(Constants.PLAYER_STRENGTH_SCORE_PROPERTY_KEY))
-                {
-                    playersScoreText.text +=
-                        player.Value.CustomProperties[Constants.PLAYER_STRENGTH_SCORE_PROPERTY_KEY]
-                            += Environment.NewLine;
-                }
-            }
-        }
-    }
-
-    private void Update()
-    {
-        if (isCountingForStartGame)
-        {
-            timeLeftForStartGame -= Time.deltaTime;
-            countdownText.text = Mathf.Ceil(timeLeftForStartGame).ToString();
-            if (timeLeftForStartGame <= 0)
-            {
-                isCountingForStartGame = false;
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    photonView.RPC(GAME_STARTED_RPC, RpcTarget.AllViaServer);
-                }
-            }
-        }
-
-        string spawnPointsText = string.Empty;
-
-        foreach (SpawnPoint spawnPoint in spawnPoints)
-        {
-            spawnPointsText += spawnPoint.ID + " " + spawnPoint.taken + Environment.NewLine;
-        }
-
-        currentSpawnPointsInfoText.text = spawnPointsText;
-    }
-
-    private void OnValidate()
-    {
-        int currentID = 0;
-        foreach (SpawnPoint spawnPoint in spawnPoints)
-        {
-            spawnPoint.ID = currentID++;
-        }
-    }
-
-    private SpawnPoint GetSpawnPointByID(int targetID)
-    {
-        foreach (SpawnPoint spawnPoint in spawnPoints)
-        {
-            if (spawnPoint.ID == targetID)
-                return spawnPoint;
-        }
-
-        return null;
-    }
-
-
 }
