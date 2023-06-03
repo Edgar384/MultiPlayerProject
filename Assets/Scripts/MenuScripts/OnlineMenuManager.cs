@@ -1,9 +1,11 @@
 using System;
-using Managers;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OnlineMenuManager : MonoBehaviour
 {
+
     public event Action OnReturnToMainMenu;
 
     [HideInInspector] public static OnlineMenuManager Instance;
@@ -13,9 +15,6 @@ public class OnlineMenuManager : MonoBehaviour
     [SerializeField] LobbyMenuHandler _lobbyMenu;
     [SerializeField] CharacterSelectionMenuHandler _characterSelectionMenu;
 
-    [SerializeField] private OnlineRoomManager _onlineRoomManager;
-    [SerializeField] private OnlineGameManager _onlineGameManager;
-    
     public CharacterSelectionMenuHandler CharacterSelectionMenu => _characterSelectionMenu;
 
     private void OnEnable()
@@ -41,20 +40,19 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void RegisterEvents()
     {
-        _lobbyMenu.OnRoomCreated  += _onlineRoomManager.CreateRoom;
-        OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
-        _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
-        PhotonEventer.OnConnectedToMasterEvent += MoveToLobbyMenu;
+        _enterNameMenu.OnNicknameEntered += MoveToLobbyMenu;
+        _lobbyMenu.OnJoinedLobby += MoveToCarSelectionMenu;
+        _lobbyMenu.OnRoomCreated += MoveToCarSelectionMenu;
+
     }
 
     private void UnregisterEvents()
     {
-        _lobbyMenu.OnRoomCreated  -= _onlineRoomManager.CreateRoom;
-        OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
-        _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
-        PhotonEventer.OnConnectedToMasterEvent -= MoveToLobbyMenu;
+        _enterNameMenu.OnNicknameEntered -= MoveToLobbyMenu;
+        _lobbyMenu.OnJoinedLobby -= MoveToCarSelectionMenu;
+        _lobbyMenu.OnRoomCreated -= MoveToCarSelectionMenu;
     }
 
     private void CloseAllCanvases()
@@ -71,7 +69,7 @@ public class OnlineMenuManager : MonoBehaviour
         MainMenuManager.Instance.ReturnToMainMenu(false);
     }
 
-    private void MoveToLobbyMenu()
+    private void MoveToLobbyMenu(string nickname)
     {
         ChangeEnterNameCanvasStatus(false);
         ChangeLobbyCanvasStatus(true);

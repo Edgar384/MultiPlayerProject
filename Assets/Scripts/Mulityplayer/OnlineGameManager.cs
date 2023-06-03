@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Managers;
 using Photon.Pun;
@@ -8,8 +7,6 @@ using UnityEngine;
 
 public class OnlineGameManager : MonoBehaviourPun , IPunObservable
 {
-    public static event Action OnConnectedToMaster;
-    
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
     private const string UPDATE_PLAYER_READY_STAT_RPC = nameof(OnPlayerSetReadyStat);
@@ -22,11 +19,9 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
     private SpawnManager _spawnManager;
     private bool _isGameStarted;
 
-    public OnlinePlayer Player { get; private set; }
-
     public Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
 
-    private bool _hasGameStarted;
+    public bool hasGameStarted = false;
     
     private void Awake()
     {
@@ -83,8 +78,6 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         PhotonNetwork.NickName = "nickname";
         Debug.Log("Player nickname is " + PhotonNetwork.NickName);
         PhotonNetwork.ConnectUsingSettings();
-        
-        Player = new OnlinePlayer(PhotonNetwork.LocalPlayer);
     }
 
 #endif
@@ -161,7 +154,7 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
     [PunRPC]
     void GameStarted()
     {
-        _hasGameStarted = true;
+        hasGameStarted = true;
         _isCountingForStartGame = false;
         _isGameStarted = true;
         Debug.Log("Game Started!!! WHOW");
