@@ -11,6 +11,8 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
     public static event Action<OnlinePlayer> OnPlayerEnteredRoomEvent;
     public static event Action<OnlinePlayer> OnPlayerLeftRoomEvent;
     
+    public static event Action<OnlinePlayer,bool> OnPlayerReadyStatusChageneEvent;
+    
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
     private const string UPDATE_PLAYER_READY_STAT_RPC = nameof(UpdatePlayerReadyList);
@@ -123,6 +125,17 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         ConnectedPlayers.Remove(onlinePlayer.ActorNumber);
     }
 
+    public void ReadyPlayer()
+    {
+        object[] data = new object[]
+        {
+            PhotonNetwork.LocalPlayer.ActorNumber,
+            true
+        };
+        
+        photonView.RPC(UPDATE_PLAYER_READY_STAT_RPC, RpcTarget.AllViaServer,data);
+    }
+
     #endregion
 
     #region GameManagnet
@@ -165,6 +178,7 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         if (ConnectedPlayers.TryGetValue(playerId, out OnlinePlayer player))
         {
             player.SetReadyStatus(isReady);
+            OnPlayerReadyStatusChageneEvent?.Invoke(player,isReady);
             return;
         }
         

@@ -10,12 +10,19 @@ public class PhotonEventer : MonoBehaviourPunCallbacks
     public static event Action OnConnectedToMasterEvent;
     public static event Action<Player> OnPlayerEnteredRoomEvent;
     public static event Action<Player> OnPlayerLeftRoomEvent;
+    public static event Action OnPlayerJoinRoomEvent;
     
     #endregion
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        OnPlayerJoinRoomEvent?.Invoke();
     }
 
     public override void OnConnectedToMaster()
@@ -44,6 +51,11 @@ public class PhotonEventer : MonoBehaviourPunCallbacks
         base.OnMasterClientSwitched(newMasterClient);
         Debug.Log("Masterclient has been switched \n " +
                   "Masterclient is now actor number: " + newMasterClient.ActorNumber);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
     }
 
     private void Start()
