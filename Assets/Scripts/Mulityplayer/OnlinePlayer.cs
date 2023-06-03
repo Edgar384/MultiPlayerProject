@@ -40,10 +40,9 @@ namespace Managers
             
         }
 
-        public void ReadyUp()
+        public void SetReadyStatus(bool isReady)
         {
-            IsReady = true;
-            OnPlayerReadyChanged?.Invoke(ActorNumber,IsReady);
+            IsReady = isReady;
         }
     }
 }
