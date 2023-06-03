@@ -762,7 +762,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return to mian menu
+  m_text: Return to main menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1269,128 +1269,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332800362}
   m_CullTransparentMesh: 1
---- !u!1001 &354155377
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 513759856}
-    m_Modifications:
-    - target: {fileID: 5663277903844750481, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_Name
-      value: MaxPlayersSection
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_Pivot.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 567.397
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 73.3513
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -121
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 63
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277904348039192, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_Name
-      value: MaxPlayersText
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277904348039193, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277904348039194, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_text
-      value: Room Name
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277904348039194, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_fontSize
-      value: 30.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663277904512067858, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-      propertyPath: m_Name
-      value: MaxPlayersInputField
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
---- !u!224 &354155378 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5663277903844750482, guid: f1998f52f6d39ee48932e9e39f16b03b, type: 3}
-  m_PrefabInstance: {fileID: 354155377}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &373627076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,7 +2078,6 @@ RectTransform:
   m_Children:
   - {fileID: 1526444714}
   - {fileID: 1105733450}
-  - {fileID: 354155378}
   m_Father: {fileID: 2095399416}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2318,7 +2195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &520980879
 Transform:
   m_ObjectHideFlags: 0
@@ -2617,8 +2494,8 @@ Camera:
   m_GameObject: {fileID: 791704414}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2814,7 +2691,7 @@ GameObject:
   - component: {fileID: 798568023}
   - component: {fileID: 798568022}
   m_Layer: 5
-  m_Name: ChooseCarButton
+  m_Name: ReadyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3550,7 +3427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return to mian menu
+  m_text: Return to main menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3685,7 +3562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return to mian menu
+  m_text: Return to main menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5224,7 +5101,7 @@ GameObject:
   - component: {fileID: 1887003836}
   - component: {fileID: 1887003835}
   m_Layer: 5
-  m_Name: ChooseCarText
+  m_Name: ReadyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5270,7 +5147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Choose Car
+  m_text: Ready!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
