@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Managers;
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,11 +22,14 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
         _selectedCharacterIndex = 0;
 
         OnlineGameManager.OnPlayerEnteredRoomEvent += AddPlayer;
+        OnlineGameManager.OnPlayerReadyStatusChageneEvent += SetPlayerUiReadyStatus;
     }
 
     private void OnDisable()
     {
         _carSelectionPreview.SetActive(false);
+        OnlineGameManager.OnPlayerEnteredRoomEvent -= AddPlayer;
+        OnlineGameManager.OnPlayerReadyStatusChageneEvent -= SetPlayerUiReadyStatus;
     }
 
     public void AddPlayer(OnlinePlayer onlinePlayer)
@@ -40,6 +42,18 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
             playerInRoomUI.gameObject.SetActive(true);
             playerInRoomUI.Init(onlinePlayer);
             break;
+        }
+    }
+
+    private void SetPlayerUiReadyStatus(OnlinePlayer player,bool  isReady)
+    {
+        foreach (var playerInRoomUI in _playersInRoomUI)
+        {
+            if (playerInRoomUI.ID == player.ActorNumber)
+            {
+                playerInRoomUI.SetReadyStatus(isReady);
+                break;
+            }
         }
     }
 
