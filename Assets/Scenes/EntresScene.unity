@@ -1347,7 +1347,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 332800365}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1555586136}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: OpenSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &332800365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2561,7 +2573,7 @@ PrefabInstance:
     - target: {fileID: 463006133314385167, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1555586138}
+      objectReference: {fileID: 0}
     - target: {fileID: 463006133314385167, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetQuality
@@ -2569,27 +2581,27 @@ PrefabInstance:
     - target: {fileID: 463006133777672860, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1555586138}
+      objectReference: {fileID: 0}
     - target: {fileID: 463006133777672860, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetFullScreen
       objectReference: {fileID: 0}
     - target: {fileID: 463006133872503869, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 463006133872503869, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 463006133872503869, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 463006134503776676, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1555586138}
+      objectReference: {fileID: 0}
     - target: {fileID: 463006134503776676, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetVolume
@@ -2597,7 +2609,7 @@ PrefabInstance:
     - target: {fileID: 463006134639705694, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1555586138}
+      objectReference: {fileID: 0}
     - target: {fileID: 463006134639705694, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetResolution
@@ -2692,15 +2704,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 463006134912598742, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 463006134955683997, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 463006134955683997, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 463006135126585991, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
