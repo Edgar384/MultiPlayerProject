@@ -24,8 +24,6 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
         _selectedCharacterIndex = 0;
 
         PhotonEventer.OnPlayerJoinRoomEvent += Init;
-        OnlineGameManager.OnPlayerEnteredRoomEvent += AddPlayer;
-        OnlineGameManager.OnPlayerReadyStatusChageneEvent += SetPlayerUiReadyStatus;
     }
 
     private void Init()
@@ -36,8 +34,6 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
     private void OnDisable()
     {
         _carSelectionPreview.SetActive(false);
-        OnlineGameManager.OnPlayerEnteredRoomEvent -= AddPlayer;
-        OnlineGameManager.OnPlayerReadyStatusChageneEvent -= SetPlayerUiReadyStatus;
     }
 
     public void AddPlayer(OnlinePlayer onlinePlayer)

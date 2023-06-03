@@ -41,7 +41,7 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void RegisterEvents()
     {
-        _lobbyMenu.OnRoomCreated  += _onlineRoomManager.CreateRoom;
+        //_lobbyMenu.OnRoomCreated  += _onlineRoomManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
@@ -50,7 +50,7 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void UnregisterEvents()
     {
-        _lobbyMenu.OnRoomCreated  -= _onlineRoomManager.CreateRoom;
+        //_lobbyMenu.OnRoomCreated  -= _onlineRoomManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
