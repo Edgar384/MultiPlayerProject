@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 
 public class OnlineMenuManager : MonoBehaviour
@@ -12,6 +13,9 @@ public class OnlineMenuManager : MonoBehaviour
     [SerializeField] LobbyMenuHandler _lobbyMenu;
     [SerializeField] CharacterSelectionMenuHandler _characterSelectionMenu;
 
+    [SerializeField] private OnlineRoomManager _onlineRoomManager;
+    [SerializeField] private OnlineGameManager _onlineGameManager;
+    
     public CharacterSelectionMenuHandler CharacterSelectionMenu => _characterSelectionMenu;
 
     private void OnEnable()
@@ -37,19 +41,20 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void RegisterEvents()
     {
+        _lobbyMenu.OnRoomCreated  += _onlineRoomManager.CreateRoom;
+        OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
+        _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
-        _enterNameMenu.OnNicknameEntered += MoveToLobbyMenu;
-        _lobbyMenu.OnJoinedLobby += MoveToCarSelectionMenu;
-        _lobbyMenu.OnRoomCreated += MoveToCarSelectionMenu;
-
+        PhotonEventer.OnConnectedToMasterEvent += MoveToLobbyMenu;
     }
 
     private void UnregisterEvents()
     {
+        _lobbyMenu.OnRoomCreated  -= _onlineRoomManager.CreateRoom;
+        OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
+        _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
-        _enterNameMenu.OnNicknameEntered -= MoveToLobbyMenu;
-        //_lobbyMenu.OnJoinedLobby -= MoveToCarSelectionMenu;
-       // _lobbyMenu.OnRoomCreated -= MoveToCarSelectionMenu;
+        PhotonEventer.OnConnectedToMasterEvent -= MoveToLobbyMenu;
     }
 
     private void CloseAllCanvases()
@@ -66,7 +71,7 @@ public class OnlineMenuManager : MonoBehaviour
         MainMenuManager.Instance.ReturnToMainMenu(false);
     }
 
-    private void MoveToLobbyMenu(string nickname)
+    private void MoveToLobbyMenu()
     {
         ChangeEnterNameCanvasStatus(false);
         ChangeLobbyCanvasStatus(true);

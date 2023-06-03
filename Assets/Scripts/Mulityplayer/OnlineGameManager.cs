@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Managers;
 using Photon.Pun;
@@ -7,6 +8,8 @@ using UnityEngine;
 
 public class OnlineGameManager : MonoBehaviourPun , IPunObservable
 {
+    public static event Action OnConnectedToMaster;
+    
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
     private const string UPDATE_PLAYER_READY_STAT_RPC = nameof(OnPlayerSetReadyStat);

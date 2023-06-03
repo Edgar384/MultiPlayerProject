@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class LobbyMenuHandler : MonoBehaviour
 {
-    public event Action OnJoinedRoom;
+    public event Action<string> OnJoinedRoom;
     public event Action<string> OnRoomCreated;
     public event Action OnLeftLobby;
-    public event Action OnJoinedLobby;
 
     [SerializeField] private TMP_InputField _roomName;
 
@@ -18,6 +17,6 @@ public class LobbyMenuHandler : MonoBehaviour
 
     public void JoinRoom()
     {
-        OnJoinedRoom?.Invoke();
+        OnJoinedRoom?.Invoke(_roomName.text);
     }
 }
