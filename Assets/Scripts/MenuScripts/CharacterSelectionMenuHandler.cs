@@ -10,6 +10,7 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
 {
     public event Action<CarSelectionStatus> OnCarSelected;
 
+    [SerializeField] PlayerInRoomUI[] _playersInRoomUI = new PlayerInRoomUI[4];
     [SerializeField] GameObject _carSelectionPreview;
     [SerializeField] CarSelectionStatus[] _cars;
     [SerializeField] Button _selecteCarButton;
