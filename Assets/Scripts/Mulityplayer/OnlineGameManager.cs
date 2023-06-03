@@ -10,7 +10,6 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
 {
     public static event Action<OnlinePlayer> OnPlayerEnteredRoomEvent;
     public static event Action<OnlinePlayer> OnPlayerLeftRoomEvent;
-    public static event Action<OnlinePlayer,bool> OnPlayerReadyStatusChageneEvent;
     
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
@@ -166,7 +165,6 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         if (ConnectedPlayers.TryGetValue(playerId, out OnlinePlayer player))
         {
             player.SetReadyStatus(isReady);
-            OnPlayerReadyStatusChageneEvent?.Invoke(player,isReady);
             return;
         }
         
