@@ -14,12 +14,25 @@ namespace Managers
         public static event Action<List<RoomInfo>> OnRoomListUpdateEvent;
 
         private List<RoomInfo> _roomList;
+        private List<RoomInfoDisplayer> _roomInfoDisplayers;
+
+        [SerializeField] private GameObject _roomPrefab;
+        [SerializeField] private Transform _roomListParent;
 
         public List<RoomInfo> RoomList => _roomList;
 
         private void Awake()
         {
             _roomList = new List<RoomInfo>();
+            _roomInfoDisplayers = new List<RoomInfoDisplayer>();
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var roomInfoDisplayer in _roomInfoDisplayers)
+            {
+                roomInfoDisplayer.OnJoinRoom -= JoinRoom;
+            }
         }
 
 #if UNITY_EDITOR
@@ -57,6 +70,13 @@ namespace Managers
         public void JoinRoom(string roomName)
         {
             PhotonNetwork.JoinRoom(roomName);
+            OnJoinRoomEvent?.Invoke();
+        }
+
+        public void LeaveRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+            Debug.Log("Leave Room");
         }
 
         #region CallBackEvent
@@ -99,6 +119,12 @@ namespace Managers
                     continue;   
                 
                 _roomList.Add(room);
+                var roomObject = Instantiate(_roomPrefab, _roomListParent).GetComponent<RoomInfoDisplayer>();
+                
+                roomObject.SetRoomInfo(room);
+                roomObject.OnJoinRoom += JoinRoom;
+                _roomInfoDisplayers.Add(roomObject);
+                
                 Debug.Log($"Room add to room list room name: {room.Name}");
             }
         }

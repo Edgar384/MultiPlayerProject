@@ -1,20 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
-using Photon.Pun;
 
 public class RoomInfoDisplayer : MonoBehaviour
 {
+    public event Action<string> OnJoinRoom;
+
     [SerializeField] private Button _joinRoomButton;
     [SerializeField] private TextMeshProUGUI _roomInfoText;
     [SerializeField] public float Offset;
     public RoomInfo roomInfo { get; private set; }
     private string _roomName;
 
-    public void ChangeRoomInfo(RoomInfo roomInfo)
+    public void SetRoomInfo(RoomInfo roomInfo)
     {
         this.roomInfo = roomInfo;
         _roomName = roomInfo.Name;
@@ -24,6 +24,6 @@ public class RoomInfoDisplayer : MonoBehaviour
     public void JoinRoom()
     {
         if(_roomName!=string.Empty || _roomName!=null)
-        PhotonNetwork.JoinRoom(_roomName);
+            OnJoinRoom?.Invoke(_roomName);
     }
 }
