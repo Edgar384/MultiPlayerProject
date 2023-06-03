@@ -1,20 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using Managers;
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class CharacterSelectionMenuHandler : MonoBehaviour
 {
     public event Action<CarSelectionStatus> OnCarSelected;
 
-    [SerializeField] PlayerInRoomUI[] _playersInRoomUI = new PlayerInRoomUI[4];
+    [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
     [SerializeField] GameObject _carSelectionPreview;
     [SerializeField] CarSelectionStatus[] _cars;
     [SerializeField] Button _selecteCarButton;
-
+    
     private int _selectedCharacterIndex;
 
     private void OnEnable()
@@ -22,11 +21,26 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
         ResetCarsStatus();
         _carSelectionPreview.SetActive(true);
         _selectedCharacterIndex = 0;
+
+        OnlineGameManager.OnPlayerEnteredRoomEvent += AddPlayer;
     }
 
     private void OnDisable()
     {
         _carSelectionPreview.SetActive(false);
+    }
+
+    public void AddPlayer(OnlinePlayer onlinePlayer)
+    {
+        foreach (var playerInRoomUI in _playersInRoomUI)
+        {
+            if (playerInRoomUI.isActiveAndEnabled) 
+                continue;
+            
+            playerInRoomUI.gameObject.SetActive(true);
+            playerInRoomUI.Init(onlinePlayer);
+            break;
+        }
     }
 
     private void ResetCarsStatus()
