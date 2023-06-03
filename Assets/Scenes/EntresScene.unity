@@ -1347,19 +1347,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 332800365}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1555586136}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: OpenSettings
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &332800365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2624,7 +2612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 463006134912598737, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 463006134912598737, guid: 3c7672b866d757a428d30ab3a4105c53, type: 3}
       propertyPath: m_AnchorMax.x
