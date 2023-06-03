@@ -19,9 +19,11 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
     private SpawnManager _spawnManager;
     private bool _isGameStarted;
 
+    public OnlinePlayer Player { get; private set; }
+
     public Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
 
-    public bool hasGameStarted = false;
+    private bool _hasGameStarted;
     
     private void Awake()
     {
@@ -78,6 +80,8 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         PhotonNetwork.NickName = "nickname";
         Debug.Log("Player nickname is " + PhotonNetwork.NickName);
         PhotonNetwork.ConnectUsingSettings();
+        
+        Player = new OnlinePlayer(PhotonNetwork.LocalPlayer);
     }
 
 #endif
@@ -154,7 +158,7 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
     [PunRPC]
     void GameStarted()
     {
-        hasGameStarted = true;
+        _hasGameStarted = true;
         _isCountingForStartGame = false;
         _isGameStarted = true;
         Debug.Log("Game Started!!! WHOW");

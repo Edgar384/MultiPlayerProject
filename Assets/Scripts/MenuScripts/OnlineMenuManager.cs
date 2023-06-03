@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OnlineMenuManager : MonoBehaviour
 {
-
     public event Action OnReturnToMainMenu;
 
     [HideInInspector] public static OnlineMenuManager Instance;
@@ -51,8 +48,8 @@ public class OnlineMenuManager : MonoBehaviour
     {
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
         _enterNameMenu.OnNicknameEntered -= MoveToLobbyMenu;
-        _lobbyMenu.OnJoinedLobby -= MoveToCarSelectionMenu;
-        _lobbyMenu.OnRoomCreated -= MoveToCarSelectionMenu;
+        //_lobbyMenu.OnJoinedLobby -= MoveToCarSelectionMenu;
+       // _lobbyMenu.OnRoomCreated -= MoveToCarSelectionMenu;
     }
 
     private void CloseAllCanvases()

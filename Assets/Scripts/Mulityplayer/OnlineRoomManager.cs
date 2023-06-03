@@ -59,6 +59,12 @@ namespace Managers
             PhotonNetwork.JoinRoom(roomName);
         }
 
+        public void LeaveRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+            Debug.Log("Leave Room");
+        }
+
         #region CallBackEvent
 
         public override void OnJoinedRoom()
