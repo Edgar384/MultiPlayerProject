@@ -2584,7 +2584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000008920202}
+  m_AnchoredPosition: {x: 0, y: 0.0000778708}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &791704414
@@ -3727,6 +3727,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameCountDownTime: 0
+  _onlineRoomManager: {fileID: 0}
+  _onlineLobbyManager: {fileID: 0}
 --- !u!4 &1127268920
 Transform:
   m_ObjectHideFlags: 0
@@ -4176,8 +4178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4331060b8141eb86e0576647871f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomPrefab: {fileID: 3260580515539906288, guid: fec7db7b2f7c95541970d4bebdd5d6b2, type: 3}
-  _roomListParent: {fileID: 750973264}
 --- !u!4 &1451625271
 Transform:
   m_ObjectHideFlags: 0
