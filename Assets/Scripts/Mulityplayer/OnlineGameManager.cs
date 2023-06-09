@@ -1,5 +1,3 @@
-using GarlicStudios.Online.Managers;
-using Managers;
 using Photon.Pun;
 using SpawnSystem;
 using UnityEngine;
@@ -9,12 +7,9 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
     
-    [SerializeField] private float _gameCountDownTime;
-    [SerializeField] private OnlineRoomManager _onlineRoomManager;
-    [SerializeField] private OnlineLobbyManager _onlineLobbyManager;
+    [SerializeField] private float _timeLeftForStartGame = 0;
 
     private bool _isCountingForStartGame;
-    private float _timeLeftForStartGame = 0;
 
     private SpawnManager _spawnManager;
 
@@ -76,7 +71,7 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC(COUNTDOWN_STARTED_RPC,
-                RpcTarget.AllViaServer, _gameCountDownTime );
+                RpcTarget.AllViaServer);
         }
     }
     
@@ -93,16 +88,14 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
     #region RPCS
 
     [PunRPC]
-    void CountdownStarted(int countdownTime)
+    void CountdownStarted()
     {
         _isCountingForStartGame = true;
-        _timeLeftForStartGame = countdownTime;
     }
     
     [PunRPC]
     void GameStarted()
     {
-        _isGameStarted = true;
         _isCountingForStartGame = false;
         _isGameStarted = true;
         Debug.Log("Game Started!!! WHOW");
@@ -112,6 +105,13 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new System.NotImplementedException();
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_timeLeftForStartGame);
+        }
+        else if (stream.IsReading)
+        {
+            _timeLeftForStartGame = (float)stream.ReceiveNext();
+        }
     }
 }

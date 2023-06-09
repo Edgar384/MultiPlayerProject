@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Managers;
-using Photon.Pun;
+using GarlicStudios.Online.Data;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class CharacterSelectionMenuHandler : MonoBehaviour

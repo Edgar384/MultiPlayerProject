@@ -1,5 +1,5 @@
 using System;
-using Managers;
+using GarlicStudios.Online.Managers;
 using UnityEngine;
 
 public class OnlineMenuManager : MonoBehaviour
@@ -13,6 +13,7 @@ public class OnlineMenuManager : MonoBehaviour
     [SerializeField] LobbyMenuHandler _lobbyMenu;
     [SerializeField] CharacterSelectionMenuHandler _characterSelectionMenu;
 
+    [SerializeField] private OnlineLobbyManager _onlineLobbyManager;
     [SerializeField] private OnlineRoomManager _onlineRoomManager;
     [SerializeField] private OnlineGameManager _onlineGameManager;
     
@@ -41,7 +42,7 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void RegisterEvents()
     {
-        //_lobbyMenu.OnRoomCreated  += _onlineRoomManager.CreateRoom;
+        _lobbyMenu.OnRoomCreated += _onlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
@@ -50,7 +51,7 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void UnregisterEvents()
     {
-        //_lobbyMenu.OnRoomCreated  -= _onlineRoomManager.CreateRoom;
+        _lobbyMenu.OnRoomCreated -= _onlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;

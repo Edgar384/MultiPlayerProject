@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DefaultNamespace;
-using Managers;
+using GarlicStudios.Online.Data;
 using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,26 +9,26 @@ using Random = UnityEngine.Random;
 namespace SpawnSystem
 {
     [Serializable]
-    public class SpawnManager : IPunObservable
+    public class SpawnManager
     {
         //private const string ASK_FOR_RANDOM_SPAWN_POINT_RPC = nameof(AskForRandomSpawnPoint);
         //private const string SPAWN_PLAYER_CLIENT_RPC = nameof(SpawnPlayer);
         private const string LOCAL_PLAYER_PREFAB_NAME = "NetworkPlayer";
 
         [SerializeField] private SpawnPoint[] _spawnPoints;
+        
+        private Dictionary<int,SpawnPoint> _spawnPointDictionary;
 
-        private bool[] _spawnPointData;
 
         public void Init()
         {
+            _spawnPointDictionary = new Dictionary<int, SpawnPoint>();
+
             for (int i = 0; i < _spawnPoints.Length; i++)
+            {
+                _spawnPointDictionary.Add(_spawnPoints[i].ID, _spawnPoints[i]);
                 _spawnPoints[i].Init(i);
-
-
-            _spawnPointData = new bool[_spawnPoints.Length];
-
-            for (int i = 0; i < _spawnPointData.Length; i++)
-                _spawnPointData[i] = false;
+            }
         }
         
         [PunRPC]
@@ -40,6 +40,7 @@ namespace SpawnSystem
                 spawnPoint.transform.position,
                 spawnPoint.transform.rotation).GetComponent<LocalPlayer>();
             
+            spawnPoint.SetSpawnPointToTaken();
             localPlayer.Init(onlinePlayer);
 
             return localPlayer;
@@ -48,50 +49,18 @@ namespace SpawnSystem
         private SpawnPoint AskForRandomSpawnPoint()
         {
             List<SpawnPoint> availableSpawnPoints = new List<SpawnPoint>();
-            
-            for (int i = 0; i < _spawnPointData.Length; i++)
+
+            foreach (var keyValuePair in _spawnPointDictionary)
             {
-                if (!_spawnPointData[i])
-                    availableSpawnPoints.Add(GetSpawnPointByID(i));
+                if (!keyValuePair.Value.IsTaken)
+                    availableSpawnPoints.Add(keyValuePair.Value);
             }
             
             SpawnPoint chosenSpawnPoint =
                 availableSpawnPoints[Random.Range(0, availableSpawnPoints.Count)];
             chosenSpawnPoint.SetSpawnPointToTaken();
-        
-            bool[] updateSpawnPointData = new bool[_spawnPoints.Length];
-            
-            for (int i = 0; i < _spawnPoints.Length; i++)
-            {
-                updateSpawnPointData[i] = _spawnPoints[i].IsTaken;
-            }
-
-            _spawnPointData = updateSpawnPointData;
             
             return chosenSpawnPoint;
-        }
-        
-        private SpawnPoint GetSpawnPointByID(int targetID)
-        {
-            foreach (SpawnPoint spawnPoint in _spawnPoints)
-            {
-                if (spawnPoint.ID == targetID)
-                    return spawnPoint;
-            }
-
-            return null;
-        }
-
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            if (stream.IsWriting)
-            {
-                stream.SendNext(_spawnPointData);
-            }
-            else
-            {
-                _spawnPointData = stream.ReceiveNext() as bool[];
-            }
         }
     }
 }
