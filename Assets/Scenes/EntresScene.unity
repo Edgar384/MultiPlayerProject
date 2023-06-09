@@ -2584,7 +2584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00025774218}
+  m_AnchoredPosition: {x: 0, y: -0.000079741716}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &791704414
@@ -3694,7 +3694,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1127268920}
   - component: {fileID: 1127268919}
-  - component: {fileID: 1127268918}
   m_Layer: 0
   m_Name: OnlineManager
   m_TagString: Untagged
@@ -3702,18 +3701,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1127268918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127268917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db49050fb56b314f829085b005c3ecd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1127268919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3726,9 +3713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659b6a4a8e9efa942a4126d49f1bfdf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameCountDownTime: 0
-  _onlineRoomManager: {fileID: 1451625270}
-  _onlineLobbyManager: {fileID: 1451625272}
+  _timeLeftForStartGame: 0
 --- !u!4 &1127268920
 Transform:
   m_ObjectHideFlags: 0
@@ -4559,6 +4544,7 @@ MonoBehaviour:
   _enterNameMenu: {fileID: 1820671085}
   _lobbyMenu: {fileID: 1882695873}
   _characterSelectionMenu: {fileID: 373627079}
+  _onlineLobbyManager: {fileID: 1451625272}
   _onlineRoomManager: {fileID: 1451625270}
   _onlineGameManager: {fileID: 1127268919}
 --- !u!1 &1565507704
@@ -6050,7 +6036,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 619256977}
   m_HandleRect: {fileID: 619256976}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

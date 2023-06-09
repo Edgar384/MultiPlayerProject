@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-<<<<<<< Updated upstream
 using DefaultNamespace.CharcterSelect;
-=======
 using GarlicStudios.Online.Data;
->>>>>>> Stashed changes
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -37,7 +34,6 @@ namespace GarlicStudios.Online.Managers
         private void Awake()
         {
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
-            _readyList = new bool[PhotonNetwork.CurrentRoom.MaxPlayers];
         }
         
         private void UpdatePlayerReadyList(int playerId, bool isReady)
@@ -79,6 +75,7 @@ namespace GarlicStudios.Online.Managers
         public override void OnCreatedRoom()
         {
             base.OnCreatedRoom();
+            _readyList = new bool[PhotonNetwork.CurrentRoom.MaxPlayers];
             OnCreatedRoomEvent?.Invoke();
         }
         

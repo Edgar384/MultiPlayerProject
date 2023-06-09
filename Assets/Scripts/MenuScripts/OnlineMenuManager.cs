@@ -46,7 +46,7 @@ public class OnlineMenuManager : MonoBehaviour
         OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
-        PhotonEventer.OnConnectedToMasterEvent += MoveToLobbyMenu;
+        OnlineGameManager.OnConnectedToMasterEvent += MoveToLobbyMenu;
     }
 
     private void UnregisterEvents()
@@ -55,7 +55,7 @@ public class OnlineMenuManager : MonoBehaviour
         OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
-        PhotonEventer.OnConnectedToMasterEvent -= MoveToLobbyMenu;
+        OnlineGameManager.OnConnectedToMasterEvent -= MoveToLobbyMenu;
     }
 
     private void CloseAllCanvases()

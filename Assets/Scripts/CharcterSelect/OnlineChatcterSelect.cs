@@ -71,6 +71,11 @@ namespace DefaultNamespace.CharcterSelect
             OnCancelCharacterConfirm?.Invoke(_currentCharacterIndex);
         }
 
+        private void UpdateCharecterList_RPF(int id, bool isAvailable)
+        {
+            
+        }
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)

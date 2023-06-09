@@ -1,9 +1,12 @@
+using System;
 using Photon.Pun;
 using SpawnSystem;
 using UnityEngine;
 
-public class OnlineGameManager : MonoBehaviourPun , IPunObservable
+public class OnlineGameManager : MonoBehaviourPunCallbacks , IPunObservable
 {
+    public static event Action OnConnectedToMasterEvent;
+
     private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
     
@@ -62,6 +65,14 @@ public class OnlineGameManager : MonoBehaviourPun , IPunObservable
         PhotonNetwork.NickName = nickname;
         Debug.Log("Player nickname is " + PhotonNetwork.NickName);
         PhotonNetwork.ConnectUsingSettings();
+    }
+    
+    public override void OnConnectedToMaster()
+    {
+        base.OnConnectedToMaster();
+        Debug.Log("<color=#00ff00>We are connected!</color>");
+        PhotonNetwork.JoinLobby();
+        OnConnectedToMasterEvent?.Invoke();
     }
     
     #region GameManagnet
