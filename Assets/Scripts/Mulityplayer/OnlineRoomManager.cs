@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace.CharcterSelect;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace Managers
         public static event Action<Player> OnMasterClientSwitchedEvent;
         public static event Action OnCreatedRoomEvent;
         public static event Action OnJoinRoomEvent;
+
+        [SerializeField] private OnlineCharacterSelect _characterSelect;
 
         private bool[] _readyList;
         
