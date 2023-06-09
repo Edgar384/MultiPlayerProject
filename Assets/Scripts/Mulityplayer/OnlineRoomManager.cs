@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< Updated upstream
 using DefaultNamespace.CharcterSelect;
+=======
+using GarlicStudios.Online.Data;
+>>>>>>> Stashed changes
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-namespace Managers
+namespace GarlicStudios.Online.Managers
 {
     public class OnlineRoomManager : MonoBehaviourPunCallbacks
     {
