@@ -569,6 +569,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117168867}
   m_CullTransparentMesh: 1
+--- !u!1001 &120493424
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 414517546}
+    m_Modifications:
+    - target: {fileID: 5098927320779600303, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_Name
+      value: Banana Withoud Input
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.026
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.209
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.575
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.2115706
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.97736275
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -155.571
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+--- !u!4 &120493425 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5586952619935034133, guid: 274984566bd6ce0418ee78df08792abd, type: 3}
+  m_PrefabInstance: {fileID: 120493424}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &196025386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,7 +1496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &373627077
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1811,6 +1885,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6169480322045361526}
+  - {fileID: 120493425}
   m_Father: {fileID: 520980879}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2339,7 +2414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &520980879
 Transform:
   m_ObjectHideFlags: 0
@@ -5415,7 +5490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1820671084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5567,7 +5642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1882695872
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6457,6 +6532,10 @@ PrefabInstance:
     - target: {fileID: 604651998369960584, guid: 682914a7b8c0a3b4d83930ddcc47ff88, type: 3}
       propertyPath: m_Name
       value: BananaCarModeleOnly
+      objectReference: {fileID: 0}
+    - target: {fileID: 604651998369960584, guid: 682914a7b8c0a3b4d83930ddcc47ff88, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1423160379485913285, guid: 682914a7b8c0a3b4d83930ddcc47ff88, type: 3}
       propertyPath: m_IsActive

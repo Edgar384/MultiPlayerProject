@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Banana4TEX4_Car1_BaseColor
+  m_Name: BananTexture 1
   m_Shader: {fileID: -6465566751694194690, guid: d9e1753f3c8abc643816031526ffaec8, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -110,6 +110,9 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _C: {r: 0.4716981, g: 0.21656577, b: 0.21656577, a: 0}
+    - _C1: {r: 0, g: 0, b: 0, a: 0}
+    - _C2: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
