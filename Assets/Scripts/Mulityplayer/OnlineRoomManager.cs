@@ -30,7 +30,7 @@ namespace GarlicStudios.Online.Managers
         
         public OnlinePlayer MasterClient { get; private set; }
         
-        public bool IsAllReady => _readyList.All(VARIABLE => VARIABLE);
+        public bool IsAllReady => ConnectedPlayers.All(player => player.Value.IsReady);
 
         private void Awake()
         {

@@ -43,10 +43,10 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
     private void Update()
     {
-        if (_onlineRoomManager.IsAllReady && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && _onlineRoomManager.IsAllReady)
         {
             _start.interactable = true;
-            Debug.Log("Ready to start the game!!!");
+//            Debug.Log("Ready to start the game!!!");
         }
     }
 
@@ -118,10 +118,10 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void CheckCarAvailability()
     {
         if(_cars[_selectedCharacterIndex].CheckIfCarIsFree())
-            _selecteCarButton.interactable = false;
+            _readyUp.interactable = false;
 
         else
-            _selecteCarButton.interactable=true;
+            _readyUp.interactable=true;
     }
 
     public void CancleSelect()

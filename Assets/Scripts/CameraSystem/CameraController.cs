@@ -165,18 +165,18 @@ public class CameraController : MonoBehaviour
 #endif
     }
 
-    private void OnDrawGizmos()
-    {
-        if (!_debugMode)
-            return;
-
-        if (_trackObjects == null || _trackObjects.Count == 0)
-            return;
-
-        for (int i = 0; i < _trackObjects.Count; i++)
-        {
-            Gizmos.color = _colors[i];
-            Gizmos.DrawWireSphere(_trackObjects[i].transform.position,_gizmosRadius);
-        }
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     if (!_debugMode)
+    //         return;
+    //
+    //     if (_trackObjects == null || _trackObjects.Count == 0)
+    //         return;
+    //
+    //     for (int i = 0; i < _trackObjects.Count; i++)
+    //     {
+    //         Gizmos.color = _colors[i];
+    //         Gizmos.DrawWireSphere(_trackObjects[i].transform.position,_gizmosRadius);
+    //     }
+    // }
 }
