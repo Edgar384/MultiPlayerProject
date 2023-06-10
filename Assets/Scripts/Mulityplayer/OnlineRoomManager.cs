@@ -1,132 +1,140 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using DefaultNamespace.CharcterSelect;
+using GarlicStudios.Online.Data;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-namespace Managers
+namespace GarlicStudios.Online.Managers
 {
     public class OnlineRoomManager : MonoBehaviourPunCallbacks
     {
+        private const string UPDATE_READY_LIST = nameof(UpdatePlayerReadyList_RPC);
+        
+        public static event Action OnPlayerListUpdateEvent;
+        public static event Action<Player> OnPlayerEnteredRoomEvent;
+        public static event Action<Player> OnPlayerLeftRoomEvent;
+        public static event Action<Player> OnMasterClientSwitchedEvent;
         public static event Action OnCreatedRoomEvent;
         public static event Action OnJoinRoomEvent;
-        public static event Action<short,string> OnCreateRoomFailedEvent;
-        public static event Action<List<RoomInfo>> OnRoomListUpdateEvent;
-
-        private List<RoomInfo> _roomList;
-        private List<RoomInfoDisplayer> _roomInfoDisplayers;
-
-        [SerializeField] private GameObject _roomPrefab;
-        [SerializeField] private Transform _roomListParent;
-
-        public List<RoomInfo> RoomList => _roomList;
+        
+        private bool[] _readyList;
+        
+        [SerializeField] private OnlineCharacterSelect _characterSelect;
+        
+        public static Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
+        
+        public OnlinePlayer Player { get; private set; }
+        
+        public OnlinePlayer MasterClient { get; private set; }
+        
+        public bool IsAllReady => _readyList.All(VARIABLE => VARIABLE);
 
         private void Awake()
         {
-            _roomList = new List<RoomInfo>();
-            _roomInfoDisplayers = new List<RoomInfoDisplayer>();
+            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
         }
 
-        private void OnDestroy()
+        public void OnCharacterSelect(int characterId)
         {
-            foreach (var roomInfoDisplayer in _roomInfoDisplayers)
+            UpdatePlayerReadyList(PhotonNetwork.LocalPlayer.ActorNumber,true);
+        }
+
+        private void UpdatePlayerReadyList(int playerId, bool isReady)
+        {
+            photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,playerId,isReady);
+        }
+
+        #region RPC
+
+        [PunRPC]
+        private void UpdatePlayerReadyList_RPC(int playerId, bool isReady)
+        {
+            if (!ConnectedPlayers.TryGetValue(playerId,out var player))
             {
-                roomInfoDisplayer.OnJoinRoom -= JoinRoom;
+                Debug.LogError("can not find player");
+                return;
             }
+            
+            player.SetReadyStatus(isReady);
         }
 
-#if UNITY_EDITOR
-        [ContextMenu("CreateRoom")]
-        public void CreateRoom()
-        {
-            RoomOptions roomOptions = new RoomOptions()
-            {
-                MaxPlayers = 4,
-                PlayerTtl = 10000
-            };
+        #endregion
+        
 
-            PhotonNetwork.CreateRoom("TestRoom",roomOptions);
-        }
-        
-        [ContextMenu("JoinRoom")]
-        public void JoinRoom()
-        {
-            PhotonNetwork.JoinRoom("TestRoom");
-        }
-#endif 
-        
-        
-        public void CreateRoom(string roomName)
-        {
-            RoomOptions roomOptions = new RoomOptions()
-            {
-                MaxPlayers = 4,
-                PlayerTtl = 10000
-            };
-
-            PhotonNetwork.CreateRoom(roomName,roomOptions);
-        }
-        
-        public void JoinRoom(string roomName)
-        {
-            PhotonNetwork.JoinRoom(roomName);
-            OnJoinRoomEvent?.Invoke();
-        }
-
-        public void LeaveRoom()
+        public static void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
             Debug.Log("Leave Room");
         }
 
-        #region CallBackEvent
+        #region PunCallbacks
 
+        public override void OnCreatedRoom()
+        {
+            base.OnCreatedRoom();
+            _readyList = new bool[PhotonNetwork.CurrentRoom.MaxPlayers];
+            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
+            ConnectedPlayers.Add(PhotonNetwork.LocalPlayer.ActorNumber,new OnlinePlayer(PhotonNetwork.LocalPlayer));
+            MasterClient  = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
+            Player  = MasterClient;
+            OnCreatedRoomEvent?.Invoke();
+        }
+        
         public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
             Debug.Log($"Joined Room {PhotonNetwork.CurrentRoom.Name}");
+            GetPlayers();
+            Player = ConnectedPlayers[PhotonNetwork.LocalPlayer.ActorNumber];
+            MasterClient = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
             OnJoinRoomEvent?.Invoke();
         }
-
-        public override void OnJoinRoomFailed(short returnCode, string message)
-        {
-            base.OnJoinRoomFailed(returnCode, message);
-            Debug.LogError("Join failed..." + Environment.NewLine + message);
-        }
         
-        public override void OnCreatedRoom()
+        public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            base.OnCreatedRoom();
-            OnCreatedRoomEvent?.Invoke();
-        }
-        
-        public override void OnCreateRoomFailed(short returnCode, string message)
-        {
-            base.OnCreateRoomFailed(returnCode, message);
-            Debug.LogError("Create failed..." + Environment.NewLine + message);
-            OnCreateRoomFailedEvent?.Invoke(returnCode, message);
-        }
-        
-        public override void OnRoomListUpdate(List<RoomInfo> roomList)
-        {
-            base.OnRoomListUpdate(roomList);
-            Debug.Log("Got room list");
-            OnRoomListUpdateEvent?.Invoke(roomList);
-
-            foreach (var room in roomList)
+            if (ConnectedPlayers.TryGetValue(newPlayer.ActorNumber, out var player))
             {
-                if (_roomList.Contains(room))
-                    continue;   
-                
-                _roomList.Add(room);
-                var roomObject = Instantiate(_roomPrefab, _roomListParent).GetComponent<RoomInfoDisplayer>();
-                
-                roomObject.SetRoomInfo(room);
-                roomObject.OnJoinRoom += JoinRoom;
-                _roomInfoDisplayers.Add(roomObject);
-                
-                Debug.Log($"Room add to room list room name: {room.Name}");
+                Debug.LogError("Player already isn the room");
+                return;
             }
+
+            var onlinePlayer = new OnlinePlayer(newPlayer);
+            onlinePlayer.OnPlayerReadyChanged += UpdatePlayerReadyList;
+            ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
+            OnPlayerListUpdateEvent?.Invoke();
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            if (!ConnectedPlayers.TryGetValue(otherPlayer.ActorNumber, out var player))
+            {
+                Debug.LogError("can not find player");
+                return;
+            }
+
+            player.OnPlayerReadyChanged -= UpdatePlayerReadyList;
+            ConnectedPlayers.Remove(otherPlayer.ActorNumber);
+            OnPlayerListUpdateEvent?.Invoke();
+        }
+        
+       
+        private static void GetPlayers()
+        {
+            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
+            var players = PhotonNetwork.PlayerList;
+            
+            foreach (var player in players)
+            {
+                ConnectedPlayers.Add(player.ActorNumber, new OnlinePlayer(player));
+            }
+        }
+
+        public override void OnMasterClientSwitched(Player newMasterClient)
+        {
+            //need to add logic
         }
 
         #endregion

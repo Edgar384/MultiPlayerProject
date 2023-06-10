@@ -2,7 +2,7 @@
 using DefaultNamespace.SciptableObject.PlayerData;
 using Photon.Realtime;
 
-namespace Managers
+namespace GarlicStudios.Online.Data
 {
     public class OnlinePlayer
     {

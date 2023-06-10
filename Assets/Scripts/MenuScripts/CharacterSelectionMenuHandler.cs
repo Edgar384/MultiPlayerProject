@@ -1,19 +1,21 @@
 using System;
 using System.Collections.Generic;
-using Managers;
-using Photon.Pun;
+using System.Linq;
+using GarlicStudios.Online.Data;
+using GarlicStudios.Online.Managers;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class CharacterSelectionMenuHandler : MonoBehaviour
 {
-    public event Action<CarSelectionStatus> OnCarSelected;
+    public event Action<int> OnCarSelected;
 
     [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
     [SerializeField] GameObject _carSelectionPreview;
     [SerializeField] CarSelectionStatus[] _cars;
     [SerializeField] Button _selecteCarButton;
+
+    [SerializeField] private OnlineRoomManager _onlineRoomManager;
     
     private int _selectedCharacterIndex;
 
@@ -22,22 +24,16 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
         ResetCarsStatus();
         _carSelectionPreview.SetActive(true);
         _selectedCharacterIndex = 0;
-
-        PhotonEventer.OnPlayerJoinRoomEvent += Init;
-        OnlineGameManager.OnPlayerEnteredRoomEvent += AddPlayer;
-        OnlineGameManager.OnPlayerReadyStatusChageneEvent += SetPlayerUiReadyStatus;
-    }
-
-    private void Init()
-    {
-        
+        OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
+        OnCarSelected += _onlineRoomManager.OnCharacterSelect;
+        UpdatePlayerUI();
     }
 
     private void OnDisable()
     {
+        OnCarSelected -= _onlineRoomManager.OnCharacterSelect;
+        OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
         _carSelectionPreview.SetActive(false);
-        OnlineGameManager.OnPlayerEnteredRoomEvent -= AddPlayer;
-        OnlineGameManager.OnPlayerReadyStatusChageneEvent -= SetPlayerUiReadyStatus;
     }
 
     public void AddPlayer(OnlinePlayer onlinePlayer)
@@ -50,6 +46,20 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
             playerInRoomUI.gameObject.SetActive(true);
             playerInRoomUI.Init(onlinePlayer);
             break;
+        }
+    }
+
+    private void UpdatePlayerUI()
+    {
+        int numberOfPlayersInRoom = OnlineRoomManager.ConnectedPlayers.Count;
+        int numberOfPlayerUIElements = _playersInRoomUI.Count;
+
+        var playerArray = OnlineRoomManager.ConnectedPlayers.Values.ToArray();
+        
+        for (int i = 0; i < numberOfPlayersInRoom; i++)
+        {
+            _playersInRoomUI[i].Init(playerArray[i]);
+            SetPlayerUiReadyStatus(playerArray[i],playerArray[i].IsReady);
         }
     }
     
@@ -108,6 +118,6 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
     public void ConfirmSelection()
     {
         _cars[_selectedCharacterIndex].ChangeCarAvailability(true);
-        OnCarSelected?.Invoke(_cars[_selectedCharacterIndex]);
+        OnCarSelected?.Invoke(_selectedCharacterIndex);
     }
 }
