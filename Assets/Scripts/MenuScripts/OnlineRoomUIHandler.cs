@@ -27,6 +27,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         ResetCarsStatus();
         _carSelectionPreview.SetActive(true);
         _selectedCharacterIndex = 0;
+        _cars[_selectedCharacterIndex].gameObject.SetActive(true);
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
         OnCarSelected += _onlineRoomManager.OnCharacterSelect;
         UpdatePlayerUI();
@@ -117,10 +118,10 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void CheckCarAvailability()
     {
         if(_cars[_selectedCharacterIndex].CheckIfCarIsFree())
-            _readyUp.interactable = true;
+            _selecteCarButton.interactable = false;
 
         else
-            _readyUp.interactable=false;
+            _selecteCarButton.interactable=true;
     }
 
     public void CancleSelect()
