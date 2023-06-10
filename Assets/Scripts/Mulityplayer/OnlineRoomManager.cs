@@ -58,7 +58,9 @@ namespace GarlicStudios.Online.Managers
                 return;
             }
             
+            Debug.Log("Update ready list");
             player.SetReadyStatus(isReady);
+            OnPlayerListUpdateEvent?.Invoke();
         }
 
         #endregion

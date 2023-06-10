@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class CharacterSelectionMenuHandler : MonoBehaviour
+public class OnlineRoomUIHandler : MonoBehaviour
 {
     public event Action<int> OnCarSelected;
 
     [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
     [SerializeField] GameObject _carSelectionPreview;
     [SerializeField] CarSelectionStatus[] _cars;
-    [SerializeField] Button _selecteCarButton;
+    [FormerlySerializedAs("_selecteCarButton")] [SerializeField] Button _readyUp;
+    [SerializeField] Button _start;
 
     [SerializeField] private OnlineRoomManager _onlineRoomManager;
     
@@ -27,6 +30,7 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
         OnCarSelected += _onlineRoomManager.OnCharacterSelect;
         UpdatePlayerUI();
+        _start.interactable = false;
     }
 
     private void OnDisable()
@@ -34,6 +38,15 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
         OnCarSelected -= _onlineRoomManager.OnCharacterSelect;
         OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
         _carSelectionPreview.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (_onlineRoomManager.IsAllReady && PhotonNetwork.IsMasterClient)
+        {
+            _start.interactable = true;
+            Debug.Log("Ready to start the game!!!");
+        }
     }
 
     public void AddPlayer(OnlinePlayer onlinePlayer)
@@ -104,10 +117,10 @@ public class CharacterSelectionMenuHandler : MonoBehaviour
     private void CheckCarAvailability()
     {
         if(_cars[_selectedCharacterIndex].CheckIfCarIsFree())
-            _selecteCarButton.interactable = true;
+            _readyUp.interactable = true;
 
         else
-            _selecteCarButton.interactable=false;
+            _readyUp.interactable=false;
     }
 
     public void CancleSelect()

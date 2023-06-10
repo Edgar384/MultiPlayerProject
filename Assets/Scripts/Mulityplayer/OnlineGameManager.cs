@@ -4,7 +4,7 @@ using Photon.Realtime;
 using SpawnSystem;
 using UnityEngine;
 
-public class OnlineGameManager : MonoBehaviourPunCallbacks , IPunObservable
+public class OnlineGameManager : MonoBehaviourPunCallbacks
 {
     public static event Action OnConnectedToMasterEvent;
     public static event Action<Player> OnMasterClientSwitchedEvent;

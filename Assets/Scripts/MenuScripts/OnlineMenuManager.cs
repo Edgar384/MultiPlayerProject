@@ -2,6 +2,7 @@ using System;
 using DefaultNamespace.MenuScripts;
 using GarlicStudios.Online.Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class OnlineMenuManager : MonoBehaviour
 {
@@ -13,11 +14,11 @@ public class OnlineMenuManager : MonoBehaviour
     [SerializeField] EnterNameHandler _enterNameMenu;
     [SerializeField] LobbyMenuHandler _lobbyMenu;
     [SerializeField] LobbyRoomUIListHandler _lobbyRoomUIListHandler;
-    [SerializeField] CharacterSelectionMenuHandler _characterSelectionMenu;
+    [FormerlySerializedAs("_characterSelectionMenu")] [SerializeField] OnlineRoomUIHandler onlineRoomUI;
 
     [SerializeField] private OnlineGameManager _onlineGameManager;
     
-    public CharacterSelectionMenuHandler CharacterSelectionMenu => _characterSelectionMenu;
+    public OnlineRoomUIHandler OnlineRoomUI => onlineRoomUI;
 
     private void OnEnable()
     {
@@ -99,6 +100,6 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void ChangeCharacterSelectioStatus(bool _toActivate)
     {
-        _characterSelectionMenu.gameObject.SetActive(_toActivate);
+        onlineRoomUI.gameObject.SetActive(_toActivate);
     }
 }
