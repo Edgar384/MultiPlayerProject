@@ -71,7 +71,7 @@ namespace DefaultNamespace.CharcterSelect
             OnCancelCharacterConfirm?.Invoke(_currentCharacterIndex);
         }
 
-        private void UpdateCharecterList_RPF(int id, bool isAvailable)
+        private void UpdateCharecterList_RPC(int id, bool isAvailable)
         {
             
         }

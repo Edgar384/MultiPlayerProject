@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace.MenuScripts;
 using GarlicStudios.Online.Managers;
 using UnityEngine;
 
@@ -11,10 +12,9 @@ public class OnlineMenuManager : MonoBehaviour
     [Header("Canvases")]
     [SerializeField] EnterNameHandler _enterNameMenu;
     [SerializeField] LobbyMenuHandler _lobbyMenu;
+    [SerializeField] LobbyRoomUIListHandler _lobbyRoomUIListHandler;
     [SerializeField] CharacterSelectionMenuHandler _characterSelectionMenu;
 
-    [SerializeField] private OnlineLobbyManager _onlineLobbyManager;
-    [SerializeField] private OnlineRoomManager _onlineRoomManager;
     [SerializeField] private OnlineGameManager _onlineGameManager;
     
     public CharacterSelectionMenuHandler CharacterSelectionMenu => _characterSelectionMenu;
@@ -42,7 +42,8 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void RegisterEvents()
     {
-        _lobbyMenu.OnRoomCreated += _onlineLobbyManager.CreateRoom;
+        OnlineLobbyManager.OnRoomListUpdateEvent += _lobbyRoomUIListHandler.UpdateRoomUI;
+        _lobbyMenu.OnRoomCreated += OnlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
@@ -51,7 +52,8 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void UnregisterEvents()
     {
-        _lobbyMenu.OnRoomCreated -= _onlineLobbyManager.CreateRoom;
+        OnlineLobbyManager.OnRoomListUpdateEvent -= _lobbyRoomUIListHandler.UpdateRoomUI;
+        _lobbyMenu.OnRoomCreated -= OnlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;

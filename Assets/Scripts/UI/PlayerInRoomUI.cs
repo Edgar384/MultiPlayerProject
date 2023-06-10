@@ -15,6 +15,7 @@ public class PlayerInRoomUI : MonoBehaviour
         _playerText.text = onlinePlayer.NickName;
         _playerImage.color = Color.red;
         ID = onlinePlayer.ActorNumber;
+        gameObject.SetActive(true);
     }
     
     public void SetReadyStatus(bool isReady)=>

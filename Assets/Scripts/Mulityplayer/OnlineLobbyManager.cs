@@ -11,8 +11,8 @@ namespace GarlicStudios.Online.Managers
         public static event Action<short,string> OnCreateRoomFailedEvent;
         public static event Action<short,string> OnJoinedRoomFailedEvent;
         public static event Action<List<RoomInfo>> OnRoomListUpdateEvent;
-        
-        public List<RoomInfo> RoomList { get; private set; }
+
+        private List<RoomInfo> RoomList { get; set; }
 
         private void Awake()
         {
@@ -43,7 +43,7 @@ namespace GarlicStudios.Online.Managers
 
         #endregion
         
-        public void CreateRoom(string roomName)
+        public static void CreateRoom(string roomName)
         {
             RoomOptions roomOptions = new RoomOptions()
             {
@@ -54,7 +54,7 @@ namespace GarlicStudios.Online.Managers
             PhotonNetwork.CreateRoom(roomName,roomOptions);
         }
 
-        private void JoinRoom(string roomName)
+        public static void JoinRoom(string roomName)
         {
             PhotonNetwork.JoinRoom(roomName);
         }

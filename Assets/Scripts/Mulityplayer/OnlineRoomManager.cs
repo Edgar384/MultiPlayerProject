@@ -11,19 +11,20 @@ namespace GarlicStudios.Online.Managers
 {
     public class OnlineRoomManager : MonoBehaviourPunCallbacks
     {
-        private const string UPDATE_READY_LIST = nameof(UpdatePlayerReadyListRFC);
+        private const string UPDATE_READY_LIST = nameof(UpdatePlayerReadyList_RPC);
         
+        public static event Action OnPlayerListUpdateEvent;
         public static event Action<Player> OnPlayerEnteredRoomEvent;
         public static event Action<Player> OnPlayerLeftRoomEvent;
         public static event Action<Player> OnMasterClientSwitchedEvent;
         public static event Action OnCreatedRoomEvent;
         public static event Action OnJoinRoomEvent;
-
-        [SerializeField] private OnlineCharacterSelect _characterSelect;
-
+        
         private bool[] _readyList;
         
-        public Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
+        [SerializeField] private OnlineCharacterSelect _characterSelect;
+        
+        public static Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
         
         public OnlinePlayer Player { get; private set; }
         
@@ -35,22 +36,21 @@ namespace GarlicStudios.Online.Managers
         {
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
         }
-        
+
+        public void OnCharacterSelect(int characterId)
+        {
+            UpdatePlayerReadyList(PhotonNetwork.LocalPlayer.ActorNumber,true);
+        }
+
         private void UpdatePlayerReadyList(int playerId, bool isReady)
         {
-            object[] objects = new object[]
-            {
-                playerId,
-                isReady
-            };
-            
-            photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllBuffered,objects);
+            photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,playerId,isReady);
         }
 
         #region RPC
 
         [PunRPC]
-        private void UpdatePlayerReadyListRFC(int playerId, bool isReady)
+        private void UpdatePlayerReadyList_RPC(int playerId, bool isReady)
         {
             if (!ConnectedPlayers.TryGetValue(playerId,out var player))
             {
@@ -64,7 +64,7 @@ namespace GarlicStudios.Online.Managers
         #endregion
         
 
-        public void LeaveRoom()
+        public static void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
             Debug.Log("Leave Room");
@@ -76,6 +76,10 @@ namespace GarlicStudios.Online.Managers
         {
             base.OnCreatedRoom();
             _readyList = new bool[PhotonNetwork.CurrentRoom.MaxPlayers];
+            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
+            ConnectedPlayers.Add(PhotonNetwork.LocalPlayer.ActorNumber,new OnlinePlayer(PhotonNetwork.LocalPlayer));
+            MasterClient  = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
+            Player  = MasterClient;
             OnCreatedRoomEvent?.Invoke();
         }
         
@@ -83,6 +87,9 @@ namespace GarlicStudios.Online.Managers
         {
             base.OnJoinedRoom();
             Debug.Log($"Joined Room {PhotonNetwork.CurrentRoom.Name}");
+            GetPlayers();
+            Player = ConnectedPlayers[PhotonNetwork.LocalPlayer.ActorNumber];
+            MasterClient = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
             OnJoinRoomEvent?.Invoke();
         }
         
@@ -96,8 +103,8 @@ namespace GarlicStudios.Online.Managers
 
             var onlinePlayer = new OnlinePlayer(newPlayer);
             onlinePlayer.OnPlayerReadyChanged += UpdatePlayerReadyList;
-            
             ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
+            OnPlayerListUpdateEvent?.Invoke();
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -109,10 +116,22 @@ namespace GarlicStudios.Online.Managers
             }
 
             player.OnPlayerReadyChanged -= UpdatePlayerReadyList;
-            
             ConnectedPlayers.Remove(otherPlayer.ActorNumber);
+            OnPlayerListUpdateEvent?.Invoke();
         }
         
+       
+        private static void GetPlayers()
+        {
+            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
+            var players = PhotonNetwork.PlayerList;
+            
+            foreach (var player in players)
+            {
+                ConnectedPlayers.Add(player.ActorNumber, new OnlinePlayer(player));
+            }
+        }
+
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
             //need to add logic

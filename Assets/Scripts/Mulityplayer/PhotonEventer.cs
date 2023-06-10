@@ -39,17 +39,7 @@ public class PhotonEventer : MonoBehaviourPunCallbacks
        
     }
     
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
-        base.OnMasterClientSwitched(newMasterClient);
-        Debug.Log("Masterclient has been switched \n " +
-                  "Masterclient is now actor number: " + newMasterClient.ActorNumber);
-    }
-
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        base.OnDisconnected(cause);
-    }
+   
 
     private void Start()
     {
