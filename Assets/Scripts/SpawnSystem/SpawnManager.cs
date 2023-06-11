@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using GarlicStudios.Online.Data;
 using Photon.Pun;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace SpawnSystem
@@ -11,26 +10,14 @@ namespace SpawnSystem
     [Serializable]
     public class SpawnManager
     {
-        //private const string ASK_FOR_RANDOM_SPAWN_POINT_RPC = nameof(AskForRandomSpawnPoint);
-        //private const string SPAWN_PLAYER_CLIENT_RPC = nameof(SpawnPlayer);
-        private const string LOCAL_PLAYER_PREFAB_NAME = "NetworkPlayer";
-
-        [SerializeField] private SpawnPoint[] _spawnPoints;
-        
+        private int _spawnPointCount = 0;
         private Dictionary<int,SpawnPoint> _spawnPointDictionary;
 
-
-        public void Init()
+        public SpawnManager()
         {
             _spawnPointDictionary = new Dictionary<int, SpawnPoint>();
-
-            for (int i = 0; i < _spawnPoints.Length; i++)
-            {
-                _spawnPointDictionary.Add(_spawnPoints[i].ID, _spawnPoints[i]);
-                _spawnPoints[i].Init(i);
-            }
         }
-        
+
         [PunRPC]
         public LocalPlayer SpawnPlayer(OnlinePlayer onlinePlayer)
         {
@@ -61,6 +48,13 @@ namespace SpawnSystem
             chosenSpawnPoint.SetSpawnPointToTaken();
             
             return chosenSpawnPoint;
+        }
+
+        public void RegisterSpawnPoint(SpawnPoint spawnPoint)
+        {
+            spawnPoint.Init(_spawnPointCount);
+            _spawnPointDictionary.Add(spawnPoint.ID, spawnPoint);
+            _spawnPointCount++;
         }
     }
 }

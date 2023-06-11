@@ -164,7 +164,7 @@ public class CarController : MonoBehaviour
             currentMotorForce = 0;
         }
 
-        Debug.Log(currentMotorForce);
+//        Debug.Log(currentMotorForce);
         //currentMotorForce = _isReversedPressed ? -currentMotorForce : currentMotorForce;
     }
 

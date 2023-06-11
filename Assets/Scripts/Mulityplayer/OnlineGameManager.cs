@@ -2,7 +2,6 @@ using System;
 using Photon.Pun;
 using Photon.Realtime;
 using SpawnSystem;
-using UnityEditor;
 using UnityEngine;
 
 public class OnlineGameManager : MonoBehaviourPunCallbacks
@@ -17,7 +16,7 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
 
     private bool _isCountingForStartGame;
 
-    private SpawnManager _spawnManager;
+    private static SpawnManager _spawnManager;
 
     private bool _isGameStarted;
 
@@ -31,6 +30,11 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene  = true;
 
         _spawnManager = new SpawnManager();
+    }
+
+    public static void RegisterSpawnPoint(SpawnPoint spawnPoint)
+    {
+            _spawnManager.RegisterSpawnPoint(spawnPoint);
     }
 
     private void Start()
