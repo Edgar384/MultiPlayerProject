@@ -41,6 +41,8 @@ namespace GarlicStudios.Online.Managers
 
         public void OnCharacterSelect(int carIndex)
         {
+            ConnectedPlayers.TryGetValue(PhotonNetwork.LocalPlayer.ActorNumber,out var player);
+            //player.SetPlayerData();
             UpdatePlayerReadyList(PhotonNetwork.LocalPlayer.ActorNumber,carIndex,true);
         }
 
