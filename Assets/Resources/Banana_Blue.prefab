@@ -1031,8 +1031,9 @@ GameObject:
   - component: {fileID: 7375963749906384135}
   - component: {fileID: 2369893527124070303}
   - component: {fileID: 4721832065739931102}
+  - component: {fileID: 1762993427267513793}
   m_Layer: 0
-  m_Name: Banana_Z_D
+  m_Name: Banana_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1223,6 +1224,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1762993427267513793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4938213858807734719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc31bf146cd4f3bb4805dae7789bf34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5128071914461468988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,7 +1876,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1108147716743453759, guid: 030e704a4f165494cb2c12c04772720d, type: 3}
+  - {fileID: 2100000, guid: 3b5f872166dc4e54a9b6172bbb102bce, type: 2}
   - {fileID: -351022541804052484, guid: 030e704a4f165494cb2c12c04772720d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0

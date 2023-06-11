@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         playerInputManager = FindObjectOfType<PlayerInputManager>();
+        OnlineGameManager.SpawnPlayers();
     }
 
     private void OnEnable()

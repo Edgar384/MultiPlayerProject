@@ -1,4 +1,5 @@
 using System;
+using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using Photon.Realtime;
 using SpawnSystem;
@@ -101,6 +102,17 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     }
     
     #region GameManagnet
+
+    public static void SpawnPlayers()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+        
+        foreach (var keyValuePair in OnlineRoomManager.ConnectedPlayers)
+        {
+            _spawnManager.SpawnPlayer(keyValuePair.Value);
+        }
+    }
 
     public void StartGameCountdown()
     {

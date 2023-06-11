@@ -113,6 +113,9 @@ Library: D:\Unity Projects\MultiPlayerProject\Temp\StagingArea\Data\Plugins\x86_
 --compilation-defines=PUN_2_0_OR_NEWER
 --compilation-defines=PUN_2_OR_NEWER
 --compilation-defines=PUN_2_19_OR_NEWER
+--compilation-defines=ODIN_INSPECTOR
+--compilation-defines=ODIN_INSPECTOR_3
+--compilation-defines=ODIN_INSPECTOR_3_1
 --compilation-defines=PACKAGE_PHYSICS
 --compilation-defines=PACKAGE_PHYSICS2D
 --compilation-defines=PACKAGE_TILEMAP
@@ -273,6 +276,9 @@ Library: D:\Unity Projects\MultiPlayerProject\Temp\StagingArea\Data\Plugins\x86_
 --compilation-defines=PUN_2_0_OR_NEWER
 --compilation-defines=PUN_2_OR_NEWER
 --compilation-defines=PUN_2_19_OR_NEWER
+--compilation-defines=ODIN_INSPECTOR
+--compilation-defines=ODIN_INSPECTOR_3
+--compilation-defines=ODIN_INSPECTOR_3_1
 --compilation-defines=PACKAGE_PHYSICS
 --compilation-defines=PACKAGE_PHYSICS2D
 --compilation-defines=PACKAGE_TILEMAP

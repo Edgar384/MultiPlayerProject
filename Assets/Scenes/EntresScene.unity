@@ -3467,7 +3467,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4651087956810238728, guid: afca776543b123e4ba803839452ffb09, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4651087956810238728, guid: afca776543b123e4ba803839452ffb09, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4242,6 +4242,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4331060b8141eb86e0576647871f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerDatas:
+  - {fileID: 11400000, guid: 88e138f4e9f22ab40ac352d5d8aa4845, type: 2}
+  - {fileID: 11400000, guid: d18473bf8fb1f804ebefe12cefcc2137, type: 2}
+  - {fileID: 11400000, guid: 29e6d37f2ddc05f45b2f5e2ff532432b, type: 2}
+  - {fileID: 11400000, guid: 9cba22775255f5d4f9783792c994c918, type: 2}
+  - {fileID: 11400000, guid: 93162323c536bf24fa1d3697d955e1e2, type: 2}
   _uiHandler: {fileID: 373627079}
 --- !u!1 &1138173974
 GameObject:
@@ -4724,7 +4730,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4651087956810238728, guid: 65fd59c204ce66642b048640959a42c4, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4651087956810238728, guid: 65fd59c204ce66642b048640959a42c4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6556,7 +6562,7 @@ PrefabInstance:
       objectReference: {fileID: 2131626504}
     - target: {fileID: 4651087956810238728, guid: 4b03b850e6f52b3488d733c3a72dfc98, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4651087956810238728, guid: 4b03b850e6f52b3488d733c3a72dfc98, type: 3}
       propertyPath: m_LocalPosition.x
