@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace.CharcterSelect;
 using GarlicStudios.Online.Data;
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,7 +10,10 @@ namespace GarlicStudios.Online.Managers
 {
     public class OnlineRoomManager : MonoBehaviourPunCallbacks
     {
+        private const int NUMBER_OF_CARS = 5;
         private const string UPDATE_READY_LIST = nameof(UpdatePlayerReadyList_RPC);
+        private const string UPDATE_CAR_AVAILABILITY_LIST = nameof(UpdateCarAvailability_RPC);
+        private const string SEND_CAR_DATA = nameof(SendCarData_RPC);
         
         public static event Action OnPlayerListUpdateEvent;
         public static event Action<Player> OnPlayerEnteredRoomEvent;
@@ -20,9 +22,9 @@ namespace GarlicStudios.Online.Managers
         public static event Action OnCreatedRoomEvent;
         public static event Action OnJoinRoomEvent;
         
-        private bool[] _readyList;
+        private bool[] _carAvailabilityList;
         
-        [SerializeField] private OnlineCharacterSelect _characterSelect;
+        [SerializeField] private OnlineRoomUIHandler _uiHandler;
         
         public static Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
         
@@ -37,14 +39,15 @@ namespace GarlicStudios.Online.Managers
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
         }
 
-        public void OnCharacterSelect(int characterId)
+        public void OnCharacterSelect(int carIndex)
         {
-            UpdatePlayerReadyList(PhotonNetwork.LocalPlayer.ActorNumber,true);
+            UpdatePlayerReadyList(PhotonNetwork.LocalPlayer.ActorNumber,carIndex,true);
         }
 
-        private void UpdatePlayerReadyList(int playerId, bool isReady)
+        private void UpdatePlayerReadyList(int playerId,int carIndex, bool isReady)
         {
             photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,playerId,isReady);
+            photonView.RPC(UPDATE_CAR_AVAILABILITY_LIST,RpcTarget.AllViaServer,carIndex,!isReady);
         }
 
         #region RPC
@@ -63,6 +66,24 @@ namespace GarlicStudios.Online.Managers
             OnPlayerListUpdateEvent?.Invoke();
         }
 
+        [PunRPC]
+        private void UpdateCarAvailability_RPC(int carIndex, bool carStatus)
+        {
+            Debug.Log("Update car status");
+            _carAvailabilityList[carIndex] = carStatus;
+            _uiHandler.SetCarIsTaken(carIndex,carStatus);
+        }
+        
+        [PunRPC]
+        private void SendCarData_RPC(bool[] carData)
+        {
+            Debug.Log("Receive car data");
+            _carAvailabilityList  = carData;
+
+            for (int i = 0; i < _carAvailabilityList.Length; i++)
+                _uiHandler.SetCarIsTaken(i,_carAvailabilityList[i]);
+        }
+
         #endregion
         
 
@@ -77,7 +98,11 @@ namespace GarlicStudios.Online.Managers
         public override void OnCreatedRoom()
         {
             base.OnCreatedRoom();
-            _readyList = new bool[PhotonNetwork.CurrentRoom.MaxPlayers];
+            _carAvailabilityList  = new bool[NUMBER_OF_CARS];
+
+            for (int i = 0; i < _carAvailabilityList.Length; i++)
+                _carAvailabilityList[i] = true;
+
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
             ConnectedPlayers.Add(PhotonNetwork.LocalPlayer.ActorNumber,new OnlinePlayer(PhotonNetwork.LocalPlayer));
             MasterClient  = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
@@ -103,8 +128,12 @@ namespace GarlicStudios.Online.Managers
                 return;
             }
 
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                photonView.RPC(SEND_CAR_DATA,RpcTarget.AllViaServer,_carAvailabilityList);
+            }
+
             var onlinePlayer = new OnlinePlayer(newPlayer);
-            onlinePlayer.OnPlayerReadyChanged += UpdatePlayerReadyList;
             ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
             OnPlayerListUpdateEvent?.Invoke();
         }
@@ -117,7 +146,6 @@ namespace GarlicStudios.Online.Managers
                 return;
             }
 
-            player.OnPlayerReadyChanged -= UpdatePlayerReadyList;
             ConnectedPlayers.Remove(otherPlayer.ActorNumber);
             OnPlayerListUpdateEvent?.Invoke();
         }

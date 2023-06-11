@@ -4620,16 +4620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4331060b8141eb86e0576647871f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterSelect:
-    _characterHolders:
-    - _id: 0
-      _playerData: {fileID: 0}
-    - _id: 1
-      _playerData: {fileID: 0}
-    - _id: 2
-      _playerData: {fileID: 0}
-    - _id: 3
-      _playerData: {fileID: 0}
+  _uiHandler: {fileID: 373627079}
 --- !u!4 &1451625271
 Transform:
   m_ObjectHideFlags: 0

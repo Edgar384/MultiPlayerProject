@@ -2,6 +2,7 @@ using System;
 using Photon.Pun;
 using Photon.Realtime;
 using SpawnSystem;
+using UnityEditor;
 using UnityEngine;
 
 public class OnlineGameManager : MonoBehaviourPunCallbacks
@@ -22,6 +23,9 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        
+        //PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
+
         DontDestroyOnLoad(gameObject);
 
         _spawnManager = new SpawnManager();

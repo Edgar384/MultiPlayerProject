@@ -5,7 +5,6 @@ using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class OnlineRoomUIHandler : MonoBehaviour
@@ -15,7 +14,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
     [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
     [SerializeField] GameObject _carSelectionPreview;
     [SerializeField] CarSelectionStatus[] _cars;
-    [FormerlySerializedAs("_selecteCarButton")] [SerializeField] Button _readyUp;
+    [SerializeField] Button _readyUp;
     [SerializeField] Button _start;
 
     [SerializeField] private OnlineRoomManager _onlineRoomManager;
@@ -44,10 +43,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient && _onlineRoomManager.IsAllReady)
-        {
             _start.interactable = true;
-//            Debug.Log("Ready to start the game!!!");
-        }
     }
 
     public void AddPlayer(OnlinePlayer onlinePlayer)
@@ -66,7 +62,6 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void UpdatePlayerUI()
     {
         int numberOfPlayersInRoom = OnlineRoomManager.ConnectedPlayers.Count;
-        int numberOfPlayerUIElements = _playersInRoomUI.Count;
 
         var playerArray = OnlineRoomManager.ConnectedPlayers.Values.ToArray();
         
@@ -93,7 +88,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
     {
         for (int i = 0; i < _cars.Length; i++)
         {
-            _cars[i].ChangeCarAvailability(false);
+            _cars[i].ChangeCarAvailability(true);
         }
     }
 
@@ -115,13 +110,14 @@ public class OnlineRoomUIHandler : MonoBehaviour
         CheckCarAvailability();
     }
 
+    public void SetCarIsTaken(int carIndex, bool isAvailable)
+    {
+        _cars[carIndex].ChangeCarAvailability(isAvailable);
+    }
+
     private void CheckCarAvailability()
     {
-        if(_cars[_selectedCharacterIndex].CheckIfCarIsFree())
-            _readyUp.interactable = false;
-
-        else
-            _readyUp.interactable=true;
+        _readyUp.interactable = _cars[_selectedCharacterIndex].CheckIfCarIsFree();
     }
 
     public void CancleSelect()
@@ -131,7 +127,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
     public void ConfirmSelection()
     {
-        _cars[_selectedCharacterIndex].ChangeCarAvailability(true);
+        _cars[_selectedCharacterIndex].ChangeCarAvailability(false);
         OnCarSelected?.Invoke(_selectedCharacterIndex);
     }
 }
