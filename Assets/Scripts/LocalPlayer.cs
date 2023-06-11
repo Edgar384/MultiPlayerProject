@@ -1,4 +1,4 @@
-﻿using Managers;
+﻿using GarlicStudios.Online.Data;
 using UnityEngine;
 
 namespace DefaultNamespace

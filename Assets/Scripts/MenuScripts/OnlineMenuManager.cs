@@ -1,6 +1,8 @@
 using System;
-using Managers;
+using DefaultNamespace.MenuScripts;
+using GarlicStudios.Online.Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class OnlineMenuManager : MonoBehaviour
 {
@@ -11,12 +13,12 @@ public class OnlineMenuManager : MonoBehaviour
     [Header("Canvases")]
     [SerializeField] EnterNameHandler _enterNameMenu;
     [SerializeField] LobbyMenuHandler _lobbyMenu;
-    [SerializeField] CharacterSelectionMenuHandler _characterSelectionMenu;
+    [SerializeField] LobbyRoomUIListHandler _lobbyRoomUIListHandler;
+    [FormerlySerializedAs("_characterSelectionMenu")] [SerializeField] OnlineRoomUIHandler onlineRoomUI;
 
-    [SerializeField] private OnlineRoomManager _onlineRoomManager;
     [SerializeField] private OnlineGameManager _onlineGameManager;
     
-    public CharacterSelectionMenuHandler CharacterSelectionMenu => _characterSelectionMenu;
+    public OnlineRoomUIHandler OnlineRoomUI => onlineRoomUI;
 
     private void OnEnable()
     {
@@ -41,20 +43,22 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void RegisterEvents()
     {
-        _lobbyMenu.OnRoomCreated  += _onlineRoomManager.CreateRoom;
+        OnlineLobbyManager.OnRoomListUpdateEvent += _lobbyRoomUIListHandler.UpdateRoomUI;
+        _lobbyMenu.OnRoomCreated += OnlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
-        PhotonEventer.OnConnectedToMasterEvent += MoveToLobbyMenu;
+        OnlineGameManager.OnConnectedToMasterEvent += MoveToLobbyMenu;
     }
 
     private void UnregisterEvents()
     {
-        _lobbyMenu.OnRoomCreated  -= _onlineRoomManager.CreateRoom;
+        OnlineLobbyManager.OnRoomListUpdateEvent -= _lobbyRoomUIListHandler.UpdateRoomUI;
+        _lobbyMenu.OnRoomCreated -= OnlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
         _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
-        PhotonEventer.OnConnectedToMasterEvent -= MoveToLobbyMenu;
+        OnlineGameManager.OnConnectedToMasterEvent -= MoveToLobbyMenu;
     }
 
     private void CloseAllCanvases()
@@ -96,6 +100,6 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void ChangeCharacterSelectioStatus(bool _toActivate)
     {
-        _characterSelectionMenu.gameObject.SetActive(_toActivate);
+        onlineRoomUI.gameObject.SetActive(_toActivate);
     }
 }

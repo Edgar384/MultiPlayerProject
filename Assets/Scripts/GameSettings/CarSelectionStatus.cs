@@ -1,31 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CarSelectionStatus : MonoBehaviour
 {
     [SerializeField] Image _notvaiAvailableImage;
-    private bool _isTaken;
+    private bool _isAvailable;
 
     private void OnEnable()
     {
-        if(_isTaken)
-            _notvaiAvailableImage.gameObject.SetActive(true);
-
-        else
-            _notvaiAvailableImage.gameObject.SetActive(false);
+        _notvaiAvailableImage.gameObject.SetActive(!_isAvailable);
     }
 
-    public bool CheckIfCarIsFree() { return _isTaken; }
+    public bool CheckIfCarIsFree() { return _isAvailable; }
 
-    public void ChangeCarAvailability(bool isTaken)
+    public void ChangeCarAvailability(bool isAvailable)
     {
-        _isTaken = isTaken;
-        if(_isTaken)
-            _notvaiAvailableImage.gameObject.SetActive(true);
+        _isAvailable = isAvailable;
 
-        else
-            _notvaiAvailableImage.gameObject.SetActive(false);
+        _notvaiAvailableImage.gameObject.SetActive(!_isAvailable);
     }
 }
