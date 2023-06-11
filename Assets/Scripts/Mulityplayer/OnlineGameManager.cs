@@ -27,6 +27,8 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
         //PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
 
         DontDestroyOnLoad(gameObject);
+        
+        PhotonNetwork.AutomaticallySyncScene  = true;
 
         _spawnManager = new SpawnManager();
     }

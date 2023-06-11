@@ -36,6 +36,7 @@ namespace GarlicStudios.Online.Managers
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
         }
 

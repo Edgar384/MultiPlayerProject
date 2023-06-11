@@ -1422,7 +1422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &373627077
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1475,7 +1475,7 @@ MonoBehaviour:
   - {fileID: 2053075738}
   _readyUp: {fileID: 798568022}
   _start: {fileID: 551497945}
-  _onlineRoomManager: {fileID: 1451625270}
+  _onlineRoomManager: {fileID: 1127268922}
 --- !u!1 &387505228
 GameObject:
   m_ObjectHideFlags: 0
@@ -2385,6 +2385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 514721998}
   - component: {fileID: 514721997}
+  - component: {fileID: 514721999}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2469,6 +2470,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &514721999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514721996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &520980878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,7 +2585,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 551497946}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1127268919}
+        m_TargetAssemblyTypeName: OnlineGameManager, Assembly-CSharp
+        m_MethodName: LoadGameLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &551497946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3253,6 +3286,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CharacterSelectionMenuHandler, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4127,6 +4172,7 @@ GameObject:
   - component: {fileID: 1127268920}
   - component: {fileID: 1127268919}
   - component: {fileID: 1127268921}
+  - component: {fileID: 1127268922}
   m_Layer: 0
   m_Name: OnlineManager
   m_TagString: Untagged
@@ -4184,6 +4230,19 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1127268922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127268917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4331060b8141eb86e0576647871f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiHandler: {fileID: 373627079}
 --- !u!1 &1138173974
 GameObject:
   m_ObjectHideFlags: 0
@@ -4598,29 +4657,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1451625271}
-  - component: {fileID: 1451625270}
   - component: {fileID: 1451625272}
   - component: {fileID: 1451625273}
   m_Layer: 0
-  m_Name: OnlineRoomManager
+  m_Name: OnlineLobbyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1451625270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1451625269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4331060b8141eb86e0576647871f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uiHandler: {fileID: 373627079}
 --- !u!4 &1451625271
 Transform:
   m_ObjectHideFlags: 0
