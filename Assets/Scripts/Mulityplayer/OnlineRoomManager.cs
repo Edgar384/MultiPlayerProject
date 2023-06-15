@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace.SciptableObject.PlayerData;
 using GarlicStudios.Online.Data;
 using Photon.Pun;
 using Photon.Realtime;
@@ -21,6 +22,8 @@ namespace GarlicStudios.Online.Managers
         public static event Action<Player> OnMasterClientSwitchedEvent;
         public static event Action OnCreatedRoomEvent;
         public static event Action OnJoinRoomEvent;
+
+        [SerializeField] private PlayerData[] _playerDatas;
         
         private bool[] _carAvailabilityList;
         
@@ -36,26 +39,27 @@ namespace GarlicStudios.Online.Managers
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
         }
 
         public void OnCharacterSelect(int carIndex)
         {
-            ConnectedPlayers.TryGetValue(PhotonNetwork.LocalPlayer.ActorNumber,out var player);
-            //player.SetPlayerData();
+            if (!ConnectedPlayers.TryGetValue(PhotonNetwork.LocalPlayer.ActorNumber, out var player))
+                throw  new Exception("Can not find player");
+            
             UpdatePlayerReadyList(PhotonNetwork.LocalPlayer.ActorNumber,carIndex,true);
         }
 
         private void UpdatePlayerReadyList(int playerId,int carIndex, bool isReady)
         {
-            photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,playerId,isReady);
-            photonView.RPC(UPDATE_CAR_AVAILABILITY_LIST,RpcTarget.AllViaServer,carIndex,!isReady);
+            photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,playerId,carIndex,isReady);
         }
 
         #region RPC
 
         [PunRPC]
-        private void UpdatePlayerReadyList_RPC(int playerId, bool isReady)
+        private void UpdatePlayerReadyList_RPC(int playerId,int carIndex ,bool isReady)
         {
             if (!ConnectedPlayers.TryGetValue(playerId,out var player))
             {
@@ -65,15 +69,17 @@ namespace GarlicStudios.Online.Managers
             
             Debug.Log("Update ready list");
             player.SetReadyStatus(isReady);
+            player.SetPlayerData(_playerDatas[carIndex]);
+            Debug.Log("Update car status");
+            _carAvailabilityList[carIndex] = !isReady;
+            _uiHandler.SetCarIsTaken(carIndex,!isReady);
             OnPlayerListUpdateEvent?.Invoke();
         }
 
         [PunRPC]
         private void UpdateCarAvailability_RPC(int carIndex, bool carStatus)
         {
-            Debug.Log("Update car status");
-            _carAvailabilityList[carIndex] = carStatus;
-            _uiHandler.SetCarIsTaken(carIndex,carStatus);
+           
         }
         
         [PunRPC]

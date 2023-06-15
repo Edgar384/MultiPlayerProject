@@ -1,8 +1,8 @@
 using System;
+using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using Photon.Realtime;
 using SpawnSystem;
-using UnityEditor;
 using UnityEngine;
 
 public class OnlineGameManager : MonoBehaviourPunCallbacks
@@ -17,7 +17,7 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
 
     private bool _isCountingForStartGame;
 
-    private SpawnManager _spawnManager;
+    private static SpawnManager _spawnManager;
 
     private bool _isGameStarted;
 
@@ -27,8 +27,15 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
         //PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
 
         DontDestroyOnLoad(gameObject);
+        
+        PhotonNetwork.AutomaticallySyncScene  = true;
 
         _spawnManager = new SpawnManager();
+    }
+
+    public static void RegisterSpawnPoint(SpawnPoint spawnPoint)
+    {
+            _spawnManager.RegisterSpawnPoint(spawnPoint);
     }
 
     private void Start()
@@ -95,6 +102,17 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     }
     
     #region GameManagnet
+
+    public static void SpawnPlayers()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+        
+        foreach (var keyValuePair in OnlineRoomManager.ConnectedPlayers)
+        {
+            _spawnManager.SpawnPlayer(keyValuePair.Value);
+        }
+    }
 
     public void StartGameCountdown()
     {
