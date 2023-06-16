@@ -1,22 +1,29 @@
 ﻿using System;
+using GarlicStudios.Online.Managers;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PG_Physics.Wheel
 {
-    public class KnockBackHandler : MonoBehaviour
+    public class KnockBackHandler : MonoBehaviourPun
     {
+        private const string KNOCKBACK_RPC = nameof(AddKnockBack_RPC);
+        
         [SerializeField] private Rigidbody _rigidbody;
-        [SerializeField] private float _knockBackForce;
+        [FormerlySerializedAs("_knockBackForce")] [SerializeField] private float _knockBackForceMultiplier;
 
+        public int PlayerID => photonView.ViewID;//may need to chanage
+        
         private void OnValidate()
         {
             _rigidbody ??= GetComponent<Rigidbody>();
         }
-
-        private void AddKnockBack(Vector3 dir, float velociety)
+        
+        [PunRPC]
+        private void AddKnockBack_RPC(int attackPlayerId, Vector3 velociety, int hitedPlayerId)
         {
-            _rigidbody.AddForce(Vector3.up * 4 ,ForceMode.Impulse);
-            _rigidbody.AddForce(dir * velociety * _knockBackForce ,ForceMode.Impulse);
+            OnlineRoomManager.ConnectedPlayers.TryGetValue(hitedPlayerId, out var player);
         }
         
         private void OnCollisionEnter(Collision other)
@@ -25,17 +32,16 @@ namespace PG_Physics.Wheel
             {
                 if (_rigidbody.velocity.magnitude > car._rigidbody.velocity.magnitude)
                 {
-                    var dir = (car.transform.position - transform.position).normalized;
-                    //dir = new Vector3(dir.x, 0, dir.z);
+                    var velocityMagnitude = (car.transform.position - transform.position).normalized * _rigidbody.velocity.magnitude * _knockBackForceMultiplier;
+                   photonView.RPC(KNOCKBACK_RPC,RpcTarget.MasterClient,car.photonView.ViewID,velocityMagnitude,PlayerID);
                  
-                    car.AddKnockBack(dir, _rigidbody.velocity.magnitude);
                 }
                 // else
                 // {
-                //     var dir = (transform.position - car.transform.position).normalized;
-                //     //dir = new Vector3(dir.x, 0, dir.z);
+                //     var velociety = (transform.position - car.transform.position).normalized;
+                //     //velociety = new Vector3(velociety.x, 0, velociety.z);
                 //
-                //     AddKnockBack(dir, );
+                //     AddKnockBack_RPC(velociety, );
                 // }
             }
         }

@@ -5083,6 +5083,7 @@ GameObject:
   - component: {fileID: 54073378191953874}
   - component: {fileID: 65295854798841650}
   - component: {fileID: 114098881066837142}
+  - component: {fileID: 1798502603497044538}
   - component: {fileID: 114274180005872914}
   - component: {fileID: 114507026974695980}
   - component: {fileID: 114834290597317844}
@@ -5315,6 +5316,20 @@ MonoBehaviour:
     MaxAngularVelocityHelpAngle: 90
     AngularVelucityInMaxAngle: 0.5
     AngularVelucityInMinAngle: 2
+--- !u!114 &1798502603497044538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348947134348214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d1c9ffa2fe4bcab6528ce2d37ecd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 54073378191953874}
+  _knockBackForce: 1500
 --- !u!114 &114274180005872914
 MonoBehaviour:
   m_ObjectHideFlags: 0
