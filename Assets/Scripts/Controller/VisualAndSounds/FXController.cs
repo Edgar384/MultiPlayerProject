@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 /// <summary>
 /// FX and sounds effects.
 /// </summary>
-public class FXController :Singleton<FXController>
+public class FXController :MonoSingleton<FXController>
 {
 
 	[Header("Particles settings")]
