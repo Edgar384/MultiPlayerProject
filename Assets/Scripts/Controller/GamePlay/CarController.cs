@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 /// <summary>
@@ -165,7 +166,7 @@ public class CarController :MonoBehaviour
 	{
 		for (int i = 0; i < Wheels.Length; i++)
 		{
-			//Wheels[i].UpdateVisual ();
+			Wheels[i].UpdateVisual ();
 		}
 	}
 
@@ -294,22 +295,22 @@ public class CarController :MonoBehaviour
 			}
 		}
 
-		if (!GameController.RaceIsStarted)
-		{
-			if (InCutOff)
-				return;
-
-			float rpm = CurrentAcceleration > 0 ? MaxRPM : MinRPM;
-			float speed = CurrentAcceleration > 0 ? RpmEngineToRpmWheelsLerpSpeed : RpmEngineToRpmWheelsLerpSpeed * 0.2f;
-			EngineRPM = Mathf.Lerp (EngineRPM, rpm, speed * Time.fixedDeltaTime);
-			if (EngineRPM >= CutOffRPM)
-			{
-				PlayBackfireWithProbability ();
-				InCutOff = true;
-				CutOffTimer = CarConfig.CutOffTime;
-			}
-			return;
-		}
+		// if (!GameController.RaceIsStarted)
+		// {
+		// 	if (InCutOff)
+		// 		return;
+		//
+		// 	float rpm = CurrentAcceleration > 0 ? MaxRPM : MinRPM;
+		// 	float speed = CurrentAcceleration > 0 ? RpmEngineToRpmWheelsLerpSpeed : RpmEngineToRpmWheelsLerpSpeed * 0.2f;
+		// 	EngineRPM = Mathf.Lerp (EngineRPM, rpm, speed * Time.fixedDeltaTime);
+		// 	if (EngineRPM >= CutOffRPM)
+		// 	{
+		// 		PlayBackfireWithProbability ();
+		// 		InCutOff = true;
+		// 		CutOffTimer = CarConfig.CutOffTime;
+		// 	}
+		// 	return;
+		// }
 
 		//Get drive wheel with MinRPM.
 		float minRPM = 0;
@@ -475,45 +476,48 @@ public class CarController :MonoBehaviour
 [System.Serializable]
 public class CarConfig
 {
-	[Header("Steer Settings")]
-	public float MaxSteerAngle = 25;
+	[TabGroup("Steer Settings")] public float MaxSteerAngle = 25;
 
-	[Header("Engine and power settings")]
-	public DriveType DriveType = DriveType.RWD;				//Drive type AWD, FWD, RWD. With the current parameters of the car only RWD works well. TODO Add rally and offroad regime.
-	public bool AutomaticGearBox = true;
-	public float MaxMotorTorque = 150;						//Max motor torque engine (Without GearBox multiplier).
-	public AnimationCurve MotorTorqueFromRpmCurve;			//Curve motor torque (Y(0-1) motor torque, X(0-7) motor RPM).
-	public float MaxRPM = 7000;
-	public float MinRPM = 700;
-	public float CutOffRPM = 6800;							//The RPM at which the cutoff is triggered.
-	public float CutOffOffsetRPM = 500;
-	public float CutOffTime = 0.1f;
-	[Range(0, 1)]public float ProbabilityBackfire = 0.2f;   //Probability backfire: 0 - off backfire, 1 always on backfire.
-	public float RpmToNextGear = 6500;						//The speed at which there is an increase in gearbox.
-	public float RpmToPrevGear = 4500;						//The speed at which there is an decrease in gearbox.
-	public float MaxForwardSlipToBlockChangeGear = 0.5f;	//Maximum rear wheel slip for shifting gearbox.
-	public float RpmEngineToRpmWheelsLerpSpeed = 15;		//Lerp Speed change of RPM.
-	public float[] GearsRatio;								//Forward gears ratio.
-	public float MainRatio;
-	public float ReversGearRatio;							//Reverse gear ratio.
+	[TabGroup("Engine and power settings")] public DriveType DriveType = DriveType.RWD;				//Drive type AWD, FWD, RWD. With the current parameters of the car only RWD works well. TODO Add rally and offroad regime.
+	[TabGroup("Engine and power settings")] public bool AutomaticGearBox = true;
+	[TabGroup("Engine and power settings")] public float MaxMotorTorque = 150;						//Max motor torque engine (Without GearBox multiplier).
+	[TabGroup("Engine and power settings")] public AnimationCurve MotorTorqueFromRpmCurve;			//Curve motor torque (Y(0-1) motor torque, X(0-7) motor RPM).
+	[TabGroup("Engine and power settings")] public float MaxRPM = 7000;
+	[TabGroup("Engine and power settings")] public float MinRPM = 700;
+	[TabGroup("Engine and power settings")] public float CutOffRPM = 6800;							//The RPM at which the cutoff is triggered.
+	[TabGroup("Engine and power settings")] public float CutOffOffsetRPM = 500;
+	[TabGroup("Engine and power settings")] public float CutOffTime = 0.1f;
+	[TabGroup("Engine and power settings"),Range(0, 1)]public float ProbabilityBackfire = 0.2f;   //Probability backfire: 0 - off backfire, 1 always on backfire.
+	[TabGroup("Engine and power settings")] public float RpmToNextGear = 6500;						//The speed at which there is an increase in gearbox.
+	[TabGroup("Engine and power settings")] public float RpmToPrevGear = 4500;						//The speed at which there is an decrease in gearbox.
+	[TabGroup("Engine and power settings")] public float MaxForwardSlipToBlockChangeGear = 0.5f;	//Maximum rear wheel slip for shifting gearbox.
+	[TabGroup("Engine and power settings")] public float RpmEngineToRpmWheelsLerpSpeed = 15;		//Lerp Speed change of RPM.
+	[TabGroup("Engine and power settings")] public float[] GearsRatio;								//Forward gears ratio.
+	[TabGroup("Engine and power settings")] public float MainRatio;
+	[TabGroup("Engine and power settings")] public float ReversGearRatio;							//Reverse gear ratio.
 
-	[Header("Braking settings")]
-	public float MaxBrakeTorque = 1000;
-
-	[Header("Helper settings")]								//This settings block in the full version is stored in the regime settings.
-
-	public bool EnableSteerAngleMultiplier = true;
-	public float MinSteerAngleMultiplier = 0.05f;			//Min steer angle multiplayer to limit understeer at high speeds.
-	public float MaxSteerAngleMultiplier = 1f;			//Max steer angle multiplayer to limit understeer at high speeds.
-	public float MaxSpeedForMinAngleMultiplier = 250;		//The maximum speed at which there will be a minimum steering angle multiplier.
+	[TabGroup("Braking settings")] public float MaxBrakeTorque = 1000;
+	
+	[TabGroup("Helper settings")] public bool EnableSteerAngleMultiplier = true;
+	[TabGroup("Helper settings")] public float MinSteerAngleMultiplier = 0.05f;			//Min steer angle multiplayer to limit understeer at high speeds.
+	[TabGroup("Helper settings")] public float MaxSteerAngleMultiplier = 1f;			//Max steer angle multiplayer to limit understeer at high speeds.
+	[TabGroup("Helper settings")] public float MaxSpeedForMinAngleMultiplier = 250;		//The maximum speed at which there will be a minimum steering angle multiplier.
+	[TabGroup("Helper settings")] 
 	[Space(10)]
-
-	public float SteerAngleChangeSpeed;                     //Wheel turn speed.
-	public float MinSpeedForSteerHelp;                      //Min speed at which helpers are enabled.
-	[Range(0f, 1f)] public float HelpSteerPower;            //The power of turning the wheels in the direction of the drift.
-	public float OppositeAngularVelocityHelpPower = 0.1f;	//The power of the helper to turn the rigidbody in the direction of the control turn.
-	public float PositiveAngularVelocityHelpPower = 0.1f;	//The power of the helper to positive turn the rigidbody in the direction of the control turn.
-	public float MaxAngularVelocityHelpAngle;               //The angle at which the assistant works 100%.
-	public float AngularVelucityInMaxAngle;                 //Min angular velucity, reached at max drift angles.
-	public float AngularVelucityInMinAngle;                 //Max angular velucity, reached at min drift angles.
+	[TabGroup("Helper settings")] public float SteerAngleChangeSpeed;                     //Wheel turn speed.
+	[TabGroup("Helper settings")] public float MinSpeedForSteerHelp;                      //Min speed at which helpers are enabled.
+	[TabGroup("Helper settings"),Range(0f, 1f)] public float HelpSteerPower;            //The power of turning the wheels in the direction of the drift.
+	[TabGroup("Helper settings")] public float OppositeAngularVelocityHelpPower = 0.1f;	//The power of the helper to turn the rigidbody in the direction of the control turn.
+	[TabGroup("Helper settings")] public float PositiveAngularVelocityHelpPower = 0.1f;	//The power of the helper to positive turn the rigidbody in the direction of the control turn.
+	[TabGroup("Helper settings")] public float MaxAngularVelocityHelpAngle;               //The angle at which the assistant works 100%.
+	[TabGroup("Helper settings")] public float AngularVelucityInMaxAngle;                 //Min angular velucity, reached at max drift angles.
+	[TabGroup("Helper settings")] public float AngularVelucityInMinAngle;                 //Max angular velucity, reached at min drift angles.
 }
+
+public enum DriveType
+{
+	AWD,                    //All wheels drive
+	FWD,                    //Forward wheels drive
+	RWD                     //Rear wheels drive
+}
+

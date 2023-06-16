@@ -11,6 +11,7 @@ public struct Wheel
 {
 	public WheelCollider WheelCollider;
 	public Transform WheelView;
+	[SerializeField] private bool _disablePositionUpdate;
 	public float SlipForGenerateParticle;
 	public Vector3 TrailOffset;
 
@@ -100,12 +101,14 @@ public struct Wheel
 		}
 	}
 
-	public void UpdateTransform ()
+	public void UpdateTransform()
 	{
 		Vector3 pos;
 		Quaternion quat;
 		WheelCollider.GetWorldPose (out pos, out quat);
-		WheelView.position = pos;
+		if (!_disablePositionUpdate)
+			WheelView.position = pos;
+			
 		WheelView.rotation = quat;
 	}
 

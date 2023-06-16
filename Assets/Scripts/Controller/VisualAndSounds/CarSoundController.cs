@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Car sound controller, for play car sound effects
@@ -39,8 +37,7 @@ public class CarSoundController :MonoBehaviour
         EngineSource.pitch = (EngineRPM / MaxRPM) + PitchOffset;
 
         //Slip sound logic
-        if (CarController.CurrentMaxSlip > MinSlipSound
-           )
+        if (CarController.CurrentMaxSlip > MinSlipSound)
         {
             if (!SlipSource.isPlaying)
             {
