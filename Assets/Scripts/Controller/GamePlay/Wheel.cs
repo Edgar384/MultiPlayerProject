@@ -23,18 +23,18 @@ public struct Wheel
 	WheelHit Hit;
 	TrailRenderer Trail;
 
-	PgWheelCollider m_PGWC;
-	public PgWheelCollider PG_WheelCollider
+	PG_WheelCollider m_PGWC;
+	public PG_WheelCollider PG_WheelCollider
 	{
 		get
 		{
 			if (m_PGWC == null)
 			{
-				m_PGWC = WheelCollider.GetComponent<PgWheelCollider> ();
+				m_PGWC = WheelCollider.GetComponent<PG_WheelCollider> ();
 			}
 			if (m_PGWC == null)
 			{
-				m_PGWC = WheelCollider.gameObject.AddComponent<PgWheelCollider> ();
+				m_PGWC = WheelCollider.gameObject.AddComponent<PG_WheelCollider> ();
 				m_PGWC.CheckFirstEnable ();
 			}
 			return m_PGWC;
@@ -112,7 +112,7 @@ public struct Wheel
 		WheelView.rotation = quat;
 	}
 
-	public void UpdateFrictionConfig (PgWheelColliderConfig config)
+	public void UpdateFrictionConfig (PG_WheelColliderConfig config)
 	{
 		PG_WheelCollider.UpdateConfig (config);
 	}

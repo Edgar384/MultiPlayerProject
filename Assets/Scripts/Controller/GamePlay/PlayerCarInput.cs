@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// For user multiplatform control.
@@ -8,17 +9,18 @@ using UnityEngine.InputSystem;
 [RequireComponent (typeof (CarController))]
 public class PlayerCarInput : MonoBehaviourPun
 {
-    private CarController _controlledCar;
+    CarController ControlledCar;
 
     [SerializeField] private InputAction _carController;
     [SerializeField] private InputAction _brakeController;
     [SerializeField] private InputAction _abilityController;
     
+    public bool Brake { get; private set; }
 
 
     private void Awake()
     {
-        _controlledCar = GetComponent<CarController>();
+        ControlledCar = GetComponent<CarController>();
         _carController.Enable();
     }
 
@@ -29,9 +31,9 @@ public class PlayerCarInput : MonoBehaviourPun
         
         //Standart input control (Keyboard or gamepad).
         var moveDir = _carController.ReadValue<Vector2>();
-        bool brake = _brakeController.ReadValue<bool>();
-        Debug.Log(brake);
+        Brake = _brakeController.ReadValue<bool>();
+        Debug.Log(Brake);
         //Apply control for controlled car.
-        _controlledCar.UpdateControls(moveDir.x, moveDir.y, brake);
+        ControlledCar.UpdateControls(moveDir.x, moveDir.y, Brake);
     }
 }

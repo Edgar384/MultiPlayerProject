@@ -5,7 +5,7 @@ using UnityEditor;
 
 namespace PG_Physics.Wheel {
 
-	[CustomEditor (typeof (PgWheelCollider)), CanEditMultipleObjects]
+	[CustomEditor (typeof (PG_WheelCollider)), CanEditMultipleObjects]
 	public class PG_WheelColliderEditor :Editor
 	{
 		public override void OnInspectorGUI ()
@@ -19,7 +19,7 @@ namespace PG_Physics.Wheel {
 			{
 				for (int i = 0; i < targets.Length; i++)
 				{
-					(targets[i] as PgWheelCollider).UpdateConfig ();
+					(targets[i] as PG_WheelCollider).UpdateConfig ();
 				}
 			}
 		}
@@ -28,7 +28,7 @@ namespace PG_Physics.Wheel {
 		{
 			for (int i = 0; i < targets.Length; i++) 
 			{
-				if ((targets[i] as PgWheelCollider).CheckFirstEnable())
+				if ((targets[i] as PG_WheelCollider).CheckFirstEnable())
 				{
 					serializedObject.SetIsDifferentCacheDirty ();
 					serializedObject.Update ();
@@ -43,7 +43,7 @@ namespace PG_Physics.Wheel {
 		protected override bool IsFullProperty { get { return true; } }
 	}
 
-	[CustomPropertyDrawer (typeof (PgWheelColliderConfig))]
+	[CustomPropertyDrawer (typeof (PG_WheelColliderConfig))]
 	public class PG_WheelColliderConfigDrawer :PropertyDrawer
 	{
 		protected virtual bool IsFullProperty { get { return false; } }

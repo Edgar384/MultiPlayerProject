@@ -21,8 +21,8 @@ public class CarSoundController :MonoBehaviour
 
     CarController CarController;
 
-    float MaxRPM { get { return CarController.GetMaxRpm; } }
-    float EngineRPM { get { return CarController.EngineRpm; } }
+    float MaxRPM { get { return CarController.GetMaxRPM; } }
+    float EngineRPM { get { return CarController.EngineRPM; } }
 
     private void Awake ()
     {
