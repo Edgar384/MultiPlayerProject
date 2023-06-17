@@ -2,21 +2,11 @@ using UnityEngine;
 
 public class TrackObject : MonoBehaviour
 {
-    private Vector2 _posOnScreen;
     private Camera _camera;
-    
-    public void SetCamera(Camera camera) =>
-        _camera = camera;
-
-    public Vector2 PosOnScreen => _posOnScreen;
-
+    public void SetCamera(Camera newCamera) =>
+        _camera = newCamera;
     private void Awake()
     {
         CameraController.RegisterTrackObject(this);
-    }
-
-    private void Update()
-    {
-        _posOnScreen = _camera.WorldToScreenPoint(transform.position);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using GarlicStudios.Online.Managers;
+﻿using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
