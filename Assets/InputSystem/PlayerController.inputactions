@@ -2,11 +2,11 @@
     "name": "PlayerController",
     "maps": [
         {
-            "name": "Player",
+            "name": "CarControl",
             "id": "31d8aea1-a2ae-4603-953b-2d54f768fc61",
             "actions": [
                 {
-                    "name": "Rotate",
+                    "name": "Steer",
                     "type": "Value",
                     "id": "950d3344-c548-41ac-9204-603612737a19",
                     "expectedControlType": "Vector2",
@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "Gass",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "2744c1e7-9418-44db-8032-9a95ab004177",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": "Hold",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Break",
@@ -65,17 +65,6 @@
                 },
                 {
                     "name": "",
-                    "id": "fd245bba-1b26-4f85-822e-795d8da7af67",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Gass",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "165df077-d5b0-47e0-a5c1-5caa2fdc0e8b",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
@@ -100,9 +89,20 @@
                     "name": "",
                     "id": "c5226e8c-bf59-44d0-9e66-83a6c2775367",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Break",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "647b0ade-9da5-4a2e-b4c4-9d59ab0a3a5c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Break",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -114,7 +114,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotate",
+                    "action": "Steer",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -125,7 +125,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Rotate",
+                    "action": "Steer",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -136,7 +136,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Rotate",
+                    "action": "Steer",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -147,7 +147,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Rotate",
+                    "action": "Steer",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -158,7 +158,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Rotate",
+                    "action": "Steer",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -169,7 +169,7 @@
                     "interactions": "",
                     "processors": "StickDeadzone,NormalizeVector2",
                     "groups": "Gamepad",
-                    "action": "Rotate",
+                    "action": "Steer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -1,39 +1,75 @@
 ﻿using Photon.Pun;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// For user multiplatform control.
 /// </summary>
-[RequireComponent (typeof (CarController))]
+[RequireComponent(typeof(CarController))]
 public class PlayerCarInput : MonoBehaviourPun
 {
-    private CarController ControlledCar;
+    private bool _keyBoardMode = true;
 
-    [SerializeField] private InputAction _carController;
-    [SerializeField] private InputAction _brakeController;
-    [SerializeField] private InputAction _abilityController;
-    
-    public bool Brake { get; private set; }
+    private CarController _controlledCar;
+
+    private float _horizontal;
+    private float _vertical;
+    private bool _brake;
+
+    private PlayerController _playerController;
 
 
     private void Awake()
     {
-        ControlledCar = GetComponent<CarController>();
-        _carController.Enable();
+        _controlledCar = GetComponent<CarController>();
+        _playerController = new PlayerController();
+        _playerController.CarControl.Enable();
     }
 
-    private void Update ()
+    private void Start()
+    {
+        string[] controllerNames = Input.GetJoystickNames();
+
+        if (controllerNames.Length > 0)
+        {
+            _keyBoardMode = false;
+            
+            foreach (var controllerName in controllerNames)
+            {
+                if (controllerName.Length == 19)
+                {
+                    Debug.Log("<color=#00ff00>PS4 CONTROLLER IS CONNECTED</color>");
+                }
+
+                if (controllerName.Length == 33)
+                {
+                    Debug.Log("<color=#00ff00>XBOX ONE CONTROLLER IS CONNECTED</color>");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("<color=#ff0000>Non CONTROLLER IS CONNECTED</color>");
+        }
+    }
+
+    private void Update()
     {
         if (!photonView.IsMine)
             return;
+
+        if (_keyBoardMode)
+        {
+            _horizontal = _playerController.CarControl.Steer.ReadValue<Vector2>().x;
+            _vertical = _playerController.CarControl.Steer.ReadValue<Vector2>().y;
+            _brake = _playerController.CarControl.Break.IsPressed();
+        }
+        else
+        {
+            _horizontal = _playerController.CarControl.Gass.ReadValue<float>();
+            _vertical = _playerController.CarControl.Steer.ReadValue<Vector2>().x;
+            _brake = _playerController.CarControl.Break.IsPressed();
+        }
         
-        //Standart input control (Keyboard or gamepad).
-        var moveDir = _carController.ReadValue<Vector2>();
-        Brake = _brakeController.ReadValue<bool>();
-        Debug.Log(Brake);
-        //Apply control for controlled car.
-        ControlledCar.UpdateControls(moveDir.x, moveDir.y, Brake);
+        _controlledCar.UpdateControls(_horizontal, _vertical, _brake);
     }
 }

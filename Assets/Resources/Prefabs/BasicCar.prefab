@@ -5077,6 +5077,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4400517460069692}
+  - component: {fileID: 1084575770895770577}
   - component: {fileID: 9131333332235930690}
   - component: {fileID: 4684570298209138249}
   - component: {fileID: 2587506132696676443}
@@ -5114,6 +5115,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1084575770895770577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348947134348214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc31bf146cd4f3bb4805dae7789bf34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCarInput: {fileID: 114834290597317844}
+  _knockBackHandler: {fileID: 1798502603497044538}
 --- !u!114 &9131333332235930690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5242,7 +5257,7 @@ MonoBehaviour:
     MaxSteerAngle: 42
     DriveType: 2
     AutomaticGearBox: 1
-    MaxMotorTorque: 800
+    MaxMotorTorque: 550
     MotorTorqueFromRpmCurve:
       serializedVersion: 2
       m_Curve:
@@ -5329,7 +5344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 54073378191953874}
-  _knockBackForce: 1500
+  _knockBackForceMultiplier: 1500
 --- !u!114 &114274180005872914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5378,129 +5393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb67c03a9a7bb745b02d885278296b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carController:
-    m_Name: Car Controller
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 0eabb44b-3eb7-4a46-905e-f546a543a7d4
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: WSAD
-      m_Id: 62a3007f-6d68-4fcf-9bab-95286158b1c8
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 9c402ebc-af04-4861-bb15-c31cf77bfffd
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 79ce5134-bb3a-404d-a48f-f57a4465f4ca
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    - m_Name: left
-      m_Id: b6a4881d-6d9e-478c-b3d0-467d21e7a22a
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 6b576866-ab47-4c34-b375-3353b18b0ad1
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    - m_Name: Controller
-      m_Id: 99296a7f-3335-46dd-81bb-c16127c836e3
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 4
-    - m_Name: up
-      m_Id: b0592998-fcf3-44d1-baf0-3dbe1f589d49
-      m_Path: <Gamepad>/leftStick/up
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 9a4605cc-a379-4206-8e21-78fbda58cedf
-      m_Path: <Gamepad>/leftStick/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 6f8a8906-6513-457c-8155-4d895b460eb9
-      m_Path: <Gamepad>/leftStick/left
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 05bba894-7edc-4e28-8889-7eca009f04ac
-      m_Path: <Gamepad>/leftStick/right
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Car Controller
-      m_Flags: 8
-    m_Flags: 0
-  _brakeController:
-    m_Name: Brake Controller
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: fa798cca-f090-456f-a933-a53eeb61d153
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: c37793fd-e1fa-4e17-b26a-b709197a356a
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Brake Controller
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 9b40b13b-9fdc-4130-8f1a-27771e024487
-      m_Path: <Gamepad>/buttonSouth
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Brake Controller
-      m_Flags: 0
-    m_Flags: 0
-  _abilityController:
-    m_Name: Ability Controller
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 35c61fdc-5369-447b-a978-d05b8fb09a19
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!114 &1694486116718016293
 MonoBehaviour:
   m_ObjectHideFlags: 0

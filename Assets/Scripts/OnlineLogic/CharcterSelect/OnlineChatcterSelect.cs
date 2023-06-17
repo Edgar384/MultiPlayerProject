@@ -14,6 +14,7 @@ namespace DefaultNamespace.CharcterSelect
         public static event Action OnNextCharacter;
         public static event Action OnPreviosCharacter;
         
+        
         [SerializeField] private List<CharacterHolder> _characterHolders = new List<CharacterHolder>();
 
         private bool[] _sendData;

@@ -24,11 +24,11 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     ""name"": ""PlayerController"",
     ""maps"": [
         {
-            ""name"": ""PhotonData"",
+            ""name"": ""CarControl"",
             ""id"": ""31d8aea1-a2ae-4603-953b-2d54f768fc61"",
             ""actions"": [
                 {
-                    ""name"": ""Rotate"",
+                    ""name"": ""Steer"",
                     ""type"": ""Value"",
                     ""id"": ""950d3344-c548-41ac-9204-603612737a19"",
                     ""expectedControlType"": ""Vector2"",
@@ -38,12 +38,12 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Gass"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""2744c1e7-9418-44db-8032-9a95ab004177"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
-                    ""initialStateCheck"": false
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Break"",
@@ -87,17 +87,6 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fd245bba-1b26-4f85-822e-795d8da7af67"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Gass"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""165df077-d5b0-47e0-a5c1-5caa2fdc0e8b"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
@@ -122,9 +111,20 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c5226e8c-bf59-44d0-9e66-83a6c2775367"",
                     ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""Break"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""647b0ade-9da5-4a2e-b4c4-9d59ab0a3a5c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Break"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -136,7 +136,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Rotate"",
+                    ""action"": ""Steer"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -147,7 +147,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""Steer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -158,7 +158,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""Steer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -169,7 +169,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""Steer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -180,7 +180,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""Steer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -191,7 +191,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": ""StickDeadzone,NormalizeVector2"",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""Steer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -245,13 +245,13 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // PhotonData
-        m_Player = asset.FindActionMap("PhotonData", throwIfNotFound: true);
-        m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
-        m_Player_Gass = m_Player.FindAction("Gass", throwIfNotFound: true);
-        m_Player_Break = m_Player.FindAction("Break", throwIfNotFound: true);
-        m_Player_Revers = m_Player.FindAction("Revers", throwIfNotFound: true);
-        m_Player_Join = m_Player.FindAction("Join", throwIfNotFound: true);
+        // CarControl
+        m_CarControl = asset.FindActionMap("CarControl", throwIfNotFound: true);
+        m_CarControl_Steer = m_CarControl.FindAction("Steer", throwIfNotFound: true);
+        m_CarControl_Gass = m_CarControl.FindAction("Gass", throwIfNotFound: true);
+        m_CarControl_Break = m_CarControl.FindAction("Break", throwIfNotFound: true);
+        m_CarControl_Revers = m_CarControl.FindAction("Revers", throwIfNotFound: true);
+        m_CarControl_Join = m_CarControl.FindAction("Join", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -310,35 +310,35 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PhotonData
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Rotate;
-    private readonly InputAction m_Player_Gass;
-    private readonly InputAction m_Player_Break;
-    private readonly InputAction m_Player_Revers;
-    private readonly InputAction m_Player_Join;
-    public struct PlayerActions
+    // CarControl
+    private readonly InputActionMap m_CarControl;
+    private List<ICarControlActions> m_CarControlActionsCallbackInterfaces = new List<ICarControlActions>();
+    private readonly InputAction m_CarControl_Steer;
+    private readonly InputAction m_CarControl_Gass;
+    private readonly InputAction m_CarControl_Break;
+    private readonly InputAction m_CarControl_Revers;
+    private readonly InputAction m_CarControl_Join;
+    public struct CarControlActions
     {
         private @PlayerController m_Wrapper;
-        public PlayerActions(@PlayerController wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
-        public InputAction @Gass => m_Wrapper.m_Player_Gass;
-        public InputAction @Break => m_Wrapper.m_Player_Break;
-        public InputAction @Revers => m_Wrapper.m_Player_Revers;
-        public InputAction @Join => m_Wrapper.m_Player_Join;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public CarControlActions(@PlayerController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Steer => m_Wrapper.m_CarControl_Steer;
+        public InputAction @Gass => m_Wrapper.m_CarControl_Gass;
+        public InputAction @Break => m_Wrapper.m_CarControl_Break;
+        public InputAction @Revers => m_Wrapper.m_CarControl_Revers;
+        public InputAction @Join => m_Wrapper.m_CarControl_Join;
+        public InputActionMap Get() { return m_Wrapper.m_CarControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(CarControlActions set) { return set.Get(); }
+        public void AddCallbacks(ICarControlActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Rotate.started += instance.OnRotate;
-            @Rotate.performed += instance.OnRotate;
-            @Rotate.canceled += instance.OnRotate;
+            if (instance == null || m_Wrapper.m_CarControlActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CarControlActionsCallbackInterfaces.Add(instance);
+            @Steer.started += instance.OnSteer;
+            @Steer.performed += instance.OnSteer;
+            @Steer.canceled += instance.OnSteer;
             @Gass.started += instance.OnGass;
             @Gass.performed += instance.OnGass;
             @Gass.canceled += instance.OnGass;
@@ -353,11 +353,11 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Join.canceled += instance.OnJoin;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(ICarControlActions instance)
         {
-            @Rotate.started -= instance.OnRotate;
-            @Rotate.performed -= instance.OnRotate;
-            @Rotate.canceled -= instance.OnRotate;
+            @Steer.started -= instance.OnSteer;
+            @Steer.performed -= instance.OnSteer;
+            @Steer.canceled -= instance.OnSteer;
             @Gass.started -= instance.OnGass;
             @Gass.performed -= instance.OnGass;
             @Gass.canceled -= instance.OnGass;
@@ -372,21 +372,21 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Join.canceled -= instance.OnJoin;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(ICarControlActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_CarControlActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(ICarControlActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_CarControlActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_CarControlActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public CarControlActions @CarControl => new CarControlActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -405,9 +405,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
-    public interface IPlayerActions
+    public interface ICarControlActions
     {
-        void OnRotate(InputAction.CallbackContext context);
+        void OnSteer(InputAction.CallbackContext context);
         void OnGass(InputAction.CallbackContext context);
         void OnBreak(InputAction.CallbackContext context);
         void OnRevers(InputAction.CallbackContext context);
