@@ -12,10 +12,10 @@ public class OnlineRoomUIHandler : MonoBehaviour
     public event Action<int> OnCarSelected;
 
     [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
-    [SerializeField] GameObject _carSelectionPreview;
-    [SerializeField] CarSelectionStatus[] _cars;
-    [SerializeField] Button _readyUp;
-    [SerializeField] Button _start;
+    [SerializeField] private GameObject _carSelectionPreview;
+    [SerializeField] private CarSelectionStatus[] _cars;
+    [SerializeField] private Button _readyUp;
+    [SerializeField] private Button _start;
 
     [SerializeField] private OnlineRoomManager _onlineRoomManager;
     

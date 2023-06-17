@@ -67,7 +67,7 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     public void ConnectedToMaster()
     {
         PhotonNetwork.NickName = "nickname";
-        Debug.Log("Player nickname is " + PhotonNetwork.NickName);
+        Debug.Log("PhotonData nickname is " + PhotonNetwork.NickName);
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -76,7 +76,7 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     public void ConnectedToMaster(string nickname)
     {
         PhotonNetwork.NickName = nickname;
-        Debug.Log("Player nickname is " + PhotonNetwork.NickName);
+        Debug.Log("PhotonData nickname is " + PhotonNetwork.NickName);
         PhotonNetwork.ConnectUsingSettings();
     }
     
@@ -136,13 +136,13 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     #region RPCS
 
     [PunRPC]
-    void CountdownStarted()
+    private void CountdownStarted()
     {
         _isCountingForStartGame = true;
     }
     
     [PunRPC]
-    void GameStarted()
+    private void GameStarted()
     {
         _isCountingForStartGame = false;
         _isGameStarted = true;

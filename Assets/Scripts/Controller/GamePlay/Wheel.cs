@@ -20,10 +20,10 @@ public struct Wheel
 	public float CurrentSidewaysSleep { get; private set; }
 	public WheelHit GetHit { get { return Hit; } }
 
-	WheelHit Hit;
-	TrailRenderer Trail;
+	private WheelHit Hit;
+	private TrailRenderer Trail;
 
-	PG_WheelCollider m_PGWC;
+	private PG_WheelCollider m_PGWC;
 	public PG_WheelCollider PG_WheelCollider
 	{
 		get
@@ -41,10 +41,10 @@ public struct Wheel
 		}
 	}
 
-	FXController FXController { get { return FXController.Instance; } }
-	Vector3 HitPoint;
+	private FXController FXController { get { return FXController.Instance; } }
+	private Vector3 HitPoint;
 
-	const int SmoothValuesCount = 3;
+	private const int SmoothValuesCount = 3;
 
 	/// <summary>
 	/// Update gameplay logic.

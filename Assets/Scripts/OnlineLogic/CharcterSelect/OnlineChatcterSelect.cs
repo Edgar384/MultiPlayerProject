@@ -9,12 +9,12 @@ namespace DefaultNamespace.CharcterSelect
     [Serializable]
     public class OnlineCharacterSelect : IPunObservable
     {
-        public event Action<int> OnCharacterConfirm;
-        public event Action<int> OnCancelCharacterConfirm;
-        public event Action OnNextCharacter;
-        public event Action OnPreviosCharacter;
+        public static event Action<int> OnCharacterConfirm;
+        public static event Action<int> OnCancelCharacterConfirm;
+        public static event Action OnNextCharacter;
+        public static event Action OnPreviosCharacter;
         
-        [SerializeField] List<CharacterHolder> _characterHolders = new List<CharacterHolder>();
+        [SerializeField] private List<CharacterHolder> _characterHolders = new List<CharacterHolder>();
 
         private bool[] _sendData;
         

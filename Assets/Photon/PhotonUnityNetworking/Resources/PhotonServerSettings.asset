@@ -50,6 +50,8 @@ MonoBehaviour:
   - UpdateCarAvailability_RPC
   - SendCarData
   - SendCarData_RPC
+  - AddKnockBack_RPC
+  - RegisterKnockBack_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

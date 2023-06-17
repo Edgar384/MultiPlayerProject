@@ -1,15 +1,18 @@
-﻿using GarlicStudios.Online.Data;
+﻿using PG_Physics.Wheel;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
     public class LocalPlayer : MonoBehaviour
     {
-        private OnlinePlayer _onlinePlayer;
+        [SerializeField] private PlayerCarInput _playerCarInput;
+        [SerializeField] private KnockBackHandler _knockBackHandler;
+        //add ability handler
 
-        public void Init(OnlinePlayer onlinePlayer)
+        private void OnValidate()
         {
-            _onlinePlayer = onlinePlayer;
+            _knockBackHandler ??= GetComponent<KnockBackHandler>();
+            _playerCarInput ??= GetComponent<PlayerCarInput>();
         }
     }
 }

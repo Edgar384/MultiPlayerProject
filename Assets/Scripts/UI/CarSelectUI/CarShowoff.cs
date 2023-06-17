@@ -4,8 +4,8 @@ public class CarShowoff : MonoBehaviour
 {
 
     //Should be scriptable object. Now just for the check
-    [SerializeField] bool _rotateCar;
-    [SerializeField] float _rotationSpeed;
+    [SerializeField] private bool _rotateCar;
+    [SerializeField] private float _rotationSpeed;
 
     private void Update()
     {

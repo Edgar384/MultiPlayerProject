@@ -20,7 +20,7 @@ public abstract class Singleton<T> :MonoBehaviour where T : Singleton<T>
 		}
 	}
 
-	void Awake ()
+	private void Awake ()
 	{
 		if (instance == null)
 		{

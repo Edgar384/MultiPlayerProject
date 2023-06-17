@@ -132,7 +132,7 @@ namespace GarlicStudios.Online.Managers
         {
             if (ConnectedPlayers.TryGetValue(newPlayer.ActorNumber, out var player))
             {
-                Debug.LogError("Player already isn the room");
+                Debug.LogError("PhotonData already isn the room");
                 return;
             }
 

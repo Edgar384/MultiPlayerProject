@@ -24,7 +24,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     ""name"": ""PlayerController"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""PhotonData"",
             ""id"": ""31d8aea1-a2ae-4603-953b-2d54f768fc61"",
             ""actions"": [
                 {
@@ -245,8 +245,8 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        // PhotonData
+        m_Player = asset.FindActionMap("PhotonData", throwIfNotFound: true);
         m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
         m_Player_Gass = m_Player.FindAction("Gass", throwIfNotFound: true);
         m_Player_Break = m_Player.FindAction("Break", throwIfNotFound: true);
@@ -310,7 +310,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
+    // PhotonData
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Rotate;

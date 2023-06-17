@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,52 +10,52 @@ using UnityEngine;
 public class CarController :MonoBehaviour
 {
 
-	[SerializeField] Wheel FrontLeftWheel;
-	[SerializeField] Wheel FrontRightWheel;
-	[SerializeField] Wheel RearLeftWheel;
-	[SerializeField] Wheel RearRightWheel;
-	[SerializeField] Transform COM;
-	[SerializeField] List<ParticleSystem> BackFireParticles = new List<ParticleSystem>();
+	[SerializeField] private Wheel FrontLeftWheel;
+	[SerializeField] private Wheel FrontRightWheel;
+	[SerializeField] private Wheel RearLeftWheel;
+	[SerializeField] private Wheel RearRightWheel;
+	[SerializeField] private Transform COM;
+	[SerializeField] private List<ParticleSystem> BackFireParticles = new List<ParticleSystem>();
 
-	[SerializeField] CarConfig CarConfig;
+	[SerializeField] private CarConfig CarConfig;
 
 	#region Properties of car parameters
 
-	float MaxMotorTorque;
-	float MaxSteerAngle { get { return CarConfig.MaxSteerAngle; } }
-	DriveType DriveType { get { return CarConfig.DriveType; } }
-	bool AutomaticGearBox { get { return CarConfig.AutomaticGearBox; } }
-	AnimationCurve MotorTorqueFromRpmCurve { get { return CarConfig.MotorTorqueFromRpmCurve; } }
-	float MaxRPM { get { return CarConfig.MaxRPM; } }
-	float MinRPM { get { return CarConfig.MinRPM; } }
-	float CutOffRPM { get { return CarConfig.CutOffRPM; } }
-	float CutOffOffsetRPM { get { return CarConfig.CutOffOffsetRPM; } }
-	float RpmToNextGear { get { return CarConfig.RpmToNextGear; } }
-	float RpmToPrevGear { get { return CarConfig.RpmToPrevGear; } }
-	float MaxForwardSlipToBlockChangeGear { get { return CarConfig.MaxForwardSlipToBlockChangeGear; } }
-	float RpmEngineToRpmWheelsLerpSpeed { get { return CarConfig.RpmEngineToRpmWheelsLerpSpeed; } }
-	float[] GearsRatio { get { return CarConfig.GearsRatio; } }
-	float MainRatio { get { return CarConfig.MainRatio; } }
-	float ReversGearRatio { get { return CarConfig.ReversGearRatio; } }
-	float MaxBrakeTorque { get { return CarConfig.MaxBrakeTorque; } }
+	private float MaxMotorTorque;
+	private float MaxSteerAngle { get { return CarConfig.MaxSteerAngle; } }
+	private DriveType DriveType { get { return CarConfig.DriveType; } }
+	private bool AutomaticGearBox { get { return CarConfig.AutomaticGearBox; } }
+	private AnimationCurve MotorTorqueFromRpmCurve { get { return CarConfig.MotorTorqueFromRpmCurve; } }
+	private float MaxRPM { get { return CarConfig.MaxRPM; } }
+	private float MinRPM { get { return CarConfig.MinRPM; } }
+	private float CutOffRPM { get { return CarConfig.CutOffRPM; } }
+	private float CutOffOffsetRPM { get { return CarConfig.CutOffOffsetRPM; } }
+	private float RpmToNextGear { get { return CarConfig.RpmToNextGear; } }
+	private float RpmToPrevGear { get { return CarConfig.RpmToPrevGear; } }
+	private float MaxForwardSlipToBlockChangeGear { get { return CarConfig.MaxForwardSlipToBlockChangeGear; } }
+	private float RpmEngineToRpmWheelsLerpSpeed { get { return CarConfig.RpmEngineToRpmWheelsLerpSpeed; } }
+	private float[] GearsRatio { get { return CarConfig.GearsRatio; } }
+	private float MainRatio { get { return CarConfig.MainRatio; } }
+	private float ReversGearRatio { get { return CarConfig.ReversGearRatio; } }
+	private float MaxBrakeTorque { get { return CarConfig.MaxBrakeTorque; } }
 
 
 	#endregion //Properties of car parameters
 
 	#region Properties of drif Settings
 
-	bool EnableSteerAngleMultiplier { get { return CarConfig.EnableSteerAngleMultiplier; } }
-	float MinSteerAngleMultiplier { get { return CarConfig.MinSteerAngleMultiplier; } }
-	float MaxSteerAngleMultiplier { get { return CarConfig.MaxSteerAngleMultiplier; } }
-	float MaxSpeedForMinAngleMultiplier { get { return CarConfig.MaxSpeedForMinAngleMultiplier; } }
-	float SteerAngleChangeSpeed { get { return CarConfig.SteerAngleChangeSpeed; } }
-	float MinSpeedForSteerHelp { get { return CarConfig.MinSpeedForSteerHelp; } }
-	float HelpSteerPower { get { return CarConfig.HelpSteerPower; } }
-	float OppositeAngularVelocityHelpPower { get { return CarConfig.OppositeAngularVelocityHelpPower; } }
-	float PositiveAngularVelocityHelpPower { get { return CarConfig.PositiveAngularVelocityHelpPower; } }
-	float MaxAngularVelocityHelpAngle { get { return CarConfig.MaxAngularVelocityHelpAngle; } }
-	float AngularVelucityInMaxAngle { get { return CarConfig.AngularVelucityInMaxAngle; } }
-	float AngularVelucityInMinAngle { get { return CarConfig.AngularVelucityInMinAngle; } }
+	private bool EnableSteerAngleMultiplier { get { return CarConfig.EnableSteerAngleMultiplier; } }
+	private float MinSteerAngleMultiplier { get { return CarConfig.MinSteerAngleMultiplier; } }
+	private float MaxSteerAngleMultiplier { get { return CarConfig.MaxSteerAngleMultiplier; } }
+	private float MaxSpeedForMinAngleMultiplier { get { return CarConfig.MaxSpeedForMinAngleMultiplier; } }
+	private float SteerAngleChangeSpeed { get { return CarConfig.SteerAngleChangeSpeed; } }
+	private float MinSpeedForSteerHelp { get { return CarConfig.MinSpeedForSteerHelp; } }
+	private float HelpSteerPower { get { return CarConfig.HelpSteerPower; } }
+	private float OppositeAngularVelocityHelpPower { get { return CarConfig.OppositeAngularVelocityHelpPower; } }
+	private float PositiveAngularVelocityHelpPower { get { return CarConfig.PositiveAngularVelocityHelpPower; } }
+	private float MaxAngularVelocityHelpAngle { get { return CarConfig.MaxAngularVelocityHelpAngle; } }
+	private float AngularVelucityInMaxAngle { get { return CarConfig.AngularVelucityInMaxAngle; } }
+	private float AngularVelucityInMinAngle { get { return CarConfig.AngularVelucityInMinAngle; } }
 
 	#endregion //Properties of drif Settings
 
@@ -64,9 +63,9 @@ public class CarController :MonoBehaviour
 	public Wheel[] Wheels { get; private set; }										//All wheels, public link.			
 	public System.Action BackFireAction;                                            //Backfire invoked when cut off (You can add a invoke when changing gears).
 
-	float[] AllGearsRatio;															 //All gears (Reverce, neutral and all forward).
+	private float[] AllGearsRatio;															 //All gears (Reverce, neutral and all forward).
 
-	Rigidbody _RB;
+	private Rigidbody _RB;
 	public Rigidbody RB
 	{
 		get
@@ -85,13 +84,13 @@ public class CarController :MonoBehaviour
 	public float SpeedInHour { get { return CurrentSpeed * C.KPHMult; } }
 	public int CarDirection { get { return CurrentSpeed < 1 ? 0 : (VelocityAngle < 90 && VelocityAngle > -90 ? 1 : -1); } }
 
-	float CurrentSteerAngle;
-	float CurrentAcceleration;
-	float CurrentBrake;
-    bool InHandBrake;
+	private float CurrentSteerAngle;
+	private float CurrentAcceleration;
+	private float CurrentBrake;
+	private bool InHandBrake;
 
-    int FirstDriveWheel;
-	int LastDriveWheel;
+	private int FirstDriveWheel;
+	private int LastDriveWheel;
 
 	private void Awake ()
 	{
@@ -216,7 +215,7 @@ public class CarController :MonoBehaviour
 	/// <summary>
 	/// Update all helpers logic.
 	/// </summary>
-	void UpdateSteerAngleLogic ()
+	private void UpdateSteerAngleLogic ()
 	{
 		var needHelp = SpeedInHour > MinSpeedForSteerHelp && CarDirection > 0;
 		float targetAngle = 0;
@@ -276,10 +275,10 @@ public class CarController :MonoBehaviour
 	public float GetMinRPM { get { return MinRPM; } }
 	public float GetInCutOffRPM { get { return CutOffRPM - CutOffOffsetRPM; } }
 
-	float CutOffTimer;
-	bool InCutOff;
+	private float CutOffTimer;
+	private bool InCutOff;
 
-	void UpdateRpmAndTorqueLogic ()
+	private void UpdateRpmAndTorqueLogic ()
 	{
 
 		if (InCutOff)
@@ -431,12 +430,13 @@ public class CarController :MonoBehaviour
 
 		//TODO manual gearbox logic.
 	}
-	void PlayBackfireWithProbability ()
+
+	private void PlayBackfireWithProbability ()
 	{
 		PlayBackfireWithProbability (GetCarConfig.ProbabilityBackfire);
 	}
 
-	void PlayBackfireWithProbability (float probability)
+	private void PlayBackfireWithProbability (float probability)
 	{
 		if (Random.Range (0f, 1f) <= probability)
 		{

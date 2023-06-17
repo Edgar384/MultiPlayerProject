@@ -64,7 +64,7 @@
 //     private void Awake()
 //     {
 //         _inputAsset = this.GetComponent<PlayerInput>().actions;
-//         _playerInputActionMap = _inputAsset.FindActionMap("Player");
+//         _playerInputActionMap = _inputAsset.FindActionMap("PhotonData");
 //         _playerController = new PlayerController();
 //         EnableInputAction();
 //     }
@@ -100,9 +100,9 @@
 //
 //     private void EnableInputAction()
 //     {
-//         _rotateInputAction = _playerController.Player.Rotate;
-//         _breakInputAction = _playerController.Player.Gass;
-//         _breakInputAction = _playerController.Player.Break;
+//         _rotateInputAction = _playerController.PhotonData.Rotate;
+//         _breakInputAction = _playerController.PhotonData.Gass;
+//         _breakInputAction = _playerController.PhotonData.Break;
 //
 //         _rotateInputAction.Enable();
 //         _breakInputAction.Enable();

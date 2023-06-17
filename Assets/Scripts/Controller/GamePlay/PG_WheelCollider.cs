@@ -8,10 +8,10 @@ namespace PG_Physics.Wheel
 	[RequireComponent (typeof (WheelCollider))]
 	public class PG_WheelCollider :MonoBehaviour
 	{
-		[SerializeField, FullField] PG_WheelColliderConfig WheelConfig;
+		[SerializeField, FullField] private PG_WheelColliderConfig WheelConfig;
 
-		[SerializeField, HideInInspector] WheelCollider m_WheelCollider;
-		[SerializeField, HideInInspector] Rigidbody m_RB;
+		[SerializeField, HideInInspector] private WheelCollider m_WheelCollider;
+		[SerializeField, HideInInspector] private Rigidbody m_RB;
 
 		public WheelCollider WheelCollider
 		{
@@ -128,28 +128,28 @@ namespace PG_Physics.Wheel
 		}
 
 		//Spring constants
-		const float minSpring = 0;
-		const float maxSpring = 60000;
-		const float minDamper = 0;
-		const float maxDamper = 10000;
+		private const float minSpring = 0;
+		private const float maxSpring = 60000;
+		private const float minDamper = 0;
+		private const float maxDamper = 10000;
 
 		//Minimum friction constants
-		const float minExtremumSlip = 0.4f;
-		const float minExtremumValue = 0.7f;
-		const float minAsymptoteSlip = 0.6f;
-		const float minAsymptoteValue = 0.65f;
+		private const float minExtremumSlip = 0.4f;
+		private const float minExtremumValue = 0.7f;
+		private const float minAsymptoteSlip = 0.6f;
+		private const float minAsymptoteValue = 0.65f;
 
 		//Maximum friction constants
-		const float maxExtremumSlip = 0.4f;
-		const float maxExtremumValue = 4.5f;
-		const float maxAsymptoteSlip = 0.6f;
-		const float maxAsymptoteValue = 4f;
+		private const float maxExtremumSlip = 0.4f;
+		private const float maxExtremumValue = 4.5f;
+		private const float maxAsymptoteSlip = 0.6f;
+		private const float maxAsymptoteValue = 4f;
 	}
 
 	[System.Serializable]
 	public struct PG_WheelColliderConfig
 	{
-		[SerializeField] bool IsFoldout;
+		[SerializeField] private bool IsFoldout;
 		public bool IsFullConfig;
 
 		public float Mass;

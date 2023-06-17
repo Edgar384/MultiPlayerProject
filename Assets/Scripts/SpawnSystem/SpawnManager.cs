@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DefaultNamespace;
 using GarlicStudios.Online.Data;
 using Photon.Pun;
 using Random = UnityEngine.Random;
@@ -23,9 +24,11 @@ namespace SpawnSystem
             
             SpawnPoint spawnPoint = AskForRandomSpawnPoint();
 
-            PhotonNetwork.Instantiate(onlinePlayer.PlayerData.PreFabName,
+            var localPlayer = PhotonNetwork.Instantiate(onlinePlayer.PlayerData.PreFabName,
                 spawnPoint.transform.position,
-                spawnPoint.transform.rotation);
+                spawnPoint.transform.rotation).GetComponent<LocalPlayer>();
+            
+            onlinePlayer.SetLocalPlayer(localPlayer);
             
             spawnPoint.SetSpawnPointToTaken();
         }

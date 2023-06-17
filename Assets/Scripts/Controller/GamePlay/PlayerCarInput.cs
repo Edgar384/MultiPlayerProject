@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 [RequireComponent (typeof (CarController))]
 public class PlayerCarInput : MonoBehaviourPun
 {
-    CarController ControlledCar;
+    private CarController ControlledCar;
 
     [SerializeField] private InputAction _carController;
     [SerializeField] private InputAction _brakeController;
@@ -24,7 +24,7 @@ public class PlayerCarInput : MonoBehaviourPun
         _carController.Enable();
     }
 
-    void Update ()
+    private void Update ()
     {
         if (!photonView.IsMine)
             return;

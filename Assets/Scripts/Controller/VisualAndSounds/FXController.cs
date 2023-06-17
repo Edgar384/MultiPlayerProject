@@ -11,11 +11,13 @@ public class FXController :Singleton<FXController>
 {
 
 	[Header("Particles settings")]
-	[SerializeField] ParticleSystem AsphaltSmokeParticles;      //Asphalt smoke (Gray).
+	[SerializeField]
+	private ParticleSystem AsphaltSmokeParticles;      //Asphalt smoke (Gray).
 
 	[Header("Trail settings")]
-	[SerializeField] TrailRenderer TrailRef;                    //Trail ref, The lifetime of the tracks is configured in it.
-	[SerializeField] Transform TrailsHolder;                    //Parent for copy of TrailRef.
+	[SerializeField]
+	private TrailRenderer TrailRef;                    //Trail ref, The lifetime of the tracks is configured in it.
+	[SerializeField] private Transform TrailsHolder;                    //Parent for copy of TrailRef.
 
 
 	protected override void AwakeSingleton ()
@@ -33,7 +35,7 @@ public class FXController :Singleton<FXController>
 
 	#region Trail
 
-	Queue<TrailRenderer> FreeTrails = new Queue<TrailRenderer>();
+	private Queue<TrailRenderer> FreeTrails = new Queue<TrailRenderer>();
 
 	/// <summary>
 	/// Get first free trail and set start position.

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class CarSelectionStatus : MonoBehaviour
 {
-    [SerializeField] Image _notvaiAvailableImage;
+    [SerializeField] private Image _notvaiAvailableImage;
     private bool _isAvailable;
 
     private void OnEnable()

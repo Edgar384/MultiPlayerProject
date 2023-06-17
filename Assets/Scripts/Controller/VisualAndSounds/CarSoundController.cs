@@ -9,20 +9,22 @@ public class CarSoundController :MonoBehaviour
 {
 
     [Header("Engine sounds")]
-    [SerializeField] AudioClip EngineIdleClip;
-    [SerializeField] AudioClip EngineBackFireClip;
-    [SerializeField] float PitchOffset = 0.5f;
-    [SerializeField] AudioSource EngineSource;
+    [SerializeField]
+    private AudioClip EngineIdleClip;
+    [SerializeField] private AudioClip EngineBackFireClip;
+    [SerializeField] private float PitchOffset = 0.5f;
+    [SerializeField] private AudioSource EngineSource;
 
     [Header("Slip sounds")]
-    [SerializeField] AudioSource SlipSource;
-    [SerializeField] float MinSlipSound = 0.15f;
-    [SerializeField] float MaxSlipForSound = 1f;
+    [SerializeField]
+    private AudioSource SlipSource;
+    [SerializeField] private float MinSlipSound = 0.15f;
+    [SerializeField] private float MaxSlipForSound = 1f;
 
-    CarController CarController;
+    private CarController CarController;
 
-    float MaxRPM { get { return CarController.GetMaxRPM; } }
-    float EngineRPM { get { return CarController.EngineRPM; } }
+    private float MaxRPM { get { return CarController.GetMaxRPM; } }
+    private float EngineRPM { get { return CarController.EngineRPM; } }
 
     private void Awake ()
     {
@@ -30,7 +32,7 @@ public class CarSoundController :MonoBehaviour
         CarController.BackFireAction += PlayBackfire;
     }
 
-    void Update ()
+    private void Update ()
     {
 
         //Engine PRM sound
@@ -53,7 +55,7 @@ public class CarSoundController :MonoBehaviour
         }
     }
 
-    void PlayBackfire ()
+    private void PlayBackfire ()
     {
         EngineSource.PlayOneShot(EngineBackFireClip);
     }

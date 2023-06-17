@@ -1,4 +1,5 @@
 ﻿using System;
+using DefaultNamespace;
 using DefaultNamespace.SciptableObject.PlayerData;
 using Photon.Realtime;
 
@@ -9,22 +10,28 @@ namespace GarlicStudios.Online.Data
         public event Action<int,PlayerData> OnPlayerDataChanged;
         public event  Action<int,bool> OnPlayerReadyChanged;
 
-        private Player _player;
-        private PlayerData _playerData;
+        private readonly Player _photonData;
         
+        private PlayerData _playerData;
+
+        private LocalPlayer _localPlayer;
+        
+        public bool IsMasterClient => _photonData.IsMasterClient;
         public int ActorNumber { get;}
-        public bool IsMasterClient => _player.IsMasterClient;
         public string UserId { get;}
         public string NickName { get;}
-        public bool IsReady { get; set; }
+        public bool IsReady { get; private set; }
+
+        public Player PhotonData => _photonData;
+
         public PlayerData PlayerData => _playerData;
 
-        public OnlinePlayer(Player playerData)
+        public OnlinePlayer(Player photonDataData)
         {
-            _player = playerData;
-            ActorNumber = playerData.ActorNumber;
-            UserId = playerData.UserId;
-            NickName = playerData.NickName;
+            _photonData = photonDataData;
+            ActorNumber = photonDataData.ActorNumber;
+            UserId = photonDataData.UserId;
+            NickName = photonDataData.NickName;
             IsReady = false;
         }
 
@@ -33,8 +40,12 @@ namespace GarlicStudios.Online.Data
             _playerData = playerData;
             OnPlayerDataChanged?.Invoke(ActorNumber,_playerData);
         }
-        
 
+        public void SetLocalPlayer(LocalPlayer localPlayer)
+        {
+            _localPlayer = localPlayer;
+        }
+        
         public void SetMasterClient()
         {
             
@@ -44,5 +55,11 @@ namespace GarlicStudios.Online.Data
         {
             IsReady = isReady;
         }
+
+        #region RPC
+
+        
+
+        #endregion
     }
 }

@@ -5,8 +5,8 @@ using TMPro;
 
 public class PlayerInRoomUI : MonoBehaviour
 {
-    [SerializeField] TMP_Text _playerText;
-    [SerializeField] Image _playerImage;
+    [SerializeField] private TMP_Text _playerText;
+    [SerializeField] private Image _playerImage;
     
     public int ID { get; private set; }
 

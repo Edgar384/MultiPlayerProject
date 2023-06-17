@@ -11,10 +11,12 @@ public class OnlineMenuManager : MonoBehaviour
     [HideInInspector] public static OnlineMenuManager Instance;
 
     [Header("Canvases")]
-    [SerializeField] EnterNameHandler _enterNameMenu;
-    [SerializeField] LobbyMenuHandler _lobbyMenu;
-    [SerializeField] LobbyRoomUIListHandler _lobbyRoomUIListHandler;
-    [FormerlySerializedAs("_characterSelectionMenu")] [SerializeField] OnlineRoomUIHandler onlineRoomUI;
+    [SerializeField]
+    private EnterNameHandler _enterNameMenu;
+    [SerializeField] private LobbyMenuHandler _lobbyMenu;
+    [SerializeField] private LobbyRoomUIListHandler _lobbyRoomUIListHandler;
+    [FormerlySerializedAs("_characterSelectionMenu")] [SerializeField]
+    private OnlineRoomUIHandler onlineRoomUI;
 
     [SerializeField] private OnlineGameManager _onlineGameManager;
     

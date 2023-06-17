@@ -7,8 +7,8 @@ public class EnterNameHandler : MonoBehaviour
 {
     public event Action<string> OnNicknameEntered;
 
-    [SerializeField] TMP_InputField _nicknameInputField;
-    [SerializeField] Button _confirmNameButton;
+    [SerializeField] private TMP_InputField _nicknameInputField;
+    [SerializeField] private Button _confirmNameButton;
 
     private void Awake()
     {

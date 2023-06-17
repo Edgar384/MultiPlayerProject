@@ -15,7 +15,7 @@ public class TrackObject : MonoBehaviour
         CameraController.RegisterTrackObject(this);
     }
 
-    void Update()
+    private void Update()
     {
         _posOnScreen = _camera.WorldToScreenPoint(transform.position);
     }
