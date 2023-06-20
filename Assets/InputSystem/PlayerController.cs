@@ -40,7 +40,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""name"": ""Gass"",
                     ""type"": ""Value"",
                     ""id"": ""2744c1e7-9418-44db-8032-9a95ab004177"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Analog"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
