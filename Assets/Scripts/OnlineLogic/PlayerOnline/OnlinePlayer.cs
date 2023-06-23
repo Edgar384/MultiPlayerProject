@@ -21,6 +21,8 @@ namespace GarlicStudios.Online.Data
         public string UserId { get;}
         public string NickName { get;}
         public bool IsReady { get; private set; }
+        
+        public bool InScene => _localPlayer != null;
 
         public Player PhotonData => _photonData;
 

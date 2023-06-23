@@ -52,6 +52,8 @@ MonoBehaviour:
   - SendCarData_RPC
   - AddKnockBack_RPC
   - RegisterKnockBack_RPC
+  - OnKnockBackEvent_RPC
+  - SetSpawnPointStatus_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

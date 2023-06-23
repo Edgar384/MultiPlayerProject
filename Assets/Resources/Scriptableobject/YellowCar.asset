@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389feb6df1c04fae91dd368bb8ac8fa8, type: 3}
   m_Name: YellowCar
   m_EditorClassIdentifier: 
-  _preFabName: SunLineGTE_Drift
+  _preFabName: BananaCar

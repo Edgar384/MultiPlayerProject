@@ -31,9 +31,9 @@ namespace GarlicStudios.Online.Managers
         
         public static Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
         
-        public OnlinePlayer Player { get; private set; }
+        public static OnlinePlayer Player { get; private set; }
         
-        public OnlinePlayer MasterClient { get; private set; }
+        public static OnlinePlayer MasterClient { get; private set; }
         
         public bool IsAllReady => ConnectedPlayers.All(player => player.Value.IsReady);
 
