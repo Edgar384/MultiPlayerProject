@@ -52,6 +52,7 @@ public class CameraController : MonoBehaviour
 
     private void GetCamaraPosition()
     {
+        if(_trackObjects==null || _trackObjects.Count == 0) return;
         float wordLeftX = 0;
         float wordRightX = 0;
         float wordTopZ = 0;

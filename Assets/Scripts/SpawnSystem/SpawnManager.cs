@@ -29,7 +29,8 @@ namespace SpawnSystem
             {
                 RegisterSpawnPoint(spawnPoint);
             }
-            
+
+            if(OnlineRoomManager.Player is not null) 
             SpawnPlayer(OnlineRoomManager.Player);
         }
         
