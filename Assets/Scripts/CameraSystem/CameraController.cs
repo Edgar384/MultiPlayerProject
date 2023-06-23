@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +6,7 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
+    private static Camera _camera;
     private static List<TrackObject> _trackObjects;
 
     [SerializeField, Range(0, 50)]
@@ -30,6 +29,11 @@ public class CameraController : MonoBehaviour
     };
 #endif
 
+    private void Awake()
+    {
+        _camera = GetComponent<Camera>();
+    }
+
     public static void RegisterTrackObject(TrackObject trackObject)
     {
         _trackObjects ??= new List<TrackObject>();
@@ -42,46 +46,12 @@ public class CameraController : MonoBehaviour
         _trackObjects.Add(trackObject);
     }
 
-    private void OnValidate()
-    {
-        if (_camera == null)
-            _camera = GetComponent<Camera>();
-    }
-
-    private void Start()
-    {
-        foreach (var trackObject in _trackObjects)
-            trackObject.SetCamera(_camera);
-    }
-
     private void Update()=>
         GetCamaraPosition();
     
 
     private void GetCamaraPosition()
     {
-        // float screenLeftX = 0;
-        // float screenRightX = 0;
-        // float screenTopY = 0;
-        // float screenBottomY = 0;
-        //
-        // List<Vector2> posOnScreen;
-        //
-        // foreach (var objectPosition in _trackObjects.Select(trackObject => trackObject.PosOnScreen))
-        // {
-        //     if (objectPosition.x < screenLeftX || screenLeftX == 0)
-        //         screenLeftX = objectPosition.x - _framBuffer;
-        //
-        //     if (objectPosition.x > screenRightX || screenRightX == 0)
-        //         screenRightX = objectPosition.x + _framBuffer;
-        //
-        //     if (objectPosition.y < screenBottomY || screenBottomY == 0)
-        //         screenBottomY = objectPosition.y - _framBuffer;
-        //
-        //     if (objectPosition.y > screenTopY || screenTopY == 0)
-        //         screenTopY = objectPosition.y + _framBuffer;
-        // }
-
         float wordLeftX = 0;
         float wordRightX = 0;
         float wordTopZ = 0;

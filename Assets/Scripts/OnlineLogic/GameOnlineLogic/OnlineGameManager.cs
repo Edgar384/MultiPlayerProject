@@ -17,25 +17,14 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
 
     private bool _isCountingForStartGame;
 
-    private static SpawnManager _spawnManager;
 
     private bool _isGameStarted;
 
     private void Awake()
     {
-        
-        //PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
-
         DontDestroyOnLoad(gameObject);
         
         PhotonNetwork.AutomaticallySyncScene  = true;
-
-        _spawnManager = new SpawnManager();
-    }
-
-    public static void RegisterSpawnPoint(SpawnPoint spawnPoint)
-    {
-            _spawnManager.RegisterSpawnPoint(spawnPoint);
     }
 
     private void Start()
@@ -102,17 +91,6 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     }
     
     #region GameManagnet
-
-    public static void SpawnPlayers()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-        
-        foreach (var keyValuePair in OnlineRoomManager.ConnectedPlayers)
-        {
-            _spawnManager.SpawnPlayer(keyValuePair.Value);
-        }
-    }
 
     public void StartGameCountdown()
     {

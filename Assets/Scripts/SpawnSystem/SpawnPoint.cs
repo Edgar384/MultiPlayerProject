@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace SpawnSystem
 {
-    public class SpawnPoint : MonoBehaviour
+    [Serializable]
+    public class SpawnPoint
     {
+        [SerializeField] private Transform _spawnPoint;
         [SerializeField,ReadOnly] private int _id;
         private bool _isTaken;
 
@@ -13,10 +15,7 @@ namespace SpawnSystem
 
         public bool IsTaken => _isTaken;
 
-        private void Awake()
-        {
-            OnlineGameManager.RegisterSpawnPoint(this);
-        }
+        public Vector2 GetPosition => _spawnPoint.position;
 
         public void Init(int id)
         {
@@ -24,25 +23,13 @@ namespace SpawnSystem
             _isTaken = false;
         }
  
-        private void OnDrawGizmos()
+        public void DrawGizmos()
         {
-            Gizmos.DrawSphere(transform.position, 0.5f);
+            Gizmos.DrawSphere(_spawnPoint.position, 0.5f);
         }
 
         public void SetSpawnPointToTaken() =>
             _isTaken  = true;
-
-        // public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        // {
-        //     if (stream.IsWriting)
-        //     {
-        //         stream.SendNext(_isTaken);
-        //     }
-        //     else if(stream.IsReading)
-        //     {
-        //         _isTaken = (bool)stream.ReceiveNext();
-        //     }
-        // }
     }
 
 }
