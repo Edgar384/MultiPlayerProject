@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using GarlicStudios.CarPhysics.Wheel;
 using UnityEngine;
-using PG_Physics.Wheel;
 
 /// <summary>
 /// Wheel settings and update logic.
@@ -23,18 +21,18 @@ public struct Wheel
 	private WheelHit Hit;
 	private TrailRenderer Trail;
 
-	private PG_WheelCollider m_PGWC;
-	public PG_WheelCollider PG_WheelCollider
+	private WheelController m_PGWC;
+	public WheelController WheelController
 	{
 		get
 		{
 			if (m_PGWC == null)
 			{
-				m_PGWC = WheelCollider.GetComponent<PG_WheelCollider> ();
+				m_PGWC = WheelCollider.GetComponent<WheelController> ();
 			}
 			if (m_PGWC == null)
 			{
-				m_PGWC = WheelCollider.gameObject.AddComponent<PG_WheelCollider> ();
+				m_PGWC = WheelCollider.gameObject.AddComponent<WheelController> ();
 				m_PGWC.CheckFirstEnable ();
 			}
 			return m_PGWC;
@@ -112,8 +110,8 @@ public struct Wheel
 		WheelView.rotation = quat;
 	}
 
-	public void UpdateFrictionConfig (PG_WheelColliderConfig config)
+	public void UpdateFrictionConfig (WheelControllerConfig config)
 	{
-		PG_WheelCollider.UpdateConfig (config);
+		WheelController.UpdateConfig (config);
 	}
 }

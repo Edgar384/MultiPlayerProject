@@ -35,7 +35,7 @@ namespace GarlicStudios.Online.Managers
         
         public static OnlinePlayer MasterClient { get; private set; }
         
-        public bool IsAllReady => ConnectedPlayers.All(player => player.Value.IsReady);
+        public static bool IsAllReady => ConnectedPlayers.All(player => player.Value.IsReady);
 
         private void Awake()
         {

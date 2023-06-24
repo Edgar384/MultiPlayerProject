@@ -42,7 +42,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient && _onlineRoomManager.IsAllReady)
+        if (PhotonNetwork.IsMasterClient && OnlineRoomManager.IsAllReady)
             _start.interactable = true;
     }
 
