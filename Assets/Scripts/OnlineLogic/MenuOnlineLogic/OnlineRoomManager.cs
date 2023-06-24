@@ -27,7 +27,7 @@ namespace GarlicStudios.Online.Managers
         
         private bool[] _carAvailabilityList;
         
-        [SerializeField] private OnlineRoomUIHandler _uiHandler;
+        [SerializeField] private OnlineRoomUIHandler _uiHandler;//need to remove
         
         public static Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
         
