@@ -5144,7 +5144,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
@@ -5344,7 +5344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 54073378191953874}
-  _knockBackForceMultiplier: 1500
+  _knockBackForceMultiplier: 3000
 --- !u!114 &114274180005872914
 MonoBehaviour:
   m_ObjectHideFlags: 0
