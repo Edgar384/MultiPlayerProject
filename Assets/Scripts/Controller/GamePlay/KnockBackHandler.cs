@@ -57,7 +57,7 @@ namespace PG_Physics.Wheel
             var velocityMagnitude = (car.transform.position - transform.position).normalized * _rigidbody.velocity.magnitude * _knockBackForceMultiplier;
             
             photonView.RPC(REGISTER_KNOCKBACK_RPC,RpcTarget.MasterClient,
-                parameters: new object[] { car.photonView.Controller.ActorNumber, velocityMagnitude, photonView.Controller.ActorNumber });
+                parameters: new object[] { photonView.Controller.ActorNumber , velocityMagnitude ,car.photonView.Controller.ActorNumber});
         }
     }
 }
