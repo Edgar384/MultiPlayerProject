@@ -32,7 +32,7 @@ namespace PG_Physics.Wheel
             }
             
             photonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,velocity);
-            photonView.RPC(ON_KNOCKBACK_EVENT_RPC,player.PhotonData,attackPlayerId,hitedPlayerId);
+            photonView.RPC(ON_KNOCKBACK_EVENT_RPC,RpcTarget.AllViaServer,attackPlayerId,hitedPlayerId);
         }
         
         [PunRPC]
@@ -44,6 +44,7 @@ namespace PG_Physics.Wheel
         [PunRPC]
         private void AddKnockBack_RPC(Vector3 velocity)
         {
+            _rigidbody.AddForce(Vector3.up * _knockBackForceMultiplier / 4, ForceMode.Impulse);
             _rigidbody.AddForce(velocity, ForceMode.Impulse);
             Debug.Log("Add knockBack");
         }
@@ -54,7 +55,7 @@ namespace PG_Physics.Wheel
             
             if (!(_rigidbody.velocity.magnitude > car._rigidbody.velocity.magnitude)) return;
             
-            var velocityMagnitude = (car.transform.position - transform.position).normalized * _rigidbody.velocity.magnitude * _knockBackForceMultiplier;
+            var velocityMagnitude =  _rigidbody.velocity * _knockBackForceMultiplier;
             
             photonView.RPC(REGISTER_KNOCKBACK_RPC,RpcTarget.MasterClient,
                 parameters: new object[] { photonView.Controller.ActorNumber , velocityMagnitude ,car.photonView.Controller.ActorNumber});
