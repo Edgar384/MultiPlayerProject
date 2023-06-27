@@ -895,6 +895,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BananaCar
       objectReference: {fileID: 0}
+    - target: {fileID: 586159425492243846, guid: fca0a0d5abf526a428a1c0258c6ffb4c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 588032043694957324, guid: fca0a0d5abf526a428a1c0258c6ffb4c,
         type: 3}
       propertyPath: m_RootOrder
