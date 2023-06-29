@@ -4897,7 +4897,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -5332,33 +5332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb67c03a9a7bb745b02d885278296b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carController:
-    m_Name: Car Controller
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 3915589e-b60a-4b6e-b9a9-0cf7ea23dad5
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _brakeController:
-    m_Name: Brake Controller
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: cc3c9ae7-b37e-45b8-be05-eaaec5f9d526
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _abilityController:
-    m_Name: Ability Controller
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 0cb1779f-80ab-4326-a02c-4aea30244130
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!81 &81554163586931898
 AudioListener:
   m_ObjectHideFlags: 0

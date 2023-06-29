@@ -1,4 +1,6 @@
-﻿using GarlicStudios.Online.Managers;
+﻿using System;
+using System.Security.Cryptography;
+using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using UnityEngine;
 
@@ -12,8 +14,9 @@ namespace PG_Physics.Wheel
         
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _knockBackForceMultiplier;
-        
-        
+        [SerializeField] private float _magnitudeTrchholl;
+
+
         private void OnValidate()
         {
             _rigidbody ??= GetComponent<Rigidbody>();
@@ -51,6 +54,12 @@ namespace PG_Physics.Wheel
         
         private void OnCollisionEnter(Collision other)
         {
+            if (!photonView.IsMine) return;
+            
+            Debug.Log(_rigidbody.velocity.magnitude);
+
+            if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
+            
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
             
             if (!(_rigidbody.velocity.magnitude > car._rigidbody.velocity.magnitude)) return;

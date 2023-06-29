@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2277,7 +2277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe9ff3b22e6c9f46a42be66626eb95d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 963194227}
   _framBuffer: 20
   _speed: 1000
   _cameraAngle: 55
@@ -3604,6 +3603,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 785127028923153368, guid: fca0a0d5abf526a428a1c0258c6ffb4c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
     - target: {fileID: 8547758911899198066, guid: fca0a0d5abf526a428a1c0258c6ffb4c,
         type: 3}
       propertyPath: sceneViewId
