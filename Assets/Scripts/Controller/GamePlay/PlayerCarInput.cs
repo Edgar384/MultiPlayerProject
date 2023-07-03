@@ -65,7 +65,12 @@ public class PlayerCarInput : MonoBehaviourPun
         }
         else
         {
-             _vertical = _playerController.CarControl.Gass.ReadValue<float>();
+             float gass = _playerController.CarControl.Gass.ReadValue<float>();
+             float revers = _playerController.CarControl.Revers.ReadValue<float>();
+            if (gass > 0)
+                _vertical = gass;
+            else
+                _vertical = -revers;
              _horizontal = _playerController.CarControl.Steer.ReadValue<Vector2>().x;
             _brake = _playerController.CarControl.Break.IsPressed();
         }
