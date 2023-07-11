@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MainMenuManager: MonoBehaviour
 {
@@ -13,6 +15,14 @@ public class MainMenuManager: MonoBehaviour
     [SerializeField] private GameObject _onlineCanvas;
     [SerializeField] private GameObject _settingsCanvas;
 
+    [Header("Buttons")]
+    [SerializeField] private Button _playButton;
+    [SerializeField] private Button _settingsButton;
+    [SerializeField] private Button _quitButton;
+
+
+    [SerializeField] private EventSystem _eventSystem;
+
     private void Awake()
     {
         Instance = this;
@@ -24,6 +34,8 @@ public class MainMenuManager: MonoBehaviour
         _mainMenuCanvas.SetActive(true);
         _onlineCanvas.SetActive(false);
         _settingsCanvas.SetActive(false);
+
+        _eventSystem.firstSelectedGameObject = _playButton.gameObject;
     }
     public void Play()
     {
