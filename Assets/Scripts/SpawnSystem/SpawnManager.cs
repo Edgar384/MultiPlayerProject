@@ -18,7 +18,6 @@ namespace SpawnSystem
         private const string  SET_SPAWN_POINT_STATUS = nameof(SetSpawnPointStatus_RPC);
         
         [SerializeField] private SpawnPoint[] _spawnPoints;
-        [SerializeField] private OnlineGameManager _onlineGameManager;
         
         private int _spawnPointCount = 0;
         private Dictionary<int,SpawnPoint> _spawnPointDictionary;
@@ -55,9 +54,7 @@ namespace SpawnSystem
                 quaternion.identity).GetComponent<LocalPlayer>();
             
             localPlayer.SetOnlinePlayer(onlinePlayer);
-            
-            _onlineGameManager.AddLocalPlayer_RPC(localPlayer);
-                
+
             photonView.RPC(SET_SPAWN_POINT_STATUS,RpcTarget.AllViaServer,spawnPoint.ID);
         }
 

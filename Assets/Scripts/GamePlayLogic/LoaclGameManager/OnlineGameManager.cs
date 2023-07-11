@@ -22,17 +22,6 @@ namespace GamePlayLogic
         {
             _scoreManager.AddScore(localPlayer.KnockBackHandler.LeastAttackPlayerId);
         }
-        
-        [PunRPC]
-        public void AddLocalPlayer_RPC(LocalPlayer localPlayer)
-        {
-            photonView.RPC(nameof(AddLocalPlayer), RpcTarget.AllViaServer, localPlayer);
-        }
-        
-        private void AddLocalPlayer(LocalPlayer  localPlayer)
-        {
-            LocalPlayers.Add(localPlayer.PlayerId, localPlayer);
-        }
 
         private void OnDisable()
         {
