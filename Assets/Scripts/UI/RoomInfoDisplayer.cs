@@ -9,7 +9,8 @@ public class RoomInfoDisplayer : MonoBehaviour
     public event Action<string> OnJoinRoom;
 
     [SerializeField] private Button _joinRoomButton;
-    [SerializeField] private TextMeshProUGUI _roomInfoText;
+    [SerializeField] private GameTextLayers _roomInfoText;
+    [SerializeField] private GameTextLayers _playerCountInfoText;
     [SerializeField] public float Offset;
     public RoomInfo roomInfo { get; private set; }
     private string _roomName;
@@ -18,7 +19,8 @@ public class RoomInfoDisplayer : MonoBehaviour
     {
         this.roomInfo = roomInfo;
         _roomName = roomInfo.Name;
-        _roomInfoText.text = $"RoomName:{roomInfo.Name} Players In The room: {roomInfo.PlayerCount}/{roomInfo.MaxPlayers}";
+        _roomInfoText.ChangeText($"RoomName:{roomInfo.Name}");
+        _playerCountInfoText.ChangeText($"{roomInfo.PlayerCount}/{roomInfo.MaxPlayers}");
     }
 
     public void JoinRoom()
