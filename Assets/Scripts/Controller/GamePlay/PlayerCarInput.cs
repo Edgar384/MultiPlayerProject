@@ -57,19 +57,19 @@ public class PlayerCarInput : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
 
-        if (_keyBoardMode)
-        {
+       // if (_keyBoardMode)
+        //{
             _horizontal = _playerController.CarControl.Steer.ReadValue<Vector2>().x;
             _vertical = _playerController.CarControl.Steer.ReadValue<Vector2>().y;
             _brake = _playerController.CarControl.Break.IsPressed();
-        }
-        else
-        {
-             _vertical = _playerController.CarControl.Gass.ReadValue<float>();
-             _horizontal = _playerController.CarControl.Steer.ReadValue<Vector2>().x;
-            _brake = _playerController.CarControl.Break.IsPressed();
-        }
-        
+      //  }
+        // else
+        // {
+        //      _vertical = _playerController.CarControl.Gass.ReadValue<float>();
+        //      _horizontal = _playerController.CarControl.Steer.ReadValue<Vector2>().x;
+        //     _brake = _playerController.CarControl.Break.IsPressed();
+        // }
+        //
         _controlledCar.UpdateControls(_horizontal, _vertical, _brake);
     }
 }

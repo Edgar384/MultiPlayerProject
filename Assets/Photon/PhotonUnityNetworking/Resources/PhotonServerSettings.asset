@@ -54,6 +54,8 @@ MonoBehaviour:
   - RegisterKnockBack_RPC
   - OnKnockBackEvent_RPC
   - SetSpawnPointStatus_RPC
+  - AddScoreToPlayer
+  - AddLocalPlayer_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

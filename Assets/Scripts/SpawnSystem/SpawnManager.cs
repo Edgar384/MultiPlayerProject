@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DefaultNamespace;
+using GamePlayLogic;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
@@ -17,6 +18,8 @@ namespace SpawnSystem
         private const string  SET_SPAWN_POINT_STATUS = nameof(SetSpawnPointStatus_RPC);
         
         [SerializeField] private SpawnPoint[] _spawnPoints;
+        [SerializeField] private OnlineGameManager _onlineGameManager;
+        
         private int _spawnPointCount = 0;
         private Dictionary<int,SpawnPoint> _spawnPointDictionary;
         
@@ -31,14 +34,14 @@ namespace SpawnSystem
             }
 
             if(OnlineRoomManager.Player is not null) 
-            SpawnPlayer(OnlineRoomManager.Player);
+                SpawnPlayer(OnlineRoomManager.Player);
         }
         
        
         public void SpawnPlayer(OnlinePlayer onlinePlayer)
         {
-            if (onlinePlayer.InScene)
-                return;
+            // if (onlinePlayer.InScene)
+            //     return;
             
             SpawnPoint spawnPoint = AskForRandomSpawnPoint();
 
@@ -52,7 +55,9 @@ namespace SpawnSystem
                 spawnPoint.GetPosition,
                 quaternion.identity).GetComponent<LocalPlayer>();
             
-            onlinePlayer.SetLocalPlayer(localPlayer);
+            localPlayer.SetOnlinePlayer(onlinePlayer);
+            
+            _onlineGameManager.AddLocalPlayer_RPC(localPlayer);
                 
             photonView.RPC(SET_SPAWN_POINT_STATUS,RpcTarget.AllViaServer,spawnPoint.ID);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using DefaultNamespace;
 using DefaultNamespace.SciptableObject.PlayerData;
+using GamePlayLogic;
 using Photon.Realtime;
 
 namespace GarlicStudios.Online.Data
@@ -14,7 +15,6 @@ namespace GarlicStudios.Online.Data
         
         private PlayerData _playerData;
 
-        private LocalPlayer _localPlayer;
         
         public bool IsMasterClient => _photonData.IsMasterClient;
         public int ActorNumber { get;}
@@ -22,7 +22,7 @@ namespace GarlicStudios.Online.Data
         public string NickName { get;}
         public bool IsReady { get; private set; }
         
-        public bool InScene => _localPlayer != null;
+
 
         public Player PhotonData => _photonData;
 
@@ -35,6 +35,7 @@ namespace GarlicStudios.Online.Data
             UserId = photonDataData.UserId;
             NickName = photonDataData.NickName;
             IsReady = false;
+            
         }
 
         public void SetPlayerData(PlayerData playerData)
@@ -43,11 +44,6 @@ namespace GarlicStudios.Online.Data
             OnPlayerDataChanged?.Invoke(ActorNumber,_playerData);
         }
 
-        public void SetLocalPlayer(LocalPlayer localPlayer)
-        {
-            _localPlayer = localPlayer;
-        }
-        
         public void SetMasterClient()
         {
             
@@ -57,11 +53,5 @@ namespace GarlicStudios.Online.Data
         {
             IsReady = isReady;
         }
-
-        #region RPC
-
-        
-
-        #endregion
     }
 }
