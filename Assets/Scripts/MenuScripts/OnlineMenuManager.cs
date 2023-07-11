@@ -18,7 +18,7 @@ public class OnlineMenuManager : MonoBehaviour
     [FormerlySerializedAs("_characterSelectionMenu")] [SerializeField]
     private OnlineRoomUIHandler onlineRoomUI;
 
-    [SerializeField] private OnlineGameManager _onlineGameManager;
+    [SerializeField] private OnlineManager _onlineManager;
     
     public OnlineRoomUIHandler OnlineRoomUI => onlineRoomUI;
 
@@ -48,9 +48,9 @@ public class OnlineMenuManager : MonoBehaviour
         OnlineLobbyManager.OnRoomListUpdateEvent += _lobbyRoomUIListHandler.UpdateRoomUI;
         _lobbyMenu.OnRoomCreated += OnlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
-        _enterNameMenu.OnNicknameEntered += _onlineGameManager.ConnectedToMaster;
+        _enterNameMenu.OnNicknameEntered += _onlineManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
-        OnlineGameManager.OnConnectedToMasterEvent += MoveToLobbyMenu;
+        OnlineManager.OnConnectedToMasterEvent += MoveToLobbyMenu;
     }
 
     private void UnregisterEvents()
@@ -58,9 +58,9 @@ public class OnlineMenuManager : MonoBehaviour
         OnlineLobbyManager.OnRoomListUpdateEvent -= _lobbyRoomUIListHandler.UpdateRoomUI;
         _lobbyMenu.OnRoomCreated -= OnlineLobbyManager.CreateRoom;
         OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
-        _enterNameMenu.OnNicknameEntered -= _onlineGameManager.ConnectedToMaster;
+        _enterNameMenu.OnNicknameEntered -= _onlineManager.ConnectedToMaster;
         MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
-        OnlineGameManager.OnConnectedToMasterEvent -= MoveToLobbyMenu;
+        OnlineManager.OnConnectedToMasterEvent -= MoveToLobbyMenu;
     }
 
     private void CloseAllCanvases()

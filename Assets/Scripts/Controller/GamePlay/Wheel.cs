@@ -9,6 +9,7 @@ public struct Wheel
 {
 	public WheelCollider WheelCollider;
 	public Transform WheelView;
+	[SerializeField] private FXController FXController;
 	[SerializeField] private bool _disablePositionUpdate;
 	public float SlipForGenerateParticle;
 	public Vector3 TrailOffset;
@@ -39,7 +40,6 @@ public struct Wheel
 		}
 	}
 
-	private FXController FXController { get { return FXController.Instance; } }
 	private Vector3 HitPoint;
 
 	private const int SmoothValuesCount = 3;

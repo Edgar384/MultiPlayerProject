@@ -1,20 +1,28 @@
+using System;
 using DefaultNamespace;
 using UnityEngine;
 
-public class RestFallHandler : MonoBehaviour
+namespace Temp
 {
-    [SerializeField] private Transform _resetPos;
+    public class RestFallHandler : MonoBehaviour
+    {
+        public event Action<LocalPlayer> OnRestCarEvent;
 
-    private void RestCar(LocalPlayer player)
-    {
-        player.transform.position = _resetPos.position;
-    }
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.TryGetComponent(out LocalPlayer player))
+        [SerializeField] private Transform _resetPos;
+
+        private void RestCar(LocalPlayer player)
         {
-            RestCar(player);
+            OnRestCarEvent?.Invoke(player);
+            player.transform.position = _resetPos.position;
+        }
+    
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.TryGetComponent(out LocalPlayer player))
+            {
+                Debug.Log("RestCar");
+                RestCar(player);
+            }
         }
     }
 }

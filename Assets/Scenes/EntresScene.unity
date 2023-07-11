@@ -6555,7 +6555,7 @@ MonoBehaviour:
   _lobbyMenu: {fileID: 1882695873}
   _lobbyRoomUIListHandler: {fileID: 308688747}
   onlineRoomUI: {fileID: 373627079}
-  _onlineGameManager: {fileID: 1127268919}
+  _onlineManager: {fileID: 1127268919}
 --- !u!1 &1565507704
 GameObject:
   m_ObjectHideFlags: 0
