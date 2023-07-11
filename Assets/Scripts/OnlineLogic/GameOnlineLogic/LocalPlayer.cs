@@ -39,8 +39,8 @@ namespace DefaultNamespace
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
             OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
-            Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.ViewID}");
-            OnlineGameManager.LocalPlayers.Add(photonView.ViewID,this);
+            Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.Owner.ActorNumber}");
+            OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
         }
     }
 }

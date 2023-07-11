@@ -89,7 +89,7 @@ namespace PG_Physics.Wheel
             if (!(_rigidbody.velocity.magnitude > car._rigidbody.velocity.magnitude)) return;
             
             photonView.RPC(REGISTER_KNOCKBACK_RPC,RpcTarget.MasterClient,
-                parameters: new object[] { photonView.ViewID , _rigidbody.velocity ,car.photonView.ViewID});
+                parameters: new object[] { photonView.Controller.ActorNumber , _rigidbody.velocity ,car.photonView.Controller.ActorNumber});
         }
     }
 }
