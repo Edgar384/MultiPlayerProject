@@ -31,7 +31,10 @@ namespace GamePlayLogic
         private void AddScoreToPlayer(int playerId)
         {
             if (Players.TryGetValue(playerId, out var player))
+            {
+                Debug.Log($"Add score to player {playerId}");
                 player.ScoreHandler.AddScore(1);
+            }
 
             if (!PhotonNetwork.IsMasterClient) return;
             
