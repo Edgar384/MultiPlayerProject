@@ -1,66 +1,28 @@
-using System;
+using Photon.Pun.Demo.PunBasics;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MainMenuManager: MonoBehaviour
+public class MainMenuManager : MonoBehaviour
 {
-
-    public event Action<bool> OnPlayerWantToPlay;
-
-    [HideInInspector] public static MainMenuManager Instance;
-
-    [Header("Canvases")]
-    [SerializeField] private GameObject _mainMenuCanvas;
-    [SerializeField] private GameObject _onlineCanvas;
-    [SerializeField] private GameObject _settingsCanvas;
-
     [Header("Buttons")]
     [SerializeField] private Button _playButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _quitButton;
 
-
-    [SerializeField] private EventSystem _eventSystem;
-
-    private void Awake()
+    private void OnEnable()
     {
-        Instance = this;
-        ResetScene();
+        CanvasManager.Instance.EventSystem.firstSelectedGameObject = _playButton.gameObject;
     }
 
-    private void ResetScene()
+    private void SubscribeEvents()
     {
-        _mainMenuCanvas.SetActive(true);
-        _onlineCanvas.SetActive(false);
-        _settingsCanvas.SetActive(false);
-
-        _eventSystem.firstSelectedGameObject = _playButton.gameObject;
-    }
-    public void Play()
-    {
-        _mainMenuCanvas.SetActive(false);
-        _onlineCanvas.SetActive(true);
-        OnPlayerWantToPlay?.Invoke(true);
     }
 
-    public void OpenSettings()
+    private void UnsubscribeEvnents()
     {
-        _mainMenuCanvas.SetActive(false);
-        _settingsCanvas.SetActive(true);
+
     }
-
-    public void ReturnToMainMenu(bool isFromSettings)
-    {
-        if(isFromSettings) { _settingsCanvas.SetActive(false); }
-        else{ _onlineCanvas.SetActive(false); }
-
-        _mainMenuCanvas.SetActive(true);
-    }
-
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
-
 }
