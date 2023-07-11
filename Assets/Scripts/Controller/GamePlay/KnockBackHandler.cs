@@ -35,6 +35,7 @@ namespace PG_Physics.Wheel
 
         private void Update()
         {
+            //Debug.Log(_rigidbody.velocity.magnitude);
             //timer to clear the _leastAttackPlayerId field
             if (_leastAttackPlayerId == -1) return;
             
@@ -45,6 +46,7 @@ namespace PG_Physics.Wheel
                 _leastAttackPlayerId = -1;
                 _timeToClearAttackedPlayerCounter = _timeToClearAttackedPlayer;
             }
+
         }
 
         [PunRPC]

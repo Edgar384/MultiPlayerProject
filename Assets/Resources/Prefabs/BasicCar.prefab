@@ -5357,9 +5357,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 54073378191953874}
-  _knockBackForceMultiplier: 3000
-  _magnitudeTrchholl: 1.5
-  _timeToClearAttackedPlayer: 10
+  _knockBackForceMultiplier: 2700
+  _magnitudeTrchholl: 14
+  _timeToClearAttackedPlayer: 7
 --- !u!114 &114274180005872914
 MonoBehaviour:
   m_ObjectHideFlags: 0
