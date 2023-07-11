@@ -20,6 +20,7 @@ namespace Temp
         {
             if (other.gameObject.TryGetComponent(out LocalPlayer player))
             {
+                Debug.Log("RestCar");
                 RestCar(player);
             }
         }
