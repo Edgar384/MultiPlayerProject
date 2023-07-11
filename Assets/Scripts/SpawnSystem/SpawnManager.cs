@@ -36,8 +36,7 @@ namespace SpawnSystem
             if(OnlineRoomManager.Player is not null) 
                 SpawnPlayer(OnlineRoomManager.Player);
         }
-        
-       
+
         public void SpawnPlayer(OnlinePlayer onlinePlayer)
         {
             // if (onlinePlayer.InScene)
@@ -61,8 +60,7 @@ namespace SpawnSystem
                 
             photonView.RPC(SET_SPAWN_POINT_STATUS,RpcTarget.AllViaServer,spawnPoint.ID);
         }
-        
-        
+
         private SpawnPoint AskForRandomSpawnPoint()
         {
             List<SpawnPoint> availableSpawnPoints = new List<SpawnPoint>();
@@ -86,6 +84,7 @@ namespace SpawnSystem
         private void SetSpawnPointStatus_RPC(int spawnPointId)
         {
             _spawnPointDictionary[spawnPointId].SetSpawnPointToTaken();
+            Debug.Log($"SpawnPoint {spawnPointId} is taken");
         }
 
         public void RegisterSpawnPoint(SpawnPoint spawnPoint)

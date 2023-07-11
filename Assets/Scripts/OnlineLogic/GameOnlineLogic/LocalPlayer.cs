@@ -1,11 +1,12 @@
 ﻿using GamePlayLogic;
 using GarlicStudios.Online.Data;
 using PG_Physics.Wheel;
+using Photon.Pun;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class LocalPlayer : MonoBehaviour
+    public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback
     {
         [SerializeField] private PlayerCarInput _playerCarInput;
         [SerializeField] private KnockBackHandler _knockBackHandler; 
@@ -32,6 +33,12 @@ namespace DefaultNamespace
         {
             _knockBackHandler ??= GetComponent<KnockBackHandler>();
             _playerCarInput ??= GetComponent<PlayerCarInput>();
+        }
+
+        public void OnPhotonInstantiate(PhotonMessageInfo info)
+        {
+            Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.ViewID}");
+            OnlineGameManager.LocalPlayers.Add(photonView.ViewID,this);
         }
     }
 }
