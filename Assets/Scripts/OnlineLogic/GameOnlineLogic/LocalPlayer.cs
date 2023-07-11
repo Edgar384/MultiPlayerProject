@@ -1,5 +1,6 @@
 ﻿using GamePlayLogic;
 using GarlicStudios.Online.Data;
+using GarlicStudios.Online.Managers;
 using PG_Physics.Wheel;
 using Photon.Pun;
 using UnityEngine;
@@ -37,6 +38,7 @@ namespace DefaultNamespace
 
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
+            OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
             Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.ViewID}");
             OnlineGameManager.LocalPlayers.Add(photonView.ViewID,this);
         }
