@@ -73,9 +73,8 @@ namespace PG_Physics.Wheel
         private void AddKnockBack_RPC(Vector3 velocity,int attackPlayerId)
         {
             _leastAttackPlayerId = attackPlayerId;
-            _rigidbody.AddForce(Vector3.up * _knockBackForceMultiplier / 2, ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.up * _knockBackForceMultiplier, ForceMode.Impulse);
             _rigidbody.AddForce(velocity * _knockBackForceMultiplier, ForceMode.Impulse);
-            Debug.Log("Add knockBack");
         }
         
         private void OnCollisionEnter(Collision other)
@@ -86,7 +85,7 @@ namespace PG_Physics.Wheel
             
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
             
-            if (!(_rigidbody.velocity.magnitude > car._rigidbody.velocity.magnitude)) return;
+            if (_rigidbody.velocity.magnitude < car._rigidbody.velocity.magnitude) return;
             
             photonView.RPC(REGISTER_KNOCKBACK_RPC,RpcTarget.MasterClient,
                 parameters: new object[] { photonView.Controller.ActorNumber , _rigidbody.velocity ,car.photonView.Controller.ActorNumber});
