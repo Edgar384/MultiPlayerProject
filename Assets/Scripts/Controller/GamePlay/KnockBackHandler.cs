@@ -17,7 +17,8 @@ namespace PG_Physics.Wheel
 
         [SerializeField] private float _timeToClearAttackedPlayer;
         private float _timeToClearAttackedPlayerCounter;
-        
+
+        public Rigidbody Rigidbody => _rigidbody;
 
         private int _leastAttackPlayerId;
 
