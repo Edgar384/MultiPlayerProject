@@ -1779,7 +1779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreManager: {fileID: 1321846787}
-  _restFallHandler: {fileID: 0}
+  _restFallHandler: {fileID: 2070573378}
 --- !u!114 &2070573377
 MonoBehaviour:
   m_ObjectHideFlags: 0

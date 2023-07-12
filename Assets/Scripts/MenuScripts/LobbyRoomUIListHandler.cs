@@ -22,7 +22,7 @@ namespace DefaultNamespace.MenuScripts
             foreach (var room in roomList)
             {
                 var roomObject = Instantiate(_roomPrefab, _roomListParent).GetComponent<RoomInfoDisplayer>();
-                
+                roomObject.transform.rotation = _roomListParent.rotation;
                 roomObject.SetRoomInfo(room);
                 roomObject.OnJoinRoom += OnlineLobbyManager.JoinRoom;
                 _roomInfoDisplayers.Add(roomObject);
