@@ -1,8 +1,5 @@
 using System;
-using DefaultNamespace.MenuScripts;
-using GarlicStudios.Online.Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class OnlineMenuManager : MonoBehaviour
 {
@@ -11,10 +8,33 @@ public class OnlineMenuManager : MonoBehaviour
     [SerializeField] LobbyMenuManager _lobby;
     [SerializeField] OnlineRoomUIHandler _carSelection;
 
-    private void Awake()
+    public LobbyMenuManager Lobby => _lobby;
+    public OnlineRoomUIHandler Room => _carSelection;
+
+    private void Start()
+    {
+        _lobby.gameObject.SetActive(false);
+        _carSelection.gameObject.SetActive(false);
+        CanvasManager.Instance.OnPlayerPressedPlay += TurnOnLobby;
+    }
+
+    private void TurnOnLobby(bool isNewPlayer)
     {
         _lobby.gameObject.SetActive(true);
         _carSelection.gameObject.SetActive(false);
-        _lobby.ChangeLobbyVisual(true);
+        _lobby.ChangeLobbyVisual(isNewPlayer);
+    }
+
+    private void TurnOnRoom()
+    {
+        _lobby.gameObject.SetActive(false);
+        _carSelection.gameObject.SetActive(true);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        _lobby.gameObject.SetActive(false);
+        _carSelection.gameObject.SetActive(false);
+        OnReturnToMainMenu?.Invoke();
     }
 }

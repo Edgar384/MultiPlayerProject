@@ -31,7 +31,7 @@ public class LobbyMenuManager : MonoBehaviour
     private readonly Color grayColor = new Color(0.5f, 0.5f, 0.5f, 1);
     private readonly Color normalColor = new Color(255, 255, 255, 1);
 
-    private void Awake()
+    private void Start()
     {
         _enterNameHandler.OnNicknameEntered += ChangeToPlayerConnectedVisuals;
     }

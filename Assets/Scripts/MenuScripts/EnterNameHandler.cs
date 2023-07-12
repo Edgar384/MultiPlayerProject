@@ -1,7 +1,9 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class EnterNameHandler : MonoBehaviour
@@ -10,6 +12,7 @@ public class EnterNameHandler : MonoBehaviour
 
     [SerializeField] private TMP_InputField _nicknameInputField;
     [SerializeField] private Button _confirmNameButton;
+    [SerializeField] private EventTrigger _eventTrigger;
 
     private bool _playerConnected;
     private Navigation _noneNavigation = new Navigation();
@@ -28,8 +31,18 @@ public class EnterNameHandler : MonoBehaviour
             return;
 
         CanvasManager.Instance.EventSystem.SetSelectedGameObject(_nicknameInputField.gameObject);
-        if (Input.GetKeyDown(KeyCode.KeypadEnter) ||CanvasManager.Instance.EventSystem.currentInputModule.input.GetButtonDown("Submit"))
-            ConfirmName();
+        //if (Input.GetKeyDown(KeyCode.KeypadEnter) ||CanvasManager.Instance.EventSystem.currentInputModule.input.GetButtonDown("Submit"))
+        //    ConfirmName();
+    }
+
+    public void OnSelect(BaseEventData data)
+    {
+        Debug.Log("OnSelect called.");
+    }
+
+    public void OnSubmit(BaseEventData data)
+    {
+        Debug.Log("OnSelect called.");
     }
 
     public void ConfirmName()

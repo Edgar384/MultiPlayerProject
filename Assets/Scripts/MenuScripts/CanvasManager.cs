@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CanvasManager: MonoBehaviour
 {
 
-    public event Action<bool> OnPlayerWantToPlay;
+    public event Action<bool> OnPlayerPressedPlay;
 
     [HideInInspector] public static CanvasManager Instance;
 
@@ -24,22 +24,19 @@ public class CanvasManager: MonoBehaviour
     {
         Instance = this;
         ResetScene();
+        _onlineCanvas.OnReturnToMainMenu += ReturnToMainMenu;
     }
 
     private void ResetScene()
     {
         _mainMenuCanvas.gameObject.SetActive(true);
-        _onlineCanvas.gameObject.SetActive(false);
         _settingsCanvas.gameObject.SetActive(false);
-
-        
     }
     public void Play()
     {
         _mainMenuCanvas.gameObject.SetActive(false);
-        _onlineCanvas.gameObject.SetActive(true);
         _settingsCanvas.gameObject.SetActive(false);
-        OnPlayerWantToPlay?.Invoke(true);
+        OnPlayerPressedPlay?.Invoke(true);
     }
 
     public void OpenSettings()
@@ -48,12 +45,9 @@ public class CanvasManager: MonoBehaviour
         _settingsCanvas.gameObject.SetActive(true);
     }
 
-    public void ReturnToMainMenu(bool isFromSettings)
+    public void ReturnToMainMenu()
     {
-        if(isFromSettings) { _settingsCanvas.SetActive(false); }
-        else{ _onlineCanvas.SetActive(false); }
-
-        _mainMenuCanvas.SetActive(true);
+        ResetScene();
     }
 
     public void ExitGame()
