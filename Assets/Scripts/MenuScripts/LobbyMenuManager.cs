@@ -33,7 +33,8 @@ public class LobbyMenuManager : MonoBehaviour
 
     private void Start()
     {
-        _enterNameHandler.OnNicknameEntered += ChangeToPlayerConnectedVisuals;
+        EnterNameHandler.OnNicknameEntered += ChangeToPlayerConnectedVisuals;
+        CanvasManager.Instance.InputSystemUIInputModule.cancel.ToInputAction().performed += CanvasManager.Instance.OnlineMenuManager.ReturnToMainMenu;
     }
 
     public void CreateRoom()

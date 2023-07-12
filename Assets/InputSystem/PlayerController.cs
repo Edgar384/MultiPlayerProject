@@ -342,11 +342,11 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""eca228f1-b64a-4ebb-8d1c-b33ee02fabe1"",
+                    ""id"": ""d6de870e-3fad-401f-b72a-06a74cb74bf2"",
                     ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard"",
+                    ""groups"": """",
                     ""action"": ""Confirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

@@ -16,6 +16,7 @@ namespace DefaultNamespace.MenuScripts
         private void Awake()
         {
             _roomInfoDisplayers  = new List<RoomInfoDisplayer>();
+            OnlineLobbyManager.OnRoomListUpdateEvent += UpdateRoomUI;
         }
 
         public void UpdateRoomUI(List<RoomInfo> roomList)
@@ -23,7 +24,6 @@ namespace DefaultNamespace.MenuScripts
             foreach (var room in roomList)
             {
                 var roomObject = Instantiate(_roomPrefab, _roomListParent).GetComponent<RoomInfoDisplayer>();
-                
                 roomObject.SetRoomInfo(room);
                 roomObject.OnJoinRoom += OnlineLobbyManager.JoinRoom;
                 _roomInfoDisplayers.Add(roomObject);
@@ -38,6 +38,11 @@ namespace DefaultNamespace.MenuScripts
             {
                 roomInfoDisplayer.OnJoinRoom -= OnlineLobbyManager.JoinRoom;
             }
+        }
+
+        private void OnDestroy()
+        {
+            OnlineLobbyManager.OnRoomListUpdateEvent -= UpdateRoomUI;
         }
     }
 }

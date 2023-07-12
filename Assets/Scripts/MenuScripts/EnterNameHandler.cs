@@ -4,17 +4,18 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class EnterNameHandler : MonoBehaviour
 {
-    public event Action<string> OnNicknameEntered;
+    public static event Action<string> OnNicknameEntered;
 
     [SerializeField] private TMP_InputField _nicknameInputField;
     [SerializeField] private Button _confirmNameButton;
-    [SerializeField] private EventTrigger _eventTrigger;
-
-    private bool _playerConnected;
+    
     private Navigation _noneNavigation = new Navigation();
     private Navigation _autoNavigation = new Navigation();
 
@@ -22,35 +23,25 @@ public class EnterNameHandler : MonoBehaviour
     {
         _noneNavigation.mode = Navigation.Mode.None;
         _confirmNameButton.navigation = _noneNavigation;
-        
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (_playerConnected)
-            return;
-
         CanvasManager.Instance.EventSystem.SetSelectedGameObject(_nicknameInputField.gameObject);
-        //if (Input.GetKeyDown(KeyCode.KeypadEnter) ||CanvasManager.Instance.EventSystem.currentInputModule.input.GetButtonDown("Submit"))
-        //    ConfirmName();
+        CanvasManager.Instance.InputSystemUIInputModule.submit.ToInputAction().performed += ConfirmName;
     }
 
-    public void OnSelect(BaseEventData data)
+    private void OnDisable()
     {
-        Debug.Log("OnSelect called.");
+        CanvasManager.Instance.InputSystemUIInputModule.submit.ToInputAction().performed -= ConfirmName;
     }
 
-    public void OnSubmit(BaseEventData data)
-    {
-        Debug.Log("OnSelect called.");
-    }
-
-    public void ConfirmName()
+    public void ConfirmName(CallbackContext callbackContext)
     {
         if (_nicknameInputField.text != string.Empty)
         {
             OnNicknameEntered?.Invoke(_nicknameInputField.text);
-            _playerConnected = true;
+            _confirmNameButton.navigation = _autoNavigation;
         }
     }
 }

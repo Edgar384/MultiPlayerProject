@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -12,9 +13,31 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _quitButton;
 
-    private void OnEnable()
+
+    private void Awake()
     {
-        CanvasManager.Instance.EventSystem.firstSelectedGameObject = _playButton.gameObject;
+        OnReturnToMenu();
+    }
+
+    private void Start()
+    {
+        CanvasManager.Instance.OnReturnedToMainMenu += OnReturnToMenu;
+        CanvasManager.Instance.InputSystemUIInputModule.submit.ToInputAction().performed += DebugCheck;
+    }
+
+    private void OnDestroy()
+    {
+        CanvasManager.Instance.OnReturnedToMainMenu -= OnReturnToMenu;
+    }
+
+    private void OnReturnToMenu()
+    {
+        CanvasManager.Instance.EventSystem.SetSelectedGameObject(_playButton.gameObject);
+    }
+
+    private void DebugCheck(CallbackContext callbackContext)
+    {
+        Debug.Log("submit");
     }
 
     private void SubscribeEvents()

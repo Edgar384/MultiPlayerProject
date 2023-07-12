@@ -1,36 +1,48 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class CanvasManager: MonoBehaviour
 {
 
     public event Action<bool> OnPlayerPressedPlay;
+    public event Action OnReturnedToMainMenu;
 
     [HideInInspector] public static CanvasManager Instance;
 
     [Header("EventSystem")]
     [SerializeField] private EventSystem _eventSystem;
+    [SerializeField] private InputSystemUIInputModule _uiInputModule;
 
     [Header("Canvases")]
     [SerializeField] private MainMenuManager _mainMenuCanvas;
     [SerializeField] private OnlineMenuManager _onlineCanvas;
     [SerializeField] private GameObject _settingsCanvas;
 
+    public OnlineMenuManager OnlineMenuManager => _onlineCanvas;
     public EventSystem EventSystem => _eventSystem;
+    public InputSystemUIInputModule InputSystemUIInputModule => _uiInputModule;
 
     private void Awake()
     {
         Instance = this;
         ResetScene();
-        _onlineCanvas.OnReturnToMainMenu += ReturnToMainMenu;
+        _onlineCanvas.OnOnlineCanvasDisabled += ReturnToMainMenu;
+    }
+
+    private void OnDestroy()
+    {
+        _onlineCanvas.OnOnlineCanvasDisabled -= ReturnToMainMenu;
     }
 
     private void ResetScene()
     {
         _mainMenuCanvas.gameObject.SetActive(true);
         _settingsCanvas.gameObject.SetActive(false);
+        OnReturnedToMainMenu?.Invoke();
     }
     public void Play()
     {
@@ -46,6 +58,11 @@ public class CanvasManager: MonoBehaviour
     }
 
     public void ReturnToMainMenu()
+    {
+        ResetScene();
+    }
+
+    public void ReturnToMainMenu(CallbackContext callbackContext)
     {
         ResetScene();
     }

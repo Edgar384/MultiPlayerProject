@@ -19,7 +19,7 @@ public class RoomInfoDisplayer : MonoBehaviour
     {
         this.roomInfo = roomInfo;
         _roomName = roomInfo.Name;
-        _roomInfoText.ChangeText($"RoomName:{roomInfo.Name}");
+        _roomInfoText.ChangeText($"{roomInfo.Name}");
         _playerCountInfoText.ChangeText($"{roomInfo.PlayerCount}/{roomInfo.MaxPlayers}");
     }
 

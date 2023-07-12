@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -28,6 +29,14 @@ public class OnlineManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         _isGameStarted = false;
+        CanvasManager.Instance.OnlineMenuManager.OnOnlineCanvasDisabled += DisconnectPlayer;
+        EnterNameHandler.OnNicknameEntered += ConnectedToMaster;
+    }
+
+    private void OnDestroy()
+    {
+        CanvasManager.Instance.OnlineMenuManager.OnOnlineCanvasDisabled -= DisconnectPlayer;
+        EnterNameHandler.OnNicknameEntered -= ConnectedToMaster;
     }
 
     private void Update()
@@ -87,7 +96,27 @@ public class OnlineManager : MonoBehaviourPunCallbacks
     {
         base.OnDisconnected(cause);
     }
-    
+
+    public void DisconnectPlayer()
+    {
+        if (PhotonNetwork.IsConnected == true)
+        {
+            Debug.Log("Starting Disconnect. . .");
+            StartCoroutine(Disconnect());
+        }
+    }
+
+    private IEnumerator Disconnect()
+    {
+        PhotonNetwork.Disconnect();
+        while (PhotonNetwork.IsConnected)
+        {
+            yield return null;
+            Debug.Log("Disconnecting. . .");
+        }
+        Debug.Log("DISCONNECTED!");
+    }
+
     #region GameManagnet
 
     public void StartGameCountdown()
