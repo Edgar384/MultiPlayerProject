@@ -13,6 +13,7 @@ namespace DefaultNamespace.MenuScripts
         [SerializeField] private GameObject _roomPrefab;
         [SerializeField] private Transform _roomListParent;
 
+        public int GetRoomCount => _roomInfoDisplayers.Count;
         private void Awake()
         {
             _roomInfoDisplayers  = new List<RoomInfoDisplayer>();
@@ -30,6 +31,14 @@ namespace DefaultNamespace.MenuScripts
                 
                 Debug.Log($"Room add to room list room name: {room.Name}");
             }
+        }
+
+        public RoomInfoDisplayer GetRoom(int roomIndex)
+        {
+            if (_roomInfoDisplayers.Count < roomIndex)
+                return _roomInfoDisplayers[roomIndex];
+
+            throw new Exception("Doesnt have room in this index");
         }
 
         private void OnDisable()

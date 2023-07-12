@@ -765,6 +765,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 47bbb8938bf4c0f448bb7b8befe040e2, type: 3}
   _joinRoomImage: {fileID: 640045756}
   _joinRoomObject: {fileID: 640045754}
+  _lobbyRoomUIListHandler: {fileID: 392254444}
   _createRoomImage: {fileID: 1637374617}
   _createRoomObject: {fileID: 1637374615}
   _roomNameInput: {fileID: 122000440}

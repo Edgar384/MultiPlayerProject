@@ -1,3 +1,4 @@
+using DefaultNamespace.MenuScripts;
 using System;
 using TMPro;
 using Unity.VisualScripting;
@@ -24,6 +25,7 @@ public class LobbyMenuManager : MonoBehaviour
     [SerializeField] private GameObject _joinRoomObject;
 
     [Header("Rooom Creation")]
+    [SerializeField] private LobbyRoomUIListHandler _lobbyRoomUIListHandler;
     [SerializeField] private Image _createRoomImage;
     [SerializeField] private GameObject _createRoomObject;
     [SerializeField] private TMP_InputField _roomNameInput;
@@ -33,7 +35,7 @@ public class LobbyMenuManager : MonoBehaviour
 
     private void Start()
     {
-        EnterNameHandler.OnNicknameEntered += ChangeToPlayerConnectedVisuals;
+        OnlineManager.OnConnectedToMasterEvent += ChangeToPlayerConnectedVisuals;
         CanvasManager.Instance.InputSystemUIInputModule.cancel.ToInputAction().performed += CanvasManager.Instance.OnlineMenuManager.ReturnToMainMenu;
     }
 
@@ -47,13 +49,13 @@ public class LobbyMenuManager : MonoBehaviour
         OnJoinedRoom?.Invoke(_roomNameInput.text);
     }
 
-    public void ChangeLobbyVisual(bool isNewPlayer, string playerName=null)
+    public void ChangeLobbyVisual(bool isNewPlayer)
     {
         if (isNewPlayer)
             ChangeToNewPlayerVisuals();
 
         else
-            ChangeToPlayerConnectedVisuals(playerName);
+            ChangeToPlayerConnectedVisuals();
     }
 
     private void ChangeToNewPlayerVisuals()
@@ -66,11 +68,17 @@ public class LobbyMenuManager : MonoBehaviour
         _createRoomImage.color = grayColor;
     }
 
-    private void ChangeToPlayerConnectedVisuals(string _playerName)
+    private void ChangeToPlayerConnectedVisuals()
     {
         _currentPlayerNameImage.sprite = _playerNameImages[1]; //change sprite to gray
         _joinRoomImage.color = normalColor;
         _createRoomImage.color = normalColor;
         _lobbyLogo.color = normalColor;
+        if (_lobbyRoomUIListHandler.GetRoomCount > 0)
+            CanvasManager.Instance.EventSystem.SetSelectedGameObject(_lobbyRoomUIListHandler.GetRoom(0).gameObject);
+
+        else
+            CanvasManager.Instance.EventSystem.SetSelectedGameObject(_roomNameInput.gameObject);
+
     }
 }
