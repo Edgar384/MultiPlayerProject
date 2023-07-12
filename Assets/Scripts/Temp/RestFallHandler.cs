@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Temp
 {
-    public class RestFallHandler : MonoBehaviour
+    public class RestFallHandler : MonoBehaviourPun
     {
         public event Action<LocalPlayer> OnRestCarEvent;
 
@@ -25,8 +25,7 @@ namespace Temp
             if (other.gameObject.TryGetComponent(out LocalPlayer player))
             {
                 Debug.Log("RestCar");
-                player.KnockBackHandler.Rigidbody.velocity = Vector3.zero;
-                player.transform.rotation = Quaternion.Euler(Vector3.zero);
+                player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,_resetPos.position);
                 RestCar(player);
             }
         }

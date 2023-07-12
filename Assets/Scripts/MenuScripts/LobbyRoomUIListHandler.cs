@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GarlicStudios.Online.Managers;
 using Photon.Realtime;
 using UnityEngine;

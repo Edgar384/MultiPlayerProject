@@ -35,7 +35,15 @@ namespace DefaultNamespace
             _knockBackHandler ??= GetComponent<KnockBackHandler>();
             _playerCarInput ??= GetComponent<PlayerCarInput>();
         }
-
+        
+        [PunRPC]
+        private void RestPlayer_RPC(Vector3 pos)
+        {
+            transform.position = pos;
+            _knockBackHandler.Rigidbody.velocity = Vector3.zero;
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+        
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
             OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];

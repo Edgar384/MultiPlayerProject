@@ -829,7 +829,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1304950689}
   - component: {fileID: 1304950690}
-  - component: {fileID: 1304950691}
   m_Layer: 0
   m_Name: MapHandler
   m_TagString: Untagged
@@ -866,19 +865,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 500, y: 0, z: 500}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1304950691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304950687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62b45d34125ae34dbff4155ec222f2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _resetPos: {fileID: 730437323}
 --- !u!1001 &1307982083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1075,7 +1061,6 @@ MonoBehaviour:
     _id: 0
   - _spawnPoint: {fileID: 1987033249}
     _id: 0
-  _onlineGameManager: {fileID: 2070573376}
 --- !u!114 &1321846786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,6 +1743,7 @@ GameObject:
   - component: {fileID: 2070573375}
   - component: {fileID: 2070573376}
   - component: {fileID: 2070573377}
+  - component: {fileID: 2070573378}
   m_Layer: 0
   m_Name: LoaclGameManager
   m_TagString: Untagged
@@ -1793,7 +1779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreManager: {fileID: 1321846787}
-  _restFallHandler: {fileID: 1304950691}
+  _restFallHandler: {fileID: 0}
 --- !u!114 &2070573377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1816,6 +1802,19 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2070573378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070573374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62b45d34125ae34dbff4155ec222f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resetPos: {fileID: 730437323}
 --- !u!1 &2093126899 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3803330615829163648, guid: 57cf726d8fdf17943bd3a4680bc58c89,
