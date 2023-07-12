@@ -37,7 +37,7 @@ namespace DefaultNamespace
         }
         
         [PunRPC]
-        private void RestPlayer_RPC(int x,int y, int z)
+        private void RestPlayer_RPC(float x,float y, float z)
         {
             transform.position = new Vector3(x,y,z);
             _knockBackHandler.Rigidbody.velocity = Vector3.zero;
