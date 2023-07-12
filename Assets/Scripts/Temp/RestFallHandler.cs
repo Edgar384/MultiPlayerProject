@@ -25,7 +25,7 @@ namespace Temp
             if (other.gameObject.TryGetComponent(out LocalPlayer player))
             {
                 Debug.Log("RestCar");
-                player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,_resetPos.position);
+                player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,_resetPos.position.x,_resetPos.position.y,_resetPos.position.z);
                 RestCar(player);
             }
         }

@@ -37,9 +37,9 @@ namespace DefaultNamespace
         }
         
         [PunRPC]
-        private void RestPlayer_RPC(Vector3 pos)
+        private void RestPlayer_RPC(int x,int y, int z)
         {
-            transform.position = pos;
+            transform.position = new Vector3(x,y,z);
             _knockBackHandler.Rigidbody.velocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(Vector3.zero);
         }
