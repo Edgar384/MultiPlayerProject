@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: TitanOneReg
   m_EditorClassIdentifier: 
-  hashCode: 416918980
+  hashCode: -500416526
   material: {fileID: -1811840528990234354}
-  materialHashCode: 2009710180
+  materialHashCode: 441407250
   m_Version: 1.1.0
   m_SourceFontFileGUID: b08a1f484f2f44e4ba4cb22e5f631ba8
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: b08a1f484f2f44e4ba4cb22e5f631ba8,
