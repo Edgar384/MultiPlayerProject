@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GarlicStudios.Online.Managers;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace DefaultNamespace.MenuScripts
 {
     public class LobbyRoomUIListHandler : MonoBehaviour
     {
+        public event Action OnRoomListVisualUpdated;
         private List<RoomInfoDisplayer> _roomInfoDisplayers;
         
         [SerializeField] private GameObject _roomPrefab;
@@ -31,11 +33,12 @@ namespace DefaultNamespace.MenuScripts
                 
                 Debug.Log($"Room add to room list room name: {room.Name}");
             }
+            OnRoomListVisualUpdated?.Invoke();
         }
 
         public RoomInfoDisplayer GetRoom(int roomIndex)
         {
-            if (_roomInfoDisplayers.Count < roomIndex)
+            if (_roomInfoDisplayers.Count >= roomIndex)
                 return _roomInfoDisplayers[roomIndex];
 
             throw new Exception("Doesnt have room in this index");

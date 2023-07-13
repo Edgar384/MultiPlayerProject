@@ -12,7 +12,7 @@ namespace GarlicStudios.Online.Managers
         public static event Action<short,string> OnJoinedRoomFailedEvent;
         public static event Action<List<RoomInfo>> OnRoomListUpdateEvent;
 
-        private List<RoomInfo> RoomList { get; set; }
+        public static List<RoomInfo> RoomList {  get; private set; }
 
         private void Awake()
         {

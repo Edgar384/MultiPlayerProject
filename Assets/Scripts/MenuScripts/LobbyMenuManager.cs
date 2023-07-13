@@ -35,7 +35,7 @@ public class LobbyMenuManager : MonoBehaviour
 
     private void Start()
     {
-        OnlineManager.OnConnectedToMasterEvent += ChangeToPlayerConnectedVisuals;
+        _lobbyRoomUIListHandler.OnRoomListVisualUpdated += ChangeToPlayerConnectedVisuals;
         CanvasManager.Instance.InputSystemUIInputModule.cancel.ToInputAction().performed += CanvasManager.Instance.OnlineMenuManager.ReturnToMainMenu;
     }
 

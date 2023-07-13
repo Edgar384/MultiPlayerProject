@@ -14,7 +14,6 @@ public class EnterNameHandler : MonoBehaviour
     public static event Action<string> OnNicknameEntered;
 
     [SerializeField] private TMP_InputField _nicknameInputField;
-    [SerializeField] private Button _confirmNameButton;
     
     private Navigation _noneNavigation = new Navigation();
     private Navigation _autoNavigation = new Navigation();
@@ -22,7 +21,6 @@ public class EnterNameHandler : MonoBehaviour
     private void Awake()
     {
         _noneNavigation.mode = Navigation.Mode.None;
-        _confirmNameButton.navigation = _noneNavigation;
     }
 
     private void OnEnable()
@@ -41,7 +39,7 @@ public class EnterNameHandler : MonoBehaviour
         if (_nicknameInputField.text != string.Empty)
         {
             OnNicknameEntered?.Invoke(_nicknameInputField.text);
-            _confirmNameButton.navigation = _autoNavigation;
         }
+        gameObject.SetActive(false);
     }
 }
