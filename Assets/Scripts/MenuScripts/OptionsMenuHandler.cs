@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.Audio;
 using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.InputSystem;
+using System;
 
 public class OptionsMenuHandler : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class OptionsMenuHandler : MonoBehaviour
     [SerializeField] AudioMixer _audioMixer;
     [SerializeField] TMP_Text _audioText;
     [SerializeField] Slider _audioSlider;
+    [SerializeField] Image _handleImage;
     private float _currentVolume;
     private float _changedVolume;
 
@@ -30,6 +32,7 @@ public class OptionsMenuHandler : MonoBehaviour
     [SerializeField] TMP_Text _windowModeText;
     private bool _isFullScreen;
     private List<string> _windowModeTexts = new List<string>() {"Full Screen","Windows Mode"};
+    private int _currentTextWindowModeIndex;
 
     [Header("Quality")]
     [SerializeField] TMP_Text _qualityText;
@@ -49,6 +52,7 @@ public class OptionsMenuHandler : MonoBehaviour
         SetQualityText();
         SetVolumeStatusText(_audioSlider.value);
         CanvasManager.Instance.EventSystem.SetSelectedGameObject(_audioSlider.gameObject);
+        _handleImage.SetNativeSize();
     }
 
     private void OnDisable()
@@ -89,13 +93,15 @@ public class OptionsMenuHandler : MonoBehaviour
     {
         if (Screen.fullScreen)
         {
-            _windowModeText.text = _windowModeTexts[0];
+            _currentTextWindowModeIndex = 0;
+            _windowModeText.text = _windowModeTexts[_currentTextWindowModeIndex];
             _isFullScreen = true;
         }
 
         else
         {
-            _windowModeText.text = _windowModeTexts[1];
+            _currentTextWindowModeIndex = 1;
+            _windowModeText.text = _windowModeTexts[_currentTextWindowModeIndex];
             _isFullScreen = false;
         }
     }
@@ -127,6 +133,7 @@ public class OptionsMenuHandler : MonoBehaviour
         //_audioMixer.SetFloat("Volume", _changedVolume);
         _currentVolume = _changedVolume;
         AudioListener.volume = _currentVolume;
+        _handleImage.SetNativeSize();
     }
 
     public void SetVolumeStatusText(float volume)
@@ -136,15 +143,6 @@ public class OptionsMenuHandler : MonoBehaviour
     #endregion
 
 
-
-
-    //public void NextOption()
-    //{
-    //    _cars[_selectedCharacterIndex].gameObject.SetActive(false);
-    //    _selectedCharacterIndex = (_selectedCharacterIndex + 1) % _cars.Length; //For making a loop
-    //    _cars[_selectedCharacterIndex].gameObject.SetActive(true);
-    //    CheckCarAvailability();
-    //}
 
     //public void PreviousOption()
     //{
@@ -166,21 +164,113 @@ public class OptionsMenuHandler : MonoBehaviour
     private void CheckInput(CallbackContext callbackContext)
     {
         Vector2 input = _playerController.UI.Navigate.ReadValue<Vector2>();
-        if ((input.x > -0.016 && input.x < 0.016) && (input.y > -0.016 && input.y < 0.016))
+        if (input.x == 0)
+            return;
+
+        else if(input.x == -1)
             MoveToLeftOption();
 
-        else if (((input.x > -0.016 && input.x < 0.016) && (input.y == 1)))
+        else if (input.x == 1)
             MoveToRightOption();
     }
 
     private void MoveToLeftOption()
     {
-        Debug.Log("Move Left");
+        GameObject gameObject = CanvasManager.Instance.EventSystem.currentSelectedGameObject;
+        if (gameObject == _audioSlider.gameObject)
+            return;
+        else if (gameObject == _resolutionText.gameObject)
+            PreviousOption(0);
+
+        else if (gameObject == _windowModeText.gameObject)
+            PreviousOption(1);
+
+        else if (gameObject == _qualityText.gameObject)
+            PreviousOption(2);
     }
 
     private void MoveToRightOption()
     {
-        Debug.Log("Move Right");
+        GameObject gameObject = CanvasManager.Instance.EventSystem.currentSelectedGameObject;
+        if (gameObject == _audioSlider.gameObject)
+            return;
+        else if (gameObject == _resolutionText.gameObject)
+            NextOption(0);
+
+        else if (gameObject == _windowModeText.gameObject)
+            NextOption(1);
+
+        else if (gameObject == _qualityText.gameObject)
+            NextOption(2);
     }
 
+    /// <summary>
+    /// 0-Resolutions, 1-Window Mode, 2-Quality
+    /// </summary>
+    /// <param name="switchOption"></param>
+    private void NextOption(int switchOption)
+    {
+        switch (switchOption)
+        {
+            case 0: //Resolutions
+                {
+                    _currentTextResolutionIndex++;
+                    if (_currentTextResolutionIndex == _resolutionsStrings.Count)
+                        _currentTextResolutionIndex = 0;
+                    _resolutionText.text = _resolutionsStrings[_currentTextResolutionIndex];
+                    break;
+                }
+            case 1: //Window Mode
+                {
+                    _currentTextWindowModeIndex++;
+                    if (_currentTextWindowModeIndex == _windowModeTexts.Count)
+                        _currentTextWindowModeIndex = 0;
+                    _windowModeText.text = _windowModeTexts[_currentTextWindowModeIndex];
+                    break;
+                }
+            case 2: //Quality
+                {
+                    _currentQualityIndex++;
+                    if (_currentQualityIndex == _qualitysStrings.Count)
+                        _currentQualityIndex = 0;
+                    _qualityText.text = _qualitysStrings[_currentQualityIndex];
+                    break;
+                }
+        }
+    }
+
+    /// <summary>
+    /// 0-Resolutions, 1-Window Mode, 2-Quality
+    /// </summary>
+    /// <param name="switchOption"></param>
+    private void PreviousOption(int switchOption)
+    {
+        switch (switchOption)
+        {
+            case 0: //Resolutions
+                {
+                    _currentTextResolutionIndex--;
+                    if (_currentTextResolutionIndex == -1)
+                        _currentTextResolutionIndex = _resolutionsStrings.Count-1;
+                    _resolutionText.text = _resolutionsStrings[_currentTextResolutionIndex];
+                    break;
+                }
+            case 1: //Window Mode
+                {
+                    _currentTextWindowModeIndex--;
+                    if (_currentTextWindowModeIndex == -1)
+                        _currentTextWindowModeIndex = _windowModeTexts.Count-1;
+                    _windowModeText.text = _windowModeTexts[_currentTextWindowModeIndex];
+                    break;
+                }
+            case 2: //Quality
+                {
+                    _currentQualityIndex--;
+                    if (_currentQualityIndex == -1)
+                        _currentQualityIndex = _qualitysStrings.Count-1;
+                    _qualityText.text = _qualitysStrings[_currentQualityIndex];
+                    break;
+                }
+        }
+    }
 }
