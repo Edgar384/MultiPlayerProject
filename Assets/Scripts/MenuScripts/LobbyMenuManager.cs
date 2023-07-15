@@ -29,6 +29,7 @@ public class LobbyMenuManager : MonoBehaviour
     [SerializeField] private LobbyRoomUIListHandler _lobbyRoomUIListHandler;
     [SerializeField] private Image _createRoomImage;
     [SerializeField] private GameObject _createRoomObject;
+    [SerializeField] private GameObject _createRoomButton;
     [SerializeField] private TMP_InputField _roomNameInput;
 
     private bool _isConnected=false;
@@ -85,10 +86,16 @@ public class LobbyMenuManager : MonoBehaviour
         _createRoomImage.color = normalColor;
         _lobbyLogo.color = normalColor;
         if (_lobbyRoomUIListHandler.GetRoomCount > 0)
+        {
             CanvasManager.Instance.EventSystem.SetSelectedGameObject(_lobbyRoomUIListHandler.GetRoom(0).gameObject);
+            _createRoomButton.SetActive(false);
+        }
 
         else
+        {
             CanvasManager.Instance.EventSystem.SetSelectedGameObject(_roomNameInput.gameObject);
+            _createRoomButton.SetActive(true);
+        }
 
         CanvasManager.Instance.PlayerController.UI.Navigate.performed += CheckInput;
 
@@ -110,7 +117,10 @@ public class LobbyMenuManager : MonoBehaviour
     private void MoveToRightOption()
     {
         if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _roomNameInput)
+        {
             CanvasManager.Instance.EventSystem.SetSelectedGameObject(_roomNameInput.gameObject);
+            _createRoomButton.SetActive(true);
+        }
     }
 
     private void MoveToLeftOption()
@@ -118,7 +128,10 @@ public class LobbyMenuManager : MonoBehaviour
         if (_lobbyRoomUIListHandler.GetRoomCount > 0)
         {
             if (CanvasManager.Instance.EventSystem.currentSelectedGameObject == _roomNameInput.gameObject)
+            {
                 CanvasManager.Instance.EventSystem.SetSelectedGameObject(_lobbyRoomUIListHandler.GetRoom(0).gameObject);
+                _createRoomButton.SetActive(false);
+            }
         }
     }
 }

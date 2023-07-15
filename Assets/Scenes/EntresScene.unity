@@ -824,6 +824,7 @@ GameObject:
   - component: {fileID: 122000442}
   - component: {fileID: 122000441}
   - component: {fileID: 122000440}
+  - component: {fileID: 122000443}
   m_Layer: 5
   m_Name: RoomInputField
   m_TagString: Untagged
@@ -988,6 +989,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122000438}
   m_CullTransparentMesh: 1
+--- !u!114 &122000443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122000438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce49398ed45ce4f47915d4ccc612cabf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roomName: {fileID: 122000440}
 --- !u!1 &144652366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1690,6 +1704,7 @@ MonoBehaviour:
   _lobbyRoomUIListHandler: {fileID: 268068723}
   _createRoomImage: {fileID: 1637374617}
   _createRoomObject: {fileID: 1637374615}
+  _createRoomButton: {fileID: 1282796687}
   _roomNameInput: {fileID: 122000440}
 --- !u!114 &268068723
 MonoBehaviour:
