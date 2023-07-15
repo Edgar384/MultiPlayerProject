@@ -20,14 +20,14 @@ public class CanvasManager: MonoBehaviour
     [Header("Canvases")]
     [SerializeField] private MainMenuManager _mainMenuCanvas;
     [SerializeField] private OnlineMenuManager _onlineCanvas;
-    [SerializeField] private GameObject _settingsCanvas;
+    [SerializeField] private OptionsMenuHandler _settingsCanvas;
 
     public OnlineMenuManager OnlineMenuManager => _onlineCanvas;
     public EventSystem EventSystem => _eventSystem;
     public InputSystemUIInputModule InputSystemUIInputModule => _uiInputModule;
 
-    public PlayerController _playerController;
     private bool _keyBoardMode = true;
+    public PlayerController PlayerController { get; private set; }
 
 
     private void Awake()
@@ -35,6 +35,8 @@ public class CanvasManager: MonoBehaviour
         Instance = this;
         ResetScene();
         _onlineCanvas.OnOnlineCanvasDisabled += ReturnToMainMenu;
+        PlayerController = new PlayerController();
+        PlayerController.UI.Enable();
     }
 
     private void OnDestroy()
@@ -105,8 +107,8 @@ public class CanvasManager: MonoBehaviour
 
     private void CheckControllerInput()
     {
-        _playerController = new PlayerController();
-        _playerController.UI.Enable();
+        PlayerController = new PlayerController();
+        PlayerController.UI.Enable();
         GetControllerButtons();
         //CanvasManager.Instance.InputSystemUIInputModule.actionsAsset.a
     }

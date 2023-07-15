@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class LobbyMenuManager : MonoBehaviour
 {
@@ -29,14 +30,22 @@ public class LobbyMenuManager : MonoBehaviour
     [SerializeField] private Image _createRoomImage;
     [SerializeField] private GameObject _createRoomObject;
     [SerializeField] private TMP_InputField _roomNameInput;
-    
+
+    private bool _isConnected=false;
     private readonly Color grayColor = new Color(0.5f, 0.5f, 0.5f, 1);
     private readonly Color normalColor = new Color(255, 255, 255, 1);
 
-    private void Start()
+    private void OnEnable()
     {
         _lobbyRoomUIListHandler.OnRoomListVisualUpdated += ChangeToPlayerConnectedVisuals;
-        CanvasManager.Instance.InputSystemUIInputModule.cancel.ToInputAction().performed += CanvasManager.Instance.OnlineMenuManager.ReturnToMainMenu;
+       CanvasManager.Instance.PlayerController.UI.Back.performed += CanvasManager.Instance.OnlineMenuManager.ReturnToMainMenu;
+    }
+
+    private void OnDisable()
+    {
+        CanvasManager.Instance.PlayerController.UI.Back.performed -= CanvasManager.Instance.OnlineMenuManager.ReturnToMainMenu;
+        if(_isConnected)
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed -= CheckInput;
     }
 
     public void CreateRoom()
@@ -70,6 +79,7 @@ public class LobbyMenuManager : MonoBehaviour
 
     private void ChangeToPlayerConnectedVisuals()
     {
+        _isConnected = true;
         _currentPlayerNameImage.sprite = _playerNameImages[1]; //change sprite to gray
         _joinRoomImage.color = normalColor;
         _createRoomImage.color = normalColor;
@@ -80,5 +90,35 @@ public class LobbyMenuManager : MonoBehaviour
         else
             CanvasManager.Instance.EventSystem.SetSelectedGameObject(_roomNameInput.gameObject);
 
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed += CheckInput;
+
+    }
+
+    private void CheckInput(CallbackContext callbackContext)
+    {
+        Vector2 input = CanvasManager.Instance.PlayerController.UI.Navigate.ReadValue<Vector2>();
+        if (input.x == 0)
+            return;
+
+        else if (input.x == -1) //Left
+            MoveToLeftOption();
+
+        else if (input.x == 1) //Right
+            MoveToRightOption();
+    }
+
+    private void MoveToRightOption()
+    {
+        if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _roomNameInput)
+            CanvasManager.Instance.EventSystem.SetSelectedGameObject(_roomNameInput.gameObject);
+    }
+
+    private void MoveToLeftOption()
+    {
+        if (_lobbyRoomUIListHandler.GetRoomCount > 0)
+        {
+            if (CanvasManager.Instance.EventSystem.currentSelectedGameObject == _roomNameInput.gameObject)
+                CanvasManager.Instance.EventSystem.SetSelectedGameObject(_lobbyRoomUIListHandler.GetRoom(0).gameObject);
+        }
     }
 }

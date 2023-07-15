@@ -249,6 +249,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CreateRoom/ResetSettings"",
+                    ""type"": ""Button"",
+                    ""id"": ""457bc783-c215-40aa-b101-8aad4ad05add"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -372,6 +381,28 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""422651c5-f67b-417f-bbae-5f5225851c14"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CreateRoom/ResetSettings"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""526a6ace-4257-46ad-b520-7a97e3522535"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CreateRoom/ResetSettings"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -413,6 +444,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
+        m_UI_CreateRoomResetSettings = m_UI.FindAction("CreateRoom/ResetSettings", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -555,6 +587,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Navigate;
     private readonly InputAction m_UI_Confirm;
     private readonly InputAction m_UI_Back;
+    private readonly InputAction m_UI_CreateRoomResetSettings;
     public struct UIActions
     {
         private @PlayerController m_Wrapper;
@@ -562,6 +595,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         public InputAction @Confirm => m_Wrapper.m_UI_Confirm;
         public InputAction @Back => m_Wrapper.m_UI_Back;
+        public InputAction @CreateRoomResetSettings => m_Wrapper.m_UI_CreateRoomResetSettings;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -580,6 +614,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Back.started += instance.OnBack;
             @Back.performed += instance.OnBack;
             @Back.canceled += instance.OnBack;
+            @CreateRoomResetSettings.started += instance.OnCreateRoomResetSettings;
+            @CreateRoomResetSettings.performed += instance.OnCreateRoomResetSettings;
+            @CreateRoomResetSettings.canceled += instance.OnCreateRoomResetSettings;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -593,6 +630,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Back.started -= instance.OnBack;
             @Back.performed -= instance.OnBack;
             @Back.canceled -= instance.OnBack;
+            @CreateRoomResetSettings.started -= instance.OnCreateRoomResetSettings;
+            @CreateRoomResetSettings.performed -= instance.OnCreateRoomResetSettings;
+            @CreateRoomResetSettings.canceled -= instance.OnCreateRoomResetSettings;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -641,5 +681,6 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         void OnNavigate(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnCreateRoomResetSettings(InputAction.CallbackContext context);
     }
 }

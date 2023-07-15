@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 1
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -4076,7 +4076,6 @@ GameObject:
   m_Component:
   - component: {fileID: 791704417}
   - component: {fileID: 791704416}
-  - component: {fileID: 791704415}
   - component: {fileID: 791704418}
   m_Layer: 0
   m_Name: CarSelectionCamera
@@ -4085,14 +4084,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &791704415
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 791704414}
-  m_Enabled: 1
 --- !u!20 &791704416
 Camera:
   m_ObjectHideFlags: 0
@@ -8406,7 +8397,7 @@ MonoBehaviour:
   _uiInputModule: {fileID: 1967605949}
   _mainMenuCanvas: {fileID: 1976114610}
   _onlineCanvas: {fileID: 392254443}
-  _settingsCanvas: {fileID: 9597487}
+  _settingsCanvas: {fileID: 9597489}
 --- !u!1 &1569610836
 GameObject:
   m_ObjectHideFlags: 0

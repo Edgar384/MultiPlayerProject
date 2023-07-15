@@ -26,12 +26,12 @@ public class EnterNameHandler : MonoBehaviour
     private void OnEnable()
     {
         CanvasManager.Instance.EventSystem.SetSelectedGameObject(_nicknameInputField.gameObject);
-        CanvasManager.Instance.InputSystemUIInputModule.submit.ToInputAction().performed += ConfirmName;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed += ConfirmName;
     }
 
     private void OnDisable()
     {
-        CanvasManager.Instance.InputSystemUIInputModule.submit.ToInputAction().performed -= ConfirmName;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed -= ConfirmName;
     }
 
     public void ConfirmName(CallbackContext callbackContext)

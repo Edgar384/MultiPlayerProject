@@ -10,9 +10,6 @@ using System;
 
 public class OptionsMenuHandler : MonoBehaviour
 {
-    [Header("Input Action")]
-    [SerializeField] private PlayerController _playerController;
-
     [Header("Audio")]
     [SerializeField] AudioMixer _audioMixer;
     [SerializeField] TMP_Text _audioText;
@@ -42,11 +39,9 @@ public class OptionsMenuHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerController = new PlayerController();
-        _playerController.UI.Enable();
-        _playerController.UI.Confirm.performed += ApplyChanges;
-        _playerController.UI.Back.performed += CanvasManager.Instance.ReturnToMainMenu;
-        _playerController.UI.Navigate.performed += CheckInput;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed += ApplyChanges;
+        CanvasManager.Instance.PlayerController.UI.Back.performed += CanvasManager.Instance.ReturnToMainMenu;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed += CheckInput;
         GetScreenResolution();
         SetWindowScreenStatusText();
         SetQualityText();
@@ -57,8 +52,9 @@ public class OptionsMenuHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        //_playerController.UI.Confirm.performed -= ApplyChanges;
-        //_playerController.UI.Back.performed -= CanvasManager.Instance.ReturnToMainMenu;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed -= ApplyChanges;
+        CanvasManager.Instance.PlayerController.UI.Back.performed -= CanvasManager.Instance.ReturnToMainMenu;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed -= CheckInput;
     }
 
 
@@ -142,18 +138,6 @@ public class OptionsMenuHandler : MonoBehaviour
     }
     #endregion
 
-
-
-    //public void PreviousOption()
-    //{
-    //    _cars[_selectedCharacterIndex].gameObject.SetActive(false);
-    //    _selectedCharacterIndex--;
-    //    if (_selectedCharacterIndex < 0)
-    //        _selectedCharacterIndex += _cars.Length;
-    //    _cars[_selectedCharacterIndex].gameObject.SetActive(true);
-    //    CheckCarAvailability();
-    //}
-
     public void ApplyChanges(CallbackContext callbackContext)
     {
         SetResolution();
@@ -163,7 +147,7 @@ public class OptionsMenuHandler : MonoBehaviour
 
     private void CheckInput(CallbackContext callbackContext)
     {
-        Vector2 input = _playerController.UI.Navigate.ReadValue<Vector2>();
+        Vector2 input = CanvasManager.Instance.PlayerController.UI.Navigate.ReadValue<Vector2>();
         if (input.x == 0)
             return;
 
@@ -273,4 +257,5 @@ public class OptionsMenuHandler : MonoBehaviour
                 }
         }
     }
+
 }

@@ -16,36 +16,22 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
-        OnReturnToMenu();
+        ResetSceneSettings();
     }
 
     private void Start()
     {
-        CanvasManager.Instance.OnReturnedToMainMenu += OnReturnToMenu;
-        CanvasManager.Instance.InputSystemUIInputModule.submit.ToInputAction().performed += DebugCheck;
+        CanvasManager.Instance.OnReturnedToMainMenu += ResetSceneSettings;
     }
 
     private void OnDestroy()
     {
-        CanvasManager.Instance.OnReturnedToMainMenu -= OnReturnToMenu;
+        CanvasManager.Instance.OnReturnedToMainMenu -= ResetSceneSettings;
     }
 
-    private void OnReturnToMenu()
+    private void ResetSceneSettings()
     {
         CanvasManager.Instance.EventSystem.SetSelectedGameObject(_playButton.gameObject);
-    }
-
-    private void DebugCheck(CallbackContext callbackContext)
-    {
-        Debug.Log("submit");
-    }
-
-    private void SubscribeEvents()
-    {
-    }
-
-    private void UnsubscribeEvnents()
-    {
-
+        CanvasManager.Instance.EventSystem.enabled = true;
     }
 }

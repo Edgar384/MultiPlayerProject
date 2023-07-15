@@ -51,7 +51,6 @@ public class OnlineMenuManager : MonoBehaviour
             return;
         _lobby.gameObject.SetActive(false);
         _carSelection.gameObject.SetActive(false);
-        CanvasManager.Instance.InputSystemUIInputModule.enabled = true;
         OnOnlineCanvasDisabled?.Invoke();
     }
 }

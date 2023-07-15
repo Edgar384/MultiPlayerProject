@@ -227,6 +227,15 @@
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CreateRoom/ResetSettings",
+                    "type": "Button",
+                    "id": "457bc783-c215-40aa-b101-8aad4ad05add",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -348,6 +357,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "422651c5-f67b-417f-bbae-5f5225851c14",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CreateRoom/ResetSettings",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "526a6ace-4257-46ad-b520-7a97e3522535",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "CreateRoom/ResetSettings",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
