@@ -8,7 +8,7 @@ public class CarSelectionStatus : MonoBehaviour
 
     private void OnEnable()
     {
-        _notvaiAvailableImage.gameObject.SetActive(!_isAvailable);
+        //_notvaiAvailableImage.gameObject.SetActive(!_isAvailable);
     }
 
     public bool CheckIfCarIsFree() { return _isAvailable; }

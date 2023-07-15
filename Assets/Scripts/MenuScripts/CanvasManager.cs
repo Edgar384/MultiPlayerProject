@@ -26,6 +26,10 @@ public class CanvasManager: MonoBehaviour
     public EventSystem EventSystem => _eventSystem;
     public InputSystemUIInputModule InputSystemUIInputModule => _uiInputModule;
 
+    public PlayerController _playerController;
+    private bool _keyBoardMode = true;
+
+
     private void Awake()
     {
         Instance = this;
@@ -70,6 +74,41 @@ public class CanvasManager: MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    private void GetControllerButtons()
+    {
+        string[] controllerNames = Input.GetJoystickNames();
+
+        if (controllerNames.Length > 0)
+        {
+            _keyBoardMode = false;
+
+            foreach (var controllerName in controllerNames)
+            {
+                if (controllerName.Length == 19)
+                {
+                    Debug.Log("<color=#00ff00>PS4 CONTROLLER IS CONNECTED</color>");
+                }
+
+                if (controllerName.Length == 33)
+                {
+                    Debug.Log("<color=#00ff00>XBOX ONE CONTROLLER IS CONNECTED</color>");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("<color=#ff0000>Non CONTROLLER IS CONNECTED</color>");
+        }
+    }
+
+    private void CheckControllerInput()
+    {
+        _playerController = new PlayerController();
+        _playerController.UI.Enable();
+        GetControllerButtons();
+        //CanvasManager.Instance.InputSystemUIInputModule.actionsAsset.a
     }
 
 }
