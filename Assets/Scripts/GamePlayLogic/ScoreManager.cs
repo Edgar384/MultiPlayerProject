@@ -30,6 +30,7 @@ namespace GamePlayLogic
         [PunRPC]
         private void AddScoreToPlayer(int playerId)
         {
+            Debug.Log($"Add score to {playerId}");
             if (Players.TryGetValue(playerId, out var player))
             {
                 Debug.Log($"Add score to player {playerId}");

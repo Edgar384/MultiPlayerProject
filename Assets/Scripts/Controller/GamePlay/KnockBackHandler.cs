@@ -1,5 +1,4 @@
-﻿using System;
-using GarlicStudios.Online.Managers;
+﻿using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using UnityEngine;
 
@@ -36,22 +35,24 @@ namespace PG_Physics.Wheel
 
         private void Update()
         {
-            //Debug.Log(_rigidbody.velocity.magnitude);
-            //timer to clear the _leastAttackPlayerId field
-            if (_leastAttackPlayerId == -1) return;
+            if (_leastAttackPlayerId == -1)
+            {
+                _timeToClearAttackedPlayerCounter = _timeToClearAttackedPlayer;
+                return;
+            }
             
             _timeToClearAttackedPlayerCounter -= Time.deltaTime;
             
             if (_timeToClearAttackedPlayerCounter <= 0)
             {
-                _leastAttackPlayerId = -1;
+                //_leastAttackPlayerId = -1;
                 _timeToClearAttackedPlayerCounter = _timeToClearAttackedPlayer;
             }
 
         }
 
         [PunRPC]
-        private void RegisterKnockBack_RPC(int attackPlayerId, Vector3 velocity, int hitedPlayerId)
+        private void RegisterKnockBack_RPC(int attackPlayerId,float x , float y ,float z, int hitedPlayerId)
         {
             if (!PhotonNetwork.IsMasterClient)
                 return;
@@ -62,7 +63,7 @@ namespace PG_Physics.Wheel
                 return;
             }
             
-            photonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,velocity,attackPlayerId);
+            photonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,x,y,z,attackPlayerId);
             photonView.RPC(ON_KNOCKBACK_EVENT_RPC,RpcTarget.AllViaServer,attackPlayerId,hitedPlayerId);
         }
         
@@ -73,13 +74,18 @@ namespace PG_Physics.Wheel
         }
         
         [PunRPC]
-        private void AddKnockBack_RPC(Vector3 velocity,int attackPlayerId)
+        private void AddKnockBack_RPC(float x,float y , float z ,int attackPlayerId)
         {
-            _leastAttackPlayerId = attackPlayerId;
+            Debug.Log($"Add a knock back from {attackPlayerId}");
+            photonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
             _rigidbody.AddForce(Vector3.up * _knockBackForceMultiplier, ForceMode.Impulse);
-            _rigidbody.AddForce(velocity * _knockBackForceMultiplier, ForceMode.Impulse);
+            _rigidbody.AddForce(new Vector3(x,y,z) * _knockBackForceMultiplier, ForceMode.Impulse);
         }
         
+        [PunRPC]
+        private void UpdateLastHitPlayer(int  playerId)=>
+            _leastAttackPlayerId = playerId;
+
         private void OnCollisionEnter(Collision other)
         {
             if (!photonView.IsMine) return;
@@ -89,9 +95,10 @@ namespace PG_Physics.Wheel
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
             
             if (_rigidbody.velocity.magnitude < car._rigidbody.velocity.magnitude) return;
-            
+
+            var velocity = _rigidbody.velocity;
             photonView.RPC(REGISTER_KNOCKBACK_RPC,RpcTarget.MasterClient,
-                parameters: new object[] { photonView.Controller.ActorNumber , _rigidbody.velocity ,car.photonView.Controller.ActorNumber});
+                parameters: new object[] { photonView.Controller.ActorNumber , velocity.x,velocity.y,velocity.z ,car.photonView.Controller.ActorNumber});
         }
     }
 }

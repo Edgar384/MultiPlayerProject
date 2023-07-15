@@ -57,6 +57,7 @@ MonoBehaviour:
   - AddScoreToPlayer
   - AddLocalPlayer_RPC
   - RestPlayer_RPC
+  - UpdateLastHitPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

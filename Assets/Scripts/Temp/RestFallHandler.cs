@@ -14,7 +14,6 @@ namespace Temp
         private void RestCar(LocalPlayer player)
         {
             OnRestCarEvent?.Invoke(player);
-            player.transform.position = _resetPos.position;
         }
     
         private void OnTriggerEnter(Collider other)
