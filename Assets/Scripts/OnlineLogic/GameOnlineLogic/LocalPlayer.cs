@@ -28,7 +28,6 @@ namespace DefaultNamespace
         public void SetOnlinePlayer(OnlinePlayer onlinePlayer)
         {
             OnlinePlayer = onlinePlayer;
-            onlinePlayer.SetPhotonView(photonView);
         }
 
         private void OnValidate()
@@ -48,6 +47,7 @@ namespace DefaultNamespace
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
             OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
+            OnlinePlayer.SetPhotonView(photonView);
             Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.Owner.ActorNumber}");
             OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
         }
