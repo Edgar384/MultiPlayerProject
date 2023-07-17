@@ -1,5 +1,6 @@
 using DefaultNamespace;
 using GamePlayLogic;
+using GarlicStudios.Online.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,6 @@ using UnityEngine;
 public class ResultsUIHandler : MonoBehaviour
 {
     [SerializeField] ResultsObject[] resultsObjects = new ResultsObject[4];
-    //We can combine them to SO if we want
-    [SerializeField] Sprite[] _playersBackgrounds = new Sprite[4]; 
-    [SerializeField] Sprite[] _playersPics = new Sprite[4];
 
     private List<LocalPlayer> _organizedList;
 
@@ -40,7 +38,7 @@ public class ResultsUIHandler : MonoBehaviour
         _organizedList = players.OrderByDescending(players => players.ScoreHandler.Score).ToList(); //Need to check that the list is of the right class
         for (int i = 0; i < players.Count; i++)
         {
-            resultsObjects[i].RefreshVisuals(_playersBackgrounds[_organizedList[i].PlayerId], _playersPics[_organizedList[i].PlayerId], _organizedList[i].name, _organizedList[i].ScoreHandler.Score.ToString());
+            resultsObjects[i].RefreshVisuals(OnlineRoomManager.PlayerDatas[_organizedList[i].PlayerId], _organizedList[i].name, _organizedList[i].ScoreHandler.Score.ToString());
         }
     }
 }

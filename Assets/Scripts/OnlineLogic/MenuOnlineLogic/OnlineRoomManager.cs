@@ -26,6 +26,7 @@ namespace GarlicStudios.Online.Managers
         [SerializeField] private PlayerData[] _playerDatas;
 
         public static Dictionary<PlayerData, bool> NewCarAvailabilityList;
+        public static Dictionary<int, PlayerData> PlayerDatas;
         public static bool[] CarAvailabilityList;
         
         [SerializeField] private OnlineRoomUIHandler _uiHandler;//need to remove
@@ -42,6 +43,11 @@ namespace GarlicStudios.Online.Managers
         {
             DontDestroyOnLoad(gameObject);
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
+            PlayerDatas = new Dictionary<int, PlayerData>();
+            for (int i = 0; i < _playerDatas.Length; i++)
+            {
+                PlayerDatas.Add(i, _playerDatas[i]);
+            }
         }
 
         public void OnCharacterSelect(int carIndex, bool isReady)

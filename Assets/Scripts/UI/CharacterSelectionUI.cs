@@ -1,4 +1,5 @@
 using DefaultNamespace.SciptableObject.PlayerData;
+using GarlicStudios.Online.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,7 +13,8 @@ public class CharacterSelectionUI : MonoBehaviour
     [SerializeField] private GameObject _onHover;
     [SerializeField] private GameObject _selected;
     [SerializeField] private GameTextLayers _playerName;
-    [SerializeField] private PlayerData _playerData;
+    [SerializeField] private int _characterID;
+    private PlayerData _playerData;
     Navigation _noNavigation = new Navigation();
     Navigation _defaultNavigation = new Navigation();
     private bool _isAvailable;
@@ -24,9 +26,11 @@ public class CharacterSelectionUI : MonoBehaviour
         _noNavigation.mode = Navigation.Mode.None;
         _defaultNavigation.mode = Navigation.Mode.Automatic;
         _isAvailable = true;
+        _playerData = OnlineRoomManager.PlayerDatas[_characterID];
         _unselected.gameObject.SetActive(true);
         _onHover.gameObject.SetActive(false);
         _selected.gameObject.SetActive(false);
+        _playerName.ChangeColor(_playerData.PlayerColor);
     }
 
     private void Update()

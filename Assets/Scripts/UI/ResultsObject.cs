@@ -1,3 +1,4 @@
+using DefaultNamespace.SciptableObject.PlayerData;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,10 @@ public class ResultsObject : MonoBehaviour
     [SerializeField] Image _playerImage;
     [SerializeField] GameTextLayers _nickname;
     [SerializeField] GameTextLayers _points;
-    public void RefreshVisuals(Sprite backgorund, Sprite playerImage, string nickname, string points)
+    public void RefreshVisuals(PlayerData playerData, string nickname, string points)
     {
-        _background.sprite = backgorund;
-        _playerImage.sprite = playerImage;
+        _background.sprite = playerData.PlayerBackground;
+        _playerImage.sprite = playerData.PlayerPic;
         _nickname.ChangeText(nickname);
         _points.ChangeText(points);
     }

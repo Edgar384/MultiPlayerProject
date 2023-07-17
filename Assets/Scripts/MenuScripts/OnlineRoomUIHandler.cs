@@ -16,7 +16,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
     [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
     [SerializeField] private GameObject _carSelectionPreview;
-    [SerializeField] private CarSelectionStatus[] _cars;
+    [SerializeField] private CarPreviewHandler _carPreviewHandler;
     [SerializeField] private Button _readyUp;
     [SerializeField] private Button _start;
 
@@ -29,14 +29,15 @@ public class OnlineRoomUIHandler : MonoBehaviour
     {
         _carSelectionPreview.SetActive(true);
         _selectedCharacterIndex = 0;
-        _cars[_selectedCharacterIndex].gameObject.SetActive(true);
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
         CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
         CanvasManager.Instance.PlayerController.UI.Confirm.performed += SelectCharacter;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed += ChangeCarPreview;
         OnCharacterSelected += _onlineRoomManager.OnCharacterSelect;
         UpdatePlayerUI();
-        _start.interactable = false;
         SetFirstSelectedObject();
+        ChangeCarPreview();
+        _start.interactable = false;
     }
 
     private void OnDisable()
@@ -44,6 +45,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         OnCharacterSelected -= _onlineRoomManager.OnCharacterSelect;
         CanvasManager.Instance.PlayerController.UI.Back.performed -= OnlineMenuManager.Instance.ReturnToLobby;
         CanvasManager.Instance.PlayerController.UI.Confirm.performed -= SelectCharacter;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed -= ChangeCarPreview;
         OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
         _carSelectionPreview.SetActive(false);
     }
@@ -75,7 +77,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         {
             if (playerArray[i].IsReady)
             {
-                SelectCharacter(playerArray[i].IsReady, i, playerArray[i].NickName);
+                PlayerEnterRoomCharactersRefresh(playerArray[i].IsReady, i, playerArray[i].NickName);
             }
         }
     }
@@ -122,11 +124,31 @@ public class OnlineRoomUIHandler : MonoBehaviour
         }
     }
 
-    private void SelectCharacter(bool isReady,int playerID, string playerNickname)
+    private void PlayerEnterRoomCharactersRefresh(bool isReady,int playerID, string playerNickname)
     {
         if (!isReady)
         {
             _characters[playerID].ChangeCharacterAvailability(false, playerNickname);
+        }
+    }
+
+    private void ChangeCarPreview(CallbackContext callbackContext)
+    {
+        if(CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
+        {
+            CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
+            _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
+            _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);
+        }
+    }
+
+    private void ChangeCarPreview()
+    {
+        if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
+        {
+            CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
+            _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
+            _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);
         }
     }
 }
