@@ -17,17 +17,23 @@ public class CharacterSelectionUI : MonoBehaviour
     Navigation _defaultNavigation = new Navigation();
     private bool _isAvailable;
 
+    public PlayerData PlayerData => _playerData;
+
     private void OnEnable()
     {
         _noNavigation.mode = Navigation.Mode.None;
         _defaultNavigation.mode = Navigation.Mode.Automatic;
-        _unselected.gameObject.SetActive(false);
+        _isAvailable = true;
+        _unselected.gameObject.SetActive(true);
         _onHover.gameObject.SetActive(false);
-        _selected.gameObject.SetActive(true);
+        _selected.gameObject.SetActive(false);
     }
 
     private void Update()
     {
+        if (!_isAvailable)
+            return;
+
         //Plaster until we have animations
         if(CanvasManager.Instance.EventSystem.currentSelectedGameObject != this.gameObject && _isAvailable)
         {
@@ -48,13 +54,19 @@ public class CharacterSelectionUI : MonoBehaviour
     public void ChangeCharacterAvailability(bool isAvailable, string playerName)
     {
         _isAvailable = isAvailable;
-        _selected.gameObject.SetActive(!_isAvailable);
-        _onHover.gameObject.SetActive(_isAvailable);
         _playerName.ChangeText(playerName);
-        if (!isAvailable)
+        if (isAvailable)
+        {
             _confirmSelectionButton.navigation = _defaultNavigation;
+            _selected.gameObject.SetActive(false);
+            _onHover.gameObject.SetActive(true);
+        }
 
         else
+        {
             _confirmSelectionButton.navigation = _noNavigation;
+            _selected.gameObject.SetActive(true);
+            _onHover.gameObject.SetActive(false);
+        }
     }
 }

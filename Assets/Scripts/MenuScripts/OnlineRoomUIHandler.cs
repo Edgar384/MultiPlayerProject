@@ -4,6 +4,7 @@ using System.Linq;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
@@ -31,15 +32,18 @@ public class OnlineRoomUIHandler : MonoBehaviour
         _cars[_selectedCharacterIndex].gameObject.SetActive(true);
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
         CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed += SelectCharacter;
         OnCarSelected += _onlineRoomManager.OnCharacterSelect;
         UpdatePlayerUI();
         _start.interactable = false;
+        SetFirstSelectedObject();
     }
 
     private void OnDisable()
     {
         OnCarSelected -= _onlineRoomManager.OnCharacterSelect;
         CanvasManager.Instance.PlayerController.UI.Back.performed -= OnlineMenuManager.Instance.ReturnToLobby;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed -= SelectCharacter;
         OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
         _carSelectionPreview.SetActive(false);
     }
@@ -141,6 +145,18 @@ public class OnlineRoomUIHandler : MonoBehaviour
         {
             if (_characters[i].CheckIfCharacterIsFree())
                 CanvasManager.Instance.EventSystem.SetSelectedGameObject(_characters[i].gameObject);
+        }
+    }
+
+    private void SelectCharacter(CallbackContext callbackContext)
+    {
+        if(CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover))
+        {
+            if (currentCharacterOnHover.CheckIfCharacterIsFree())
+                currentCharacterOnHover.ChangeCharacterAvailability(false,PhotonNetwork.NickName);
+
+            else
+                currentCharacterOnHover.ChangeCharacterAvailability(true, PhotonNetwork.NickName);
         }
     }
 }
