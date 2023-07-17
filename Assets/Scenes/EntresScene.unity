@@ -839,7 +839,7 @@ MonoBehaviour:
   _onHover: {fileID: 327753001}
   _selected: {fileID: 985818434}
   _playerName: {fileID: 985818433}
-  _playerData: {fileID: 0}
+  _playerData: {fileID: 11400000, guid: 9cba22775255f5d4f9783792c994c918, type: 2}
 --- !u!95 &112590962
 Animator:
   serializedVersion: 5
@@ -5394,7 +5394,7 @@ MonoBehaviour:
   _onHover: {fileID: 635539571}
   _selected: {fileID: 1231702830}
   _playerName: {fileID: 1231702829}
-  _playerData: {fileID: 0}
+  _playerData: {fileID: 11400000, guid: 29e6d37f2ddc05f45b2f5e2ff532432b, type: 2}
 --- !u!95 &796160806
 Animator:
   serializedVersion: 5
@@ -6445,7 +6445,7 @@ MonoBehaviour:
   _onHover: {fileID: 7286560619893182511}
   _selected: {fileID: 1578104028795087602}
   _playerName: {fileID: 1578104028795087601}
-  _playerData: {fileID: 0}
+  _playerData: {fileID: 11400000, guid: 93162323c536bf24fa1d3697d955e1e2, type: 2}
 --- !u!1 &956828502
 GameObject:
   m_ObjectHideFlags: 0
@@ -7891,11 +7891,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerDatas:
-  - {fileID: 11400000, guid: 88e138f4e9f22ab40ac352d5d8aa4845, type: 2}
-  - {fileID: 11400000, guid: d18473bf8fb1f804ebefe12cefcc2137, type: 2}
-  - {fileID: 11400000, guid: 29e6d37f2ddc05f45b2f5e2ff532432b, type: 2}
-  - {fileID: 11400000, guid: 9cba22775255f5d4f9783792c994c918, type: 2}
   - {fileID: 11400000, guid: 93162323c536bf24fa1d3697d955e1e2, type: 2}
+  - {fileID: 11400000, guid: 9cba22775255f5d4f9783792c994c918, type: 2}
+  - {fileID: 11400000, guid: 29e6d37f2ddc05f45b2f5e2ff532432b, type: 2}
+  - {fileID: 11400000, guid: d18473bf8fb1f804ebefe12cefcc2137, type: 2}
   _uiHandler: {fileID: 373627079}
 --- !u!1 &1138173974
 GameObject:
@@ -12256,7 +12255,7 @@ MonoBehaviour:
   _onHover: {fileID: 1654769888}
   _selected: {fileID: 1380676946}
   _playerName: {fileID: 1380676945}
-  _playerData: {fileID: 0}
+  _playerData: {fileID: 11400000, guid: d18473bf8fb1f804ebefe12cefcc2137, type: 2}
 --- !u!95 &1951348907
 Animator:
   serializedVersion: 5

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: RedCar
   m_EditorClassIdentifier: 
   _preFabName: BananaCar
+  _playerID: 1

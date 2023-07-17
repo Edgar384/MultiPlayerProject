@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PickCar
   m_EditorClassIdentifier: 
   _preFabName: BananaCar
+  _playerID: 2
