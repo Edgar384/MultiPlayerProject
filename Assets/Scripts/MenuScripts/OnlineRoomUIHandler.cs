@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GarlicStudios.Online.Data;
@@ -15,7 +16,6 @@ public class OnlineRoomUIHandler : MonoBehaviour
     public event Action OnEnteredRoom;
 
     [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
-    [SerializeField] private GameObject _carSelectionPreview;
     [SerializeField] private CarPreviewHandler _carPreviewHandler;
     [SerializeField] private Button _readyUp;
     [SerializeField] private Button _start;
@@ -27,16 +27,15 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _carSelectionPreview.SetActive(true);
         _selectedCharacterIndex = 0;
+        SetFirstSelectedObject();
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
         CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
         CanvasManager.Instance.PlayerController.UI.Confirm.performed += SelectCharacter;
-        CanvasManager.Instance.PlayerController.UI.Navigate.performed += ChangeCarPreview;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed += ChangeCarPreviewCallBack;
         OnCharacterSelected += _onlineRoomManager.OnCharacterSelect;
         UpdatePlayerUI();
-        SetFirstSelectedObject();
-        ChangeCarPreview();
+        StartCoroutine(ChangeCarPreviewOnEnter());
         _start.interactable = false;
     }
 
@@ -45,9 +44,8 @@ public class OnlineRoomUIHandler : MonoBehaviour
         OnCharacterSelected -= _onlineRoomManager.OnCharacterSelect;
         CanvasManager.Instance.PlayerController.UI.Back.performed -= OnlineMenuManager.Instance.ReturnToLobby;
         CanvasManager.Instance.PlayerController.UI.Confirm.performed -= SelectCharacter;
-        CanvasManager.Instance.PlayerController.UI.Navigate.performed -= ChangeCarPreview;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed -= ChangeCarPreviewCallBack;
         OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
-        _carSelectionPreview.SetActive(false);
     }
 
     private void Update()
@@ -132,9 +130,15 @@ public class OnlineRoomUIHandler : MonoBehaviour
         }
     }
 
-    private void ChangeCarPreview(CallbackContext callbackContext)
+    private void ChangeCarPreviewCallBack(CallbackContext callbackContext)
     {
-        if(CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
+        StartCoroutine(ChangeCarPreview());
+    }
+
+    private IEnumerator ChangeCarPreview()
+    {
+        yield return new WaitForEndOfFrame();
+        if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
         {
             CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
             _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
@@ -142,9 +146,10 @@ public class OnlineRoomUIHandler : MonoBehaviour
         }
     }
 
-    private void ChangeCarPreview()
+    private IEnumerator ChangeCarPreviewOnEnter()
     {
-        if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
+        yield return new WaitForEndOfFrame();
+        if (CanvasManager.Instance.EventSystem.currentSelectedGameObject == _characters[_selectedCharacterIndex].gameObject)
         {
             CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
             _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
