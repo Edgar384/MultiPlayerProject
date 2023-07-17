@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerUIHandler : MonoBehaviour
 {
-    public TMP_Text PlayerName;
-    public TMP_Text PlayerScore;
+    //public GameTextLayers PlayerName; //There is no name in the figma, only picture and score
+    public GameTextLayers PlayerScore;
 
-    public void UpdateUI(LocalPlayer localPlayer)
+    //We need to add bool to the updated
+    public void UpdateUI(LocalPlayer localPlayer,bool isLeading)
     {
-        PlayerName.text  = localPlayer.OnlinePlayer.NickName;
-        PlayerScore.text = localPlayer.ScoreHandler.Score.ToString();
+        //PlayerName.ChangeText(localPlayer.OnlinePlayer.NickName);
+        PlayerScore.ChangeText(localPlayer.ScoreHandler.Score.ToString());
     }
 }
