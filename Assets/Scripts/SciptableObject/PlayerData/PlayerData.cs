@@ -6,7 +6,8 @@ namespace DefaultNamespace.SciptableObject.PlayerData
     public class PlayerData : ScriptableObject
     {
         [SerializeField] private string _preFabName;
-
+        [SerializeField] private int _playerID;
         public string PreFabName => _preFabName;
+        public int PlayerID => _playerID;
     }
 }

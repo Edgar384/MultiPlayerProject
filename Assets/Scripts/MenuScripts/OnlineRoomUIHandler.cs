@@ -134,4 +134,13 @@ public class OnlineRoomUIHandler : MonoBehaviour
         _cars[_selectedCharacterIndex].ChangeCarAvailability(false);
         OnCarSelected?.Invoke(_selectedCharacterIndex);
     }
+
+    private void SetFirstSelectedObject()
+    {
+        for (int i = 0; i < _characters.Length; i++)
+        {
+            if (_characters[i].CheckIfCharacterIsFree())
+                CanvasManager.Instance.EventSystem.SetSelectedGameObject(_characters[i].gameObject);
+        }
+    }
 }

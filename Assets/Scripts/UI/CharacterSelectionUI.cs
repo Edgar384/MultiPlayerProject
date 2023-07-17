@@ -1,3 +1,4 @@
+using DefaultNamespace.SciptableObject.PlayerData;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,7 +12,7 @@ public class CharacterSelectionUI : MonoBehaviour
     [SerializeField] private GameObject _onHover;
     [SerializeField] private GameObject _selected;
     [SerializeField] private GameTextLayers _playerName;
-
+    [SerializeField] private PlayerData _playerData;
     Navigation _noNavigation = new Navigation();
     Navigation _defaultNavigation = new Navigation();
     private bool _isAvailable;

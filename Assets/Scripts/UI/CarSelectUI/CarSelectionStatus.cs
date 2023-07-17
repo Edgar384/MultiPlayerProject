@@ -17,6 +17,6 @@ public class CarSelectionStatus : MonoBehaviour
     {
         _isAvailable = isAvailable;
 
-        _notvaiAvailableImage.gameObject.SetActive(!_isAvailable);
+        //_notvaiAvailableImage.gameObject.SetActive(!_isAvailable);
     }
 }
