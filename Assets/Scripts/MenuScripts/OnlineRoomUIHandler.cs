@@ -6,6 +6,7 @@ using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class OnlineRoomUIHandler : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class OnlineRoomUIHandler : MonoBehaviour
     [SerializeField] private Button _start;
 
     [SerializeField] private OnlineRoomManager _onlineRoomManager;
-    
+
+    [SerializeField] private CharacterSelectionUI[] _characters = new CharacterSelectionUI[4];
     private int _selectedCharacterIndex;
 
     private void OnEnable()
@@ -28,6 +30,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         _selectedCharacterIndex = 0;
         _cars[_selectedCharacterIndex].gameObject.SetActive(true);
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
+        CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
         OnCarSelected += _onlineRoomManager.OnCharacterSelect;
         UpdatePlayerUI();
         _start.interactable = false;
@@ -36,6 +39,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void OnDisable()
     {
         OnCarSelected -= _onlineRoomManager.OnCharacterSelect;
+        CanvasManager.Instance.PlayerController.UI.Back.performed -= OnlineMenuManager.Instance.ReturnToLobby;
         OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
         _carSelectionPreview.SetActive(false);
     }

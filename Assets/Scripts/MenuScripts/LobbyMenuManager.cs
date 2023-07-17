@@ -1,4 +1,6 @@
 using DefaultNamespace.MenuScripts;
+using GarlicStudios.Online.Managers;
+using Photon.Pun;
 using System;
 using TMPro;
 using Unity.VisualScripting;
@@ -40,6 +42,9 @@ public class LobbyMenuManager : MonoBehaviour
     {
         _lobbyRoomUIListHandler.OnRoomListVisualUpdated += ChangeToPlayerConnectedVisuals;
        CanvasManager.Instance.PlayerController.UI.Back.performed += CanvasManager.Instance.OnlineMenuManager.ReturnToMainMenu;
+
+        OnlineRoomManager.OnCreatedRoomEvent += CreateRoom;
+        OnlineRoomManager.OnJoinRoomEvent += JoinRoom;
     }
 
     private void OnDisable()
