@@ -6,7 +6,6 @@ namespace PG_Physics.Wheel
 {
     public class KnockBackHandler : MonoBehaviourPun
     {
-        private const string REGISTER_KNOCKBACK_RPC = nameof(RegisterKnockBack_RPC);
         private const string ADD_KNOCKBACK_RPC = nameof(AddKnockBack_RPC);
         private const string ON_KNOCKBACK_EVENT_RPC = nameof(OnKnockBackEvent_RPC);
         
@@ -52,22 +51,6 @@ namespace PG_Physics.Wheel
         }
 
         [PunRPC]
-        private void RegisterKnockBack_RPC(int attackPlayerId,float x , float y ,float z, int hitedPlayerId)
-        {
-            if (!PhotonNetwork.IsMasterClient)
-                return;
-
-            if (!OnlineRoomManager.ConnectedPlayers.TryGetValue(hitedPlayerId, out var player))
-            {
-                Debug.LogError("Can not find player");
-                return;
-            }
-            player.PhotonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
-            player.PhotonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,x,y,z,attackPlayerId);
-            photonView.RPC(ON_KNOCKBACK_EVENT_RPC,RpcTarget.AllViaServer,attackPlayerId,hitedPlayerId);
-        }
-        
-        [PunRPC]
         private void OnKnockBackEvent_RPC(int attackPlayerId,int hitedPlayerId)
         {
             Debug.Log($"{attackPlayerId} hit {hitedPlayerId} and add a knock back");
@@ -96,8 +79,20 @@ namespace PG_Physics.Wheel
             if (_rigidbody.velocity.magnitude < car._rigidbody.velocity.magnitude) return;
 
             var velocity = _rigidbody.velocity;
-            photonView.RPC(REGISTER_KNOCKBACK_RPC,RpcTarget.MasterClient,
-                parameters: new object[] { photonView.Controller.ActorNumber , velocity.x,velocity.y,velocity.z ,car.photonView.Controller.ActorNumber});
+
+            int hitedPlayerId = car.photonView.Controller.ActorNumber;
+            
+            int attackPlayerId = photonView.Controller.ActorNumber;
+            
+            if (!OnlineRoomManager.ConnectedPlayers.TryGetValue(hitedPlayerId, out var player))
+            {
+                Debug.LogError("Can not find player");
+                return;
+            }
+            
+            player.PhotonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
+            player.PhotonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,velocity.x,velocity.y,velocity.z,attackPlayerId);
+            photonView.RPC(ON_KNOCKBACK_EVENT_RPC,RpcTarget.AllViaServer,attackPlayerId,hitedPlayerId);
         }
     }
 }
