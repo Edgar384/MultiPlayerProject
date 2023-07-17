@@ -20,11 +20,15 @@ namespace PG_Physics.Wheel
 
         private int _leastAttackPlayerId;
 
+        private bool _isKnockBackMode;
+
         public int LeastAttackPlayerId => _leastAttackPlayerId;
 
         private void Awake()
         {
             _leastAttackPlayerId = -1;
+            _timeToClearAttackedPlayerCounter = _timeToClearAttackedPlayer;
+            _isKnockBackMode = false;
         }
 
         private void OnValidate()
@@ -34,17 +38,12 @@ namespace PG_Physics.Wheel
 
         private void Update()
         {
-            if (_leastAttackPlayerId == -1)
-            {
-                _timeToClearAttackedPlayerCounter = _timeToClearAttackedPlayer;
-                return;
-            }
-            
             _timeToClearAttackedPlayerCounter -= Time.deltaTime;
             
             if (_timeToClearAttackedPlayerCounter <= 0)
             {
-                //_leastAttackPlayerId = -1;
+                _isKnockBackMode = false;
+                _leastAttackPlayerId = -1;
                 _timeToClearAttackedPlayerCounter = _timeToClearAttackedPlayer;
             }
 
@@ -59,6 +58,7 @@ namespace PG_Physics.Wheel
         [PunRPC]
         private void AddKnockBack_RPC(float x,float y , float z ,int attackPlayerId)
         {
+            _isKnockBackMode = true;
             Debug.Log($"Add a knock back from {attackPlayerId}");
             _rigidbody.AddForce(Vector3.up * _knockBackForceMultiplier, ForceMode.Impulse);
             _rigidbody.AddForce(new Vector3(x,y,z) * _knockBackForceMultiplier, ForceMode.Impulse);
@@ -70,14 +70,19 @@ namespace PG_Physics.Wheel
 
         private void OnCollisionEnter(Collision other)
         {
+            if (_isKnockBackMode)
+                return;
+            
             if (!photonView.IsMine) return;
+
+            _isKnockBackMode = true;
             
             if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
             
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
             
             if (_rigidbody.velocity.magnitude < car._rigidbody.velocity.magnitude) return;
-
+            
             var velocity = _rigidbody.velocity;
 
             int hitedPlayerId = car.photonView.Controller.ActorNumber;
