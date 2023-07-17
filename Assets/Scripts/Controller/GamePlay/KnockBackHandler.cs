@@ -62,8 +62,8 @@ namespace PG_Physics.Wheel
                 Debug.LogError("Can not find player");
                 return;
             }
-            
-            photonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,x,y,z,attackPlayerId);
+            player.PhotonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
+            player.PhotonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,x,y,z,attackPlayerId);
             photonView.RPC(ON_KNOCKBACK_EVENT_RPC,RpcTarget.AllViaServer,attackPlayerId,hitedPlayerId);
         }
         
@@ -77,7 +77,6 @@ namespace PG_Physics.Wheel
         private void AddKnockBack_RPC(float x,float y , float z ,int attackPlayerId)
         {
             Debug.Log($"Add a knock back from {attackPlayerId}");
-            photonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
             _rigidbody.AddForce(Vector3.up * _knockBackForceMultiplier, ForceMode.Impulse);
             _rigidbody.AddForce(new Vector3(x,y,z) * _knockBackForceMultiplier, ForceMode.Impulse);
         }

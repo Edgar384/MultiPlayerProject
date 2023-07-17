@@ -28,6 +28,7 @@ namespace DefaultNamespace
         public void SetOnlinePlayer(OnlinePlayer onlinePlayer)
         {
             OnlinePlayer = onlinePlayer;
+            onlinePlayer.SetPhotonView(photonView);
         }
 
         private void OnValidate()

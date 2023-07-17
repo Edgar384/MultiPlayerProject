@@ -2,6 +2,7 @@
 using DefaultNamespace;
 using DefaultNamespace.SciptableObject.PlayerData;
 using GamePlayLogic;
+using Photon.Pun;
 using Photon.Realtime;
 
 namespace GarlicStudios.Online.Data
@@ -15,14 +16,15 @@ namespace GarlicStudios.Online.Data
         
         private PlayerData _playerData;
 
+        private  PhotonView _photonView;
         
         public bool IsMasterClient => _photonData.IsMasterClient;
         public int ActorNumber { get;}
         public string UserId { get;}
         public string NickName { get;}
         public bool IsReady { get; private set; }
-        
 
+        public PhotonView PhotonView => _photonView;
 
         public Player PhotonData => _photonData;
 
@@ -47,6 +49,11 @@ namespace GarlicStudios.Online.Data
         public void SetMasterClient()
         {
             
+        }
+
+        public void SetPhotonView(PhotonView photonView)
+        {
+            _photonView = photonView;
         }
 
         public void SetReadyStatus(bool isReady)
