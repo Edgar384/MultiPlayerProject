@@ -16,14 +16,10 @@ public class OnlineRoomUIHandler : MonoBehaviour
     public event Action<int,bool> OnCharacterSelected;
     public event Action OnEnteredRoom;
 
-    [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
     [SerializeField] private CarPreviewHandler _carPreviewHandler;
-    [SerializeField] private Button _readyUp;
-    [SerializeField] private Button _start;
-
     [SerializeField] private OnlineRoomManager _onlineRoomManager;
-
     [SerializeField] private CharacterSelectionUI[] _characters = new CharacterSelectionUI[4];
+    [SerializeField] private GameObject _startGameObject; 
     private int _selectedCharacterIndex;
 
     private void OnEnable()
@@ -35,9 +31,9 @@ public class OnlineRoomUIHandler : MonoBehaviour
         CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
         CanvasManager.Instance.PlayerController.UI.Confirm.performed += SelectCharacter;
         CanvasManager.Instance.PlayerController.UI.Navigate.performed += ChangeCarPreviewCallBack;
+        CanvasManager.Instance.PlayerController.UI.Triangular.performed += StartGame;
         OnCharacterSelected += _onlineRoomManager.OnCharacterSelect;
         StartCoroutine(ChangeCarPreviewOnEnter());
-        _start.interactable = false;
     }
 
     private void OnDisable()
@@ -51,21 +47,11 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient && OnlineRoomManager.IsAllReady)
-            _start.interactable = true;
-    }
+        if (PhotonNetwork.IsMasterClient)
+            _startGameObject.SetActive(true);
 
-    public void AddPlayer(OnlinePlayer onlinePlayer)
-    {
-        foreach (var playerInRoomUI in _playersInRoomUI)
-        {
-            if (playerInRoomUI.isActiveAndEnabled) 
-                continue;
-            
-            playerInRoomUI.gameObject.SetActive(true);
-            playerInRoomUI.Init(onlinePlayer);
-            break;
-        }
+        else
+            _startGameObject.SetActive(false);
     }
 
     private void UpdatePlayerUI()
@@ -80,18 +66,6 @@ public class OnlineRoomUIHandler : MonoBehaviour
         {
             if (playerArray[i].PlayerData != null)
                 _characters[playerArray[i].PlayerData.CharacterID].ChangeCharacterAvailability(false, playerArray[i].PhotonData.NickName);
-        }
-    }
-    
-    private void SetPlayerUiReadyStatus(OnlinePlayer player,bool  isReady)
-    {
-        foreach (var playerInRoomUI in _playersInRoomUI)
-        {
-            if (playerInRoomUI.ID == player.ActorNumber)
-            {
-                playerInRoomUI.SetReadyStatus(isReady);
-                break;
-            }
         }
     }
 
@@ -159,5 +133,11 @@ public class OnlineRoomUIHandler : MonoBehaviour
             _selectedCharacterIndex = currentCharacterOnHover.CharacterID;
             _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);
         }
+    }
+
+    private void StartGame(CallbackContext callbackContext)
+    {
+        if(PhotonNetwork.IsMasterClient && OnlineRoomManager.IsAllReady)
+        OnlineManager.LoadGameLevel();
     }
 }

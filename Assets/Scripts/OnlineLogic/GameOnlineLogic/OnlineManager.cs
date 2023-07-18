@@ -128,7 +128,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
         }
     }
     
-    public void LoadGameLevel()
+    public static void LoadGameLevel()
     {
         if (PhotonNetwork.IsMasterClient)
         {

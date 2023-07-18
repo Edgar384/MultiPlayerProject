@@ -59,6 +59,8 @@ MonoBehaviour:
   - RestPlayer_RPC
   - UpdateLastHitPlayer
   - EndGame
+  - SendPLayerData_RPC
+  - UpdateUI
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

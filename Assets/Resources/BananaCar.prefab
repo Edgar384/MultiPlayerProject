@@ -93,7 +93,7 @@ PrefabInstance:
     - target: {fileID: 9131333332235930690, guid: 79a6673dcc919014e80de19c053f4a01,
         type: 3}
       propertyPath: ObservedComponents.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2587506132696676443, guid: 79a6673dcc919014e80de19c053f4a01, type: 3}
@@ -115,6 +115,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BananaVisual
+      objectReference: {fileID: 0}
+    - target: {fileID: 5098927320779600303, guid: b4763ce64b91fb94cbcab85944c47ff6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5586952619935034133, guid: b4763ce64b91fb94cbcab85944c47ff6,
         type: 3}
