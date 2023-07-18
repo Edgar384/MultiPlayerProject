@@ -5,7 +5,6 @@ using System.Linq;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
@@ -34,7 +33,6 @@ public class OnlineRoomUIHandler : MonoBehaviour
         CanvasManager.Instance.PlayerController.UI.Confirm.performed += SelectCharacter;
         CanvasManager.Instance.PlayerController.UI.Navigate.performed += ChangeCarPreviewCallBack;
         OnCharacterSelected += _onlineRoomManager.OnCharacterSelect;
-        UpdatePlayerUI();
         StartCoroutine(ChangeCarPreviewOnEnter());
         _start.interactable = false;
     }
@@ -67,7 +65,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         }
     }
 
-    private void UpdatePlayerUI()
+    private void UpdatePlayerUI(OnlinePlayer onlinePlayer)
     {
         int numberOfPlayersInRoom = OnlineRoomManager.ConnectedPlayers.Count;
         var playerArray = OnlineRoomManager.ConnectedPlayers.Values.ToArray();
@@ -111,13 +109,13 @@ public class OnlineRoomUIHandler : MonoBehaviour
             if (currentCharacterOnHover.CheckIfCharacterIsFree())
             {
                 currentCharacterOnHover.ChangeCharacterAvailability(false,PhotonNetwork.NickName);
-                OnCharacterSelected?.Invoke(currentCharacterOnHover.PlayerData.PlayerID,true);
+                OnCharacterSelected?.Invoke(currentCharacterOnHover.CharacterID,true);
             }
 
             else
             {
                 currentCharacterOnHover.ChangeCharacterAvailability(true, PhotonNetwork.NickName);
-                OnCharacterSelected?.Invoke(currentCharacterOnHover.PlayerData.PlayerID,false);
+                OnCharacterSelected?.Invoke(currentCharacterOnHover.CharacterID,false);
             }
         }
     }
@@ -141,7 +139,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
         {
             CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
-            _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
+            _selectedCharacterIndex = currentCharacterOnHover.CharacterID;
             _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);
         }
     }
@@ -152,7 +150,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         if (CanvasManager.Instance.EventSystem.currentSelectedGameObject == _characters[_selectedCharacterIndex].gameObject)
         {
             CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
-            _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
+            _selectedCharacterIndex = currentCharacterOnHover.CharacterID;
             _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);
         }
     }

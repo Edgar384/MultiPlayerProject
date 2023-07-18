@@ -6,12 +6,12 @@ namespace DefaultNamespace.SciptableObject.PlayerData
     public class PlayerData : ScriptableObject
     {
         [SerializeField] private string _preFabName;
-        [SerializeField] private int _playerID;
+        [SerializeField] private int _characterID;
         [SerializeField] private Sprite _playerPic;
         [SerializeField] private Sprite _playerBackground;
         [SerializeField] private Color _playerColor;
         public string PreFabName => _preFabName;
-        public int PlayerID => _playerID;
+        public int CharacterID => _characterID;
 
         public Sprite PlayerPic => _playerPic;
         public Sprite PlayerBackground => _playerBackground;

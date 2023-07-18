@@ -38,7 +38,7 @@ public class ResultsUIHandler : MonoBehaviour
         _organizedList = players.OrderByDescending(players => players.ScoreHandler.Score).ToList(); //Need to check that the list is of the right class
         for (int i = 0; i < players.Count; i++)
         {
-            resultsObjects[i].RefreshVisuals(OnlineRoomManager.PlayerDatas[_organizedList[i].PlayerId], _organizedList[i].name, _organizedList[i].ScoreHandler.Score.ToString());
+            resultsObjects[i].RefreshVisuals(OnlineRoomManager.PlayersData[_organizedList[i].PlayerId], _organizedList[i].name, _organizedList[i].ScoreHandler.Score.ToString());
         }
     }
 }

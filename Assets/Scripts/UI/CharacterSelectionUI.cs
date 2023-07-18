@@ -19,14 +19,14 @@ public class CharacterSelectionUI : MonoBehaviour
     Navigation _defaultNavigation = new Navigation();
     private bool _isAvailable;
 
-    public PlayerData PlayerData => _playerData;
+    public int CharacterID => _characterID;
 
     private void OnEnable()
     {
         _noNavigation.mode = Navigation.Mode.None;
         _defaultNavigation.mode = Navigation.Mode.Automatic;
         _isAvailable = true;
-        _playerData = OnlineRoomManager.PlayerDatas[_characterID];
+        _playerData = OnlineRoomManager.PlayersData[_characterID];
         _unselected.gameObject.SetActive(true);
         _onHover.gameObject.SetActive(false);
         _selected.gameObject.SetActive(false);

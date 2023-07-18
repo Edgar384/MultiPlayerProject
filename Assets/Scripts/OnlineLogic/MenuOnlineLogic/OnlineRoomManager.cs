@@ -11,12 +11,11 @@ namespace GarlicStudios.Online.Managers
 {
     public class OnlineRoomManager : MonoBehaviourPunCallbacks
     {
-        private const int NUMBER_OF_CARS = 5;
+        private const int NUMBER_OF_CARS = 4;
         private const string UPDATE_READY_LIST = nameof(UpdatePlayerReadyList_RPC);
-        private const string UPDATE_CAR_AVAILABILITY_LIST = nameof(UpdateCarAvailability_RPC);
         private const string SEND_CAR_DATA = nameof(SendCarData_RPC);
         
-        public static event Action OnPlayerListUpdateEvent;
+        public static event Action<OnlinePlayer> OnPlayerListUpdateEvent;
         public static event Action<Player> OnPlayerEnteredRoomEvent;
         public static event Action<Player> OnPlayerLeftRoomEvent;
         public static event Action<Player> OnMasterClientSwitchedEvent;
@@ -26,11 +25,9 @@ namespace GarlicStudios.Online.Managers
         [SerializeField] private PlayerData[] _playerDatas;
 
         public static Dictionary<PlayerData, bool> NewCarAvailabilityList;
-        public static Dictionary<int, PlayerData> PlayerDatas;
-        public static bool[] CarAvailabilityList;
         
         [SerializeField] private OnlineRoomUIHandler _uiHandler;//need to remove
-        
+        public static PlayerData[] PlayersData { get; private set; }
         public static Dictionary<int, OnlinePlayer> ConnectedPlayers { get; private set; }
         
         public static OnlinePlayer Player { get; private set; }
@@ -42,25 +39,17 @@ namespace GarlicStudios.Online.Managers
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
-            PlayerDatas = new Dictionary<int, PlayerData>();
+            PlayersData = new PlayerData[NUMBER_OF_CARS];
+
             for (int i = 0; i < _playerDatas.Length; i++)
-            {
-                PlayerDatas.Add(i, _playerDatas[i]);
-            }
+                PlayersData[i] = _playerDatas[i];
+
+            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
         }
 
         public void OnCharacterSelect(int carIndex, bool isReady)
         {
-            if (!ConnectedPlayers.TryGetValue(PhotonNetwork.LocalPlayer.ActorNumber, out var player))
-                throw  new Exception("Can not find player");
-            
-            UpdatePlayerReadyList(PhotonNetwork.LocalPlayer.ActorNumber,carIndex, isReady);
-        }
-
-        private void UpdatePlayerReadyList(int playerId,int carIndex, bool isReady)
-        {
-            photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,playerId,carIndex,isReady);
+            photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,PhotonNetwork.LocalPlayer.ActorNumber,carIndex,isReady);
         }
 
         #region RPC
@@ -76,28 +65,22 @@ namespace GarlicStudios.Online.Managers
             
             Debug.Log("Update ready list");
             player.SetReadyStatus(isReady);
-            player.SetPlayerData(_playerDatas[carIndex]);
-            Debug.Log("Update car status");
-            CarAvailabilityList[carIndex] = !isReady;
-            OnPlayerListUpdateEvent?.Invoke();
-        }
 
-        [PunRPC]
-        private void UpdateCarAvailability_RPC(int carIndex, bool carStatus)
-        {
-           
+            player.SetPlayerData(isReady ? _playerDatas[carIndex] : null);
+            Debug.Log("Update car status");
+            NewCarAvailabilityList[_playerDatas[carIndex]] = isReady;
+            OnPlayerListUpdateEvent?.Invoke(player);
         }
         
         [PunRPC]
         private void SendCarData_RPC(bool[] carData)
         {
             Debug.Log("Receive car data");
-            CarAvailabilityList  = carData;
+            
             NewCarAvailabilityList = new Dictionary<PlayerData, bool>();
+            
             for (int i = 0; i < carData.Length; i++)
-            {
                 NewCarAvailabilityList.Add(_playerDatas[i], carData[i]);
-            }
         }
 
         #endregion
@@ -114,12 +97,15 @@ namespace GarlicStudios.Online.Managers
         public override void OnCreatedRoom()
         {
             base.OnCreatedRoom();
-            CarAvailabilityList  = new bool[NUMBER_OF_CARS];
+                      
+            NewCarAvailabilityList = new Dictionary<PlayerData, bool>();
 
-            for (int i = 0; i < CarAvailabilityList.Length; i++)
-                CarAvailabilityList[i] = true;
-
-            ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                foreach (var playerData in _playerDatas)
+                    NewCarAvailabilityList.Add(playerData,false);
+            }
+            
             ConnectedPlayers.Add(PhotonNetwork.LocalPlayer.ActorNumber,new OnlinePlayer(PhotonNetwork.LocalPlayer));
             MasterClient  = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
             Player  = MasterClient;
@@ -138,7 +124,7 @@ namespace GarlicStudios.Online.Managers
         
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            if (ConnectedPlayers.TryGetValue(newPlayer.ActorNumber, out var player))
+            if (!ConnectedPlayers.TryGetValue(newPlayer.ActorNumber, out var player))
             {
                 Debug.LogError("PhotonData already isn the room");
                 return;
@@ -146,12 +132,13 @@ namespace GarlicStudios.Online.Managers
 
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
             {
-                photonView.RPC(SEND_CAR_DATA, newPlayer, CarAvailabilityList);
+                var carData = NewCarAvailabilityList.Values.ToArray();
+                photonView.RPC(SEND_CAR_DATA, newPlayer, carData);
             }
 
             var onlinePlayer = new OnlinePlayer(newPlayer);
             ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
-            OnPlayerListUpdateEvent?.Invoke();
+            OnPlayerListUpdateEvent?.Invoke(player);
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -163,7 +150,7 @@ namespace GarlicStudios.Online.Managers
             }
 
             ConnectedPlayers.Remove(otherPlayer.ActorNumber);
-            OnPlayerListUpdateEvent?.Invoke();
+            OnPlayerListUpdateEvent?.Invoke(player);
         }
         
        
