@@ -49,12 +49,6 @@ namespace GarlicStudios.Online.Managers
 
         public void OnCharacterSelect(int carIndex, bool isReady)
         {
-            if (NewCarAvailabilityList.ElementAt(carIndex).Value)
-            {
-                Debug.Log("Already selected");
-                return;
-            }
-
             photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,PhotonNetwork.LocalPlayer.ActorNumber,carIndex,isReady);
         }
 
