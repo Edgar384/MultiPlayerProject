@@ -15,7 +15,7 @@ namespace GarlicStudios.Online.Managers
         private const string UPDATE_READY_LIST = nameof(UpdatePlayerReadyList_RPC);
         private const string SEND_CAR_DATA = nameof(SendCarData_RPC);
         
-        public static event Action<OnlinePlayer> OnPlayerListUpdateEvent;
+        public static event Action OnPlayerListUpdateEvent;
         public static event Action<Player> OnPlayerEnteredRoomEvent;
         public static event Action<Player> OnPlayerLeftRoomEvent;
         public static event Action<Player> OnMasterClientSwitchedEvent;
@@ -69,7 +69,7 @@ namespace GarlicStudios.Online.Managers
             player.SetPlayerData(isReady ? _playerDatas[carIndex] : null);
             Debug.Log("Update car status");
             NewCarAvailabilityList[_playerDatas[carIndex]] = isReady;
-            OnPlayerListUpdateEvent?.Invoke(player);
+            OnPlayerListUpdateEvent?.Invoke();
         }
         
         [PunRPC]
@@ -81,6 +81,8 @@ namespace GarlicStudios.Online.Managers
             
             for (int i = 0; i < carData.Length; i++)
                 NewCarAvailabilityList.Add(_playerDatas[i], carData[i]);
+            
+            OnPlayerListUpdateEvent?.Invoke();
         }
 
         #endregion
@@ -138,7 +140,7 @@ namespace GarlicStudios.Online.Managers
 
             var onlinePlayer = new OnlinePlayer(newPlayer);
             ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
-            OnPlayerListUpdateEvent?.Invoke(onlinePlayer);
+            OnPlayerListUpdateEvent?.Invoke();
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -150,7 +152,7 @@ namespace GarlicStudios.Online.Managers
             }
 
             ConnectedPlayers.Remove(otherPlayer.ActorNumber);
-            OnPlayerListUpdateEvent?.Invoke(player);
+            OnPlayerListUpdateEvent?.Invoke();
         }
         
        

@@ -65,7 +65,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         }
     }
 
-    private void UpdatePlayerUI(OnlinePlayer onlinePlayer)
+    private void UpdatePlayerUI()
     {
         int numberOfPlayersInRoom = OnlineRoomManager.ConnectedPlayers.Count;
         var playerArray = OnlineRoomManager.ConnectedPlayers.Values.ToArray();
