@@ -170,7 +170,10 @@ namespace GarlicStudios.Online.Managers
         }
         
         [PunRPC]
-        private void UpdateUI() =>  OnSendPLayerData_RPC?.Invoke();
+        private void UpdateUI()
+        {
+            OnSendPLayerData_RPC?.Invoke();
+        } 
 
         
         [PunRPC]
