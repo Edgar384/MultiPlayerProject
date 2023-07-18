@@ -75,7 +75,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
         for (int i = 0; i < numberOfPlayersInRoom; i++)
         {
-            if (playerArray[i].PhotonData != null)
+            if (playerArray[i].PlayerData != null)
                 _characters[playerArray[i].PlayerData.CharacterID].ChangeCharacterAvailability(true, playerArray[i].PhotonData.NickName);
         }
     }
