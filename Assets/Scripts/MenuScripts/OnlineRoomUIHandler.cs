@@ -29,7 +29,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void OnEnable()
     {
         _selectedCharacterIndex = 0;
-        //SetFirstSelectedObject();
+        SetFirstSelectedObject();
         OnlineRoomManager.OnSendPLayerData_RPC += SetFirstSelectedObject;
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
         CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
