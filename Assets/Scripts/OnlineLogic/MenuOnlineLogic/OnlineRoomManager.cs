@@ -154,6 +154,7 @@ namespace GarlicStudios.Online.Managers
             var onlinePlayer = new OnlinePlayer(newPlayer);
             ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
             OnPlayerListUpdateEvent?.Invoke();
+            photonView.RPC(nameof(UpdateUI), newPlayer);
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -167,6 +168,10 @@ namespace GarlicStudios.Online.Managers
             ConnectedPlayers.Remove(otherPlayer.ActorNumber);
             OnPlayerListUpdateEvent?.Invoke();
         }
+        
+        [PunRPC]
+        private void UpdateUI() =>  OnSendPLayerData_RPC?.Invoke();
+
         
         [PunRPC]
         private void SendPLayerData_RPC(int[] charcterId,bool[] isReday)
@@ -192,7 +197,6 @@ namespace GarlicStudios.Online.Managers
             
             Player = ConnectedPlayers[PhotonNetwork.LocalPlayer.ActorNumber];
             MasterClient = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
-            OnSendPLayerData_RPC?.Invoke();
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
