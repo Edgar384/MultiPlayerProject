@@ -124,7 +124,7 @@ namespace GarlicStudios.Online.Managers
         
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            if (!ConnectedPlayers.TryGetValue(newPlayer.ActorNumber, out var player))
+            if (ConnectedPlayers.TryGetValue(newPlayer.ActorNumber, out var player))
             {
                 Debug.LogError("PhotonData already isn the room");
                 return;
@@ -138,7 +138,7 @@ namespace GarlicStudios.Online.Managers
 
             var onlinePlayer = new OnlinePlayer(newPlayer);
             ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
-            OnPlayerListUpdateEvent?.Invoke(player);
+            OnPlayerListUpdateEvent?.Invoke(onlinePlayer);
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
