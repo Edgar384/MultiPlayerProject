@@ -118,9 +118,6 @@ namespace GarlicStudios.Online.Managers
         {
             base.OnJoinedRoom();
             Debug.Log($"Joined Room {PhotonNetwork.CurrentRoom.Name}");
-            GetPlayers();
-            Player = ConnectedPlayers[PhotonNetwork.LocalPlayer.ActorNumber];
-            MasterClient = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
             OnJoinRoomEvent?.Invoke();
         }
         
@@ -135,9 +132,25 @@ namespace GarlicStudios.Online.Managers
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
             {
                 var carData = NewCarAvailabilityList.Values.ToArray();
+                
+                var players = ConnectedPlayers.Values.ToArray();
+                
+                int[] idsData = new [] {-1,-1,-1,-1};
+                bool[] readyData = new bool[players.Length];
+                
+                for (int i = 0; i < players.Length; i++)
+                {
+                    readyData[i] = players[i].IsReady;
+
+                    if (players[i].PlayerData != null)
+                        idsData[i] = players[i].PlayerData.CharacterID;
+                }
+            
+                photonView.RPC(nameof(SendPLayerData_RPC),newPlayer,idsData,readyData);
+                
                 photonView.RPC(SEND_CAR_DATA, newPlayer, carData);
             }
-
+            
             var onlinePlayer = new OnlinePlayer(newPlayer);
             ConnectedPlayers.Add(newPlayer.ActorNumber, onlinePlayer);
             OnPlayerListUpdateEvent?.Invoke();
@@ -155,16 +168,24 @@ namespace GarlicStudios.Online.Managers
             OnPlayerListUpdateEvent?.Invoke();
         }
         
-       
-        private static void GetPlayers()
+        [PunRPC]
+        private void SendPLayerData_RPC(int[] charcterId,bool[] isReday)
         {
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
             var players = PhotonNetwork.PlayerList;
-            
-            foreach (var player in players)
+
+            for (int i = 0; i < players.Length; i++)
             {
-                ConnectedPlayers.Add(player.ActorNumber, new OnlinePlayer(player));
+                var onlinePLayer = new OnlinePlayer(players[i]);
+                onlinePLayer.SetReadyStatus(isReday[i]);
+                ConnectedPlayers.Add(players[i].ActorNumber, onlinePLayer);
+
+                if (charcterId[i] != -1)
+                    onlinePLayer.SetPlayerData(_playerDatas[charcterId[i]]);
             }
+            
+            Player = ConnectedPlayers[PhotonNetwork.LocalPlayer.ActorNumber];
+            MasterClient = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
