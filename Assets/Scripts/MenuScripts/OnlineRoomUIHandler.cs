@@ -69,12 +69,14 @@ public class OnlineRoomUIHandler : MonoBehaviour
     {
         int numberOfPlayersInRoom = OnlineRoomManager.ConnectedPlayers.Count;
         var playerArray = OnlineRoomManager.ConnectedPlayers.Values.ToArray();
+
+        foreach (var selectionUI in _characters)
+            selectionUI.ChangeCharacterAvailability(false,"");
+
         for (int i = 0; i < numberOfPlayersInRoom; i++)
         {
-            if (playerArray[i].IsReady)
-            {
-                PlayerEnterRoomCharactersRefresh(playerArray[i].IsReady, i, playerArray[i].NickName);
-            }
+            if (playerArray[i].PhotonData != null)
+                _characters[playerArray[i].PlayerData.CharacterID].ChangeCharacterAvailability(true, playerArray[i].PhotonData.NickName);
         }
     }
     
