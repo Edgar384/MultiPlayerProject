@@ -187,6 +187,9 @@ namespace GarlicStudios.Online.Managers
                     onlinePLayer.SetPlayerData(_playerDatas[charcterId[i]]);
             }
             
+            var onlinePlayer = new OnlinePlayer(PhotonNetwork.LocalPlayer);
+            ConnectedPlayers.Add(PhotonNetwork.LocalPlayer.ActorNumber, onlinePlayer);
+            
             Player = ConnectedPlayers[PhotonNetwork.LocalPlayer.ActorNumber];
             MasterClient = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
         }
