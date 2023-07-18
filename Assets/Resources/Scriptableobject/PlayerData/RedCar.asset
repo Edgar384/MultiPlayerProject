@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedCar
   m_EditorClassIdentifier: 
   _preFabName: ShoeCar
-  _playerID: 2
+  _characterID: 2
   _playerPic: {fileID: 21300000, guid: 7d7ec16430993714aac308f48b67a4a7, type: 3}
-  _playerBackground: {fileID: 21300000, guid: 659d98d8aeee1fe4a981f648b793339c, type: 3}
+  _playerBackground: {fileID: 21300000, guid: 2e46356461561f94b8cbe53b9526101a, type: 3}
   _playerColor: {r: 0.95294124, g: 0.18431373, b: 0.15294118, a: 1}

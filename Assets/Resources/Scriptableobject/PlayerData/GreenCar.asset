@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GreenCar
   m_EditorClassIdentifier: 
   _preFabName: BananaCar
-  _playerID: 3
+  _characterID: 3
   _playerPic: {fileID: 21300000, guid: 7d7ec16430993714aac308f48b67a4a7, type: 3}
-  _playerBackground: {fileID: 21300000, guid: fa077bf349be7b740af254dcf9bf4bf1, type: 3}
+  _playerBackground: {fileID: 21300000, guid: 659d98d8aeee1fe4a981f648b793339c, type: 3}
   _playerColor: {r: 0.3647059, g: 0.8431373, b: 0.41176474, a: 1}
