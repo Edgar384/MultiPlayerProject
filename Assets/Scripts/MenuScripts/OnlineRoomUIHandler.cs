@@ -102,6 +102,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
             if (_characters[i].CheckIfCharacterIsFree())
             {
                 CanvasManager.Instance.EventSystem.SetSelectedGameObject(_characters[i].gameObject);
+                _selectedCharacterIndex = i;
                 return;
             }
         }
