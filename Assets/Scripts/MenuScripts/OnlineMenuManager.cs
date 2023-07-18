@@ -1,32 +1,18 @@
-using System;
-using DefaultNamespace.MenuScripts;
 using GarlicStudios.Online.Managers;
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
+using static UnityEngine.InputSystem.InputAction;
 
 public class OnlineMenuManager : MonoBehaviour
 {
-    public event Action OnReturnToMainMenu;
+    public static OnlineMenuManager Instance;
+    public event Action OnOnlineCanvasDisabled;
 
-    [HideInInspector] public static OnlineMenuManager Instance;
+    [SerializeField] LobbyMenuManager _lobby;
+    [SerializeField] OnlineRoomUIHandler _carSelection;
 
-    [Header("Canvases")]
-    [SerializeField]
-    private EnterNameHandler _enterNameMenu;
-    [SerializeField] private LobbyMenuHandler _lobbyMenu;
-    [SerializeField] private LobbyRoomUIListHandler _lobbyRoomUIListHandler;
-    [FormerlySerializedAs("_characterSelectionMenu")] [SerializeField]
-    private OnlineRoomUIHandler onlineRoomUI;
-
-    [SerializeField] private OnlineManager _onlineManager;
-    
-    public OnlineRoomUIHandler OnlineRoomUI => onlineRoomUI;
-
-    private void OnEnable()
-    {
-        CloseAllCanvases();
-        ChangeEnterNameCanvasStatus(true);
-    }
+    public LobbyMenuManager Lobby => _lobby;
+    public OnlineRoomUIHandler Room => _carSelection;
 
     private void Awake()
     {
@@ -35,73 +21,51 @@ public class OnlineMenuManager : MonoBehaviour
 
     private void Start()
     {
-        RegisterEvents();
+        _lobby.gameObject.SetActive(false);
+        _carSelection.gameObject.SetActive(false);
+        CanvasManager.Instance.OnPlayerPressedPlay += TurnOnLobby;
+        _lobby.OnJoinedRoom += TurnOnRoom;
+        _lobby.OnRoomCreated += TurnOnRoom;
     }
 
     private void OnDestroy()
     {
-        UnregisterEvents();
+        CanvasManager.Instance.OnPlayerPressedPlay -= TurnOnLobby;
+        _lobby.OnJoinedRoom -= TurnOnRoom;
+        _lobby.OnRoomCreated -= TurnOnRoom;
     }
 
-    private void RegisterEvents()
+    public void TurnOnLobby(bool isNewPlayer)
     {
-        OnlineLobbyManager.OnRoomListUpdateEvent += _lobbyRoomUIListHandler.UpdateRoomUI;
-        _lobbyMenu.OnRoomCreated += OnlineLobbyManager.CreateRoom;
-        OnlineRoomManager.OnJoinRoomEvent += MoveToCarSelectionMenu;
-        _enterNameMenu.OnNicknameEntered += _onlineManager.ConnectedToMaster;
-        MainMenuManager.Instance.OnPlayerWantToPlay += ChangeEnterNameCanvasStatus;
-        OnlineManager.OnConnectedToMasterEvent += MoveToLobbyMenu;
+        _lobby.gameObject.SetActive(true);
+        _carSelection.gameObject.SetActive(false);
+        _lobby.ChangeLobbyVisual(isNewPlayer);
     }
 
-    private void UnregisterEvents()
+    private void TurnOnRoom(string roomName)
     {
-        OnlineLobbyManager.OnRoomListUpdateEvent -= _lobbyRoomUIListHandler.UpdateRoomUI;
-        _lobbyMenu.OnRoomCreated -= OnlineLobbyManager.CreateRoom;
-        OnlineRoomManager.OnJoinRoomEvent -= MoveToCarSelectionMenu;
-        _enterNameMenu.OnNicknameEntered -= _onlineManager.ConnectedToMaster;
-        MainMenuManager.Instance.OnPlayerWantToPlay -= ChangeEnterNameCanvasStatus;
-        OnlineManager.OnConnectedToMasterEvent -= MoveToLobbyMenu;
+        _lobby.gameObject.SetActive(false);
+        _carSelection.gameObject.SetActive(true);
     }
 
-    private void CloseAllCanvases()
+    public void ReturnToMainMenu()
     {
-        ChangeEnterNameCanvasStatus(false);
-        ChangeLobbyCanvasStatus(false);
-        ChangeCharacterSelectioStatus(false);
+        _lobby.gameObject.SetActive(false);
+        _carSelection.gameObject.SetActive(false);
+        OnOnlineCanvasDisabled?.Invoke();
     }
 
-    public void MoveToMainMenu()
+    public void ReturnToMainMenu(CallbackContext callbackContext)
     {
-        CloseAllCanvases();
-        OnReturnToMainMenu?.Invoke();
-        MainMenuManager.Instance.ReturnToMainMenu(false);
+        if (!_lobby.isActiveAndEnabled && !_carSelection.isActiveAndEnabled)
+            return;
+        _lobby.gameObject.SetActive(false);
+        _carSelection.gameObject.SetActive(false);
+        OnOnlineCanvasDisabled?.Invoke();
     }
 
-    private void MoveToLobbyMenu()
+    public void ReturnToLobby(CallbackContext callbackContext)
     {
-        ChangeEnterNameCanvasStatus(false);
-        ChangeLobbyCanvasStatus(true);
-    }
-
-    private void MoveToCarSelectionMenu()
-    {
-        ChangeLobbyCanvasStatus(false);
-        ChangeCharacterSelectioStatus(true);
-    }
-
-
-    private void ChangeEnterNameCanvasStatus(bool _toActivate)
-    {
-        _enterNameMenu.gameObject.SetActive(_toActivate);
-    }
-
-    private void ChangeLobbyCanvasStatus(bool _toActivate)
-    {
-        _lobbyMenu.gameObject.SetActive(_toActivate);
-    }
-
-    private void ChangeCharacterSelectioStatus(bool _toActivate)
-    {
-        onlineRoomUI.gameObject.SetActive(_toActivate);
+        TurnOnLobby(false);
     }
 }

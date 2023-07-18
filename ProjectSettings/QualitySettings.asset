@@ -4,10 +4,10 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 3
+  m_CurrentQuality: 0
   m_QualitySettings:
   - serializedVersion: 2
-    name: Very Low
+    name: Low
     pixelLightCount: 0
     shadows: 0
     shadowResolution: 0
@@ -156,4 +156,5 @@ QualitySettings:
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
     Android: 0
+    Server: 0
     Standalone: 0

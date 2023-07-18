@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GarlicStudios.Online.Managers;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -7,14 +9,17 @@ namespace DefaultNamespace.MenuScripts
 {
     public class LobbyRoomUIListHandler : MonoBehaviour
     {
+        public event Action OnRoomListVisualUpdated;
         private List<RoomInfoDisplayer> _roomInfoDisplayers;
         
         [SerializeField] private GameObject _roomPrefab;
         [SerializeField] private Transform _roomListParent;
 
+        public int GetRoomCount => _roomInfoDisplayers.Count;
         private void Awake()
         {
             _roomInfoDisplayers  = new List<RoomInfoDisplayer>();
+            OnlineLobbyManager.OnRoomListUpdateEvent += UpdateRoomUI;
         }
 
         public void UpdateRoomUI(List<RoomInfo> roomList)
@@ -22,13 +27,21 @@ namespace DefaultNamespace.MenuScripts
             foreach (var room in roomList)
             {
                 var roomObject = Instantiate(_roomPrefab, _roomListParent).GetComponent<RoomInfoDisplayer>();
-                roomObject.transform.rotation = _roomListParent.rotation;
                 roomObject.SetRoomInfo(room);
                 roomObject.OnJoinRoom += OnlineLobbyManager.JoinRoom;
                 _roomInfoDisplayers.Add(roomObject);
                 
                 Debug.Log($"Room add to room list room name: {room.Name}");
             }
+            OnRoomListVisualUpdated?.Invoke();
+        }
+
+        public RoomInfoDisplayer GetRoom(int roomIndex)
+        {
+            if (_roomInfoDisplayers.Count >= roomIndex)
+                return _roomInfoDisplayers[roomIndex];
+
+            throw new Exception("Doesnt have room in this index");
         }
 
         private void OnDisable()
@@ -37,6 +50,11 @@ namespace DefaultNamespace.MenuScripts
             {
                 roomInfoDisplayer.OnJoinRoom -= OnlineLobbyManager.JoinRoom;
             }
+        }
+
+        private void OnDestroy()
+        {
+            OnlineLobbyManager.OnRoomListUpdateEvent -= UpdateRoomUI;
         }
     }
 }

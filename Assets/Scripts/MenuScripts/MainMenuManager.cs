@@ -1,54 +1,37 @@
-using System;
+using Photon.Pun.Demo.PunBasics;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
-public class MainMenuManager: MonoBehaviour
+public class MainMenuManager : MonoBehaviour
 {
+    [Header("Buttons")]
+    [SerializeField] private Button _playButton;
+    [SerializeField] private Button _settingsButton;
+    [SerializeField] private Button _quitButton;
 
-    public event Action<bool> OnPlayerWantToPlay;
-
-    [HideInInspector] public static MainMenuManager Instance;
-
-    [Header("Canvases")]
-    [SerializeField] private GameObject _mainMenuCanvas;
-    [SerializeField] private GameObject _onlineCanvas;
-    [SerializeField] private GameObject _settingsCanvas;
 
     private void Awake()
     {
-        Instance = this;
-        ResetScene();
+        ResetSceneSettings();
     }
 
-    private void ResetScene()
+    private void Start()
     {
-        _mainMenuCanvas.SetActive(true);
-        _onlineCanvas.SetActive(false);
-        _settingsCanvas.SetActive(false);
+        CanvasManager.Instance.OnReturnedToMainMenu += ResetSceneSettings;
     }
-    public void Play()
+
+    private void OnDestroy()
     {
-        _mainMenuCanvas.SetActive(false);
-        _onlineCanvas.SetActive(true);
-        OnPlayerWantToPlay?.Invoke(true);
+        CanvasManager.Instance.OnReturnedToMainMenu -= ResetSceneSettings;
     }
 
-    public void OpenSettings()
+    private void ResetSceneSettings()
     {
-        _mainMenuCanvas.SetActive(false);
-        _settingsCanvas.SetActive(true);
+        CanvasManager.Instance.EventSystem.SetSelectedGameObject(_playButton.gameObject);
+        CanvasManager.Instance.EventSystem.enabled = true;
     }
-
-    public void ReturnToMainMenu(bool isFromSettings)
-    {
-        if(isFromSettings) { _settingsCanvas.SetActive(false); }
-        else{ _onlineCanvas.SetActive(false); }
-
-        _mainMenuCanvas.SetActive(true);
-    }
-
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
-
 }

@@ -13,4 +13,9 @@ public class GameTextLayers : MonoBehaviour
         _roomUnderInfoText.text = text;
         _roomFrontInfoText.text = text;
     }
+
+    public void ChangeColor(Color color)
+    {
+        _roomFrontInfoText.color = color;
+    }
 }

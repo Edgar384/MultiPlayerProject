@@ -1,43 +1,51 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class OnlineRoomUIHandler : MonoBehaviour
 {
-    public event Action<int> OnCarSelected;
+    public event Action<int,bool> OnCharacterSelected;
+    public event Action OnEnteredRoom;
 
     [SerializeField] private List<PlayerInRoomUI> _playersInRoomUI;
-    [SerializeField] private GameObject _carSelectionPreview;
-    [SerializeField] private CarSelectionStatus[] _cars;
+    [SerializeField] private CarPreviewHandler _carPreviewHandler;
     [SerializeField] private Button _readyUp;
     [SerializeField] private Button _start;
 
     [SerializeField] private OnlineRoomManager _onlineRoomManager;
-    
+
+    [SerializeField] private CharacterSelectionUI[] _characters = new CharacterSelectionUI[4];
     private int _selectedCharacterIndex;
 
     private void OnEnable()
     {
-        ResetCarsStatus();
-        _carSelectionPreview.SetActive(true);
         _selectedCharacterIndex = 0;
-        _cars[_selectedCharacterIndex].gameObject.SetActive(true);
+        SetFirstSelectedObject();
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
-        OnCarSelected += _onlineRoomManager.OnCharacterSelect;
+        CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed += SelectCharacter;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed += ChangeCarPreviewCallBack;
+        OnCharacterSelected += _onlineRoomManager.OnCharacterSelect;
         UpdatePlayerUI();
+        StartCoroutine(ChangeCarPreviewOnEnter());
         _start.interactable = false;
     }
 
     private void OnDisable()
     {
-        OnCarSelected -= _onlineRoomManager.OnCharacterSelect;
+        OnCharacterSelected -= _onlineRoomManager.OnCharacterSelect;
+        CanvasManager.Instance.PlayerController.UI.Back.performed -= OnlineMenuManager.Instance.ReturnToLobby;
+        CanvasManager.Instance.PlayerController.UI.Confirm.performed -= SelectCharacter;
+        CanvasManager.Instance.PlayerController.UI.Navigate.performed -= ChangeCarPreviewCallBack;
         OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
-        _carSelectionPreview.SetActive(false);
     }
 
     private void Update()
@@ -62,13 +70,13 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void UpdatePlayerUI()
     {
         int numberOfPlayersInRoom = OnlineRoomManager.ConnectedPlayers.Count;
-
         var playerArray = OnlineRoomManager.ConnectedPlayers.Values.ToArray();
-        
         for (int i = 0; i < numberOfPlayersInRoom; i++)
         {
-            _playersInRoomUI[i].Init(playerArray[i]);
-            SetPlayerUiReadyStatus(playerArray[i],playerArray[i].IsReady);
+            if (playerArray[i].IsReady)
+            {
+                PlayerEnterRoomCharactersRefresh(playerArray[i].IsReady, i, playerArray[i].NickName);
+            }
         }
     }
     
@@ -84,50 +92,68 @@ public class OnlineRoomUIHandler : MonoBehaviour
         }
     }
 
-    private void ResetCarsStatus()
+    private void SetFirstSelectedObject()
     {
-        for (int i = 0; i < _cars.Length; i++)
+        for (int i = 0; i < _characters.Length; i++)
         {
-            _cars[i].ChangeCarAvailability(true);
+            if (_characters[i].CheckIfCharacterIsFree())
+            {
+                CanvasManager.Instance.EventSystem.SetSelectedGameObject(_characters[i].gameObject);
+                return;
+            }
         }
     }
 
-    public void NextCar()
+    private void SelectCharacter(CallbackContext callbackContext)
     {
-        _cars[_selectedCharacterIndex].gameObject.SetActive(false);
-        _selectedCharacterIndex = (_selectedCharacterIndex + 1) % _cars.Length; //For making a loop
-        _cars[_selectedCharacterIndex].gameObject.SetActive(true);
-        CheckCarAvailability();
+        if(CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover))
+        {
+            if (currentCharacterOnHover.CheckIfCharacterIsFree())
+            {
+                currentCharacterOnHover.ChangeCharacterAvailability(false,PhotonNetwork.NickName);
+                OnCharacterSelected?.Invoke(currentCharacterOnHover.PlayerData.PlayerID,true);
+            }
+
+            else
+            {
+                currentCharacterOnHover.ChangeCharacterAvailability(true, PhotonNetwork.NickName);
+                OnCharacterSelected?.Invoke(currentCharacterOnHover.PlayerData.PlayerID,false);
+            }
+        }
     }
 
-    public void PreviousCar()
+    private void PlayerEnterRoomCharactersRefresh(bool isReady,int playerID, string playerNickname)
     {
-        _cars[_selectedCharacterIndex].gameObject.SetActive(false);
-        _selectedCharacterIndex--;
-        if (_selectedCharacterIndex < 0)
-            _selectedCharacterIndex += _cars.Length;
-        _cars[_selectedCharacterIndex].gameObject.SetActive(true);
-        CheckCarAvailability();
+        if (!isReady)
+        {
+            _characters[playerID].ChangeCharacterAvailability(false, playerNickname);
+        }
     }
 
-    public void SetCarIsTaken(int carIndex, bool isAvailable)
+    private void ChangeCarPreviewCallBack(CallbackContext callbackContext)
     {
-        _cars[carIndex].ChangeCarAvailability(isAvailable);
+        StartCoroutine(ChangeCarPreview());
     }
 
-    private void CheckCarAvailability()
+    private IEnumerator ChangeCarPreview()
     {
-        _readyUp.interactable = _cars[_selectedCharacterIndex].CheckIfCarIsFree();
+        yield return new WaitForEndOfFrame();
+        if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
+        {
+            CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
+            _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
+            _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);
+        }
     }
 
-    public void CancleSelect()
+    private IEnumerator ChangeCarPreviewOnEnter()
     {
-        _cars[_selectedCharacterIndex].gameObject.SetActive(false);
-    }
-
-    public void ConfirmSelection()
-    {
-        _cars[_selectedCharacterIndex].ChangeCarAvailability(false);
-        OnCarSelected?.Invoke(_selectedCharacterIndex);
+        yield return new WaitForEndOfFrame();
+        if (CanvasManager.Instance.EventSystem.currentSelectedGameObject == _characters[_selectedCharacterIndex].gameObject)
+        {
+            CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
+            _selectedCharacterIndex = currentCharacterOnHover.PlayerData.PlayerID;
+            _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);
+        }
     }
 }
