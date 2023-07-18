@@ -21,7 +21,7 @@ namespace GarlicStudios.Online.Managers
         public static event Action<Player> OnMasterClientSwitchedEvent;
         public static event Action OnCreatedRoomEvent;
         public static event Action OnJoinRoomEvent;
-
+        public static event Action OnSendPLayerData_RPC;
         [SerializeField] private PlayerData[] _playerDatas;
 
         public static Dictionary<PlayerData, bool> NewCarAvailabilityList;
@@ -192,6 +192,7 @@ namespace GarlicStudios.Online.Managers
             
             Player = ConnectedPlayers[PhotonNetwork.LocalPlayer.ActorNumber];
             MasterClient = ConnectedPlayers[PhotonNetwork.MasterClient.ActorNumber];
+            OnSendPLayerData_RPC?.Invoke();
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)

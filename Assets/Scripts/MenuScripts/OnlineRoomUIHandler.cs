@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GamePlayLogic;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -27,7 +29,8 @@ public class OnlineRoomUIHandler : MonoBehaviour
     private void OnEnable()
     {
         _selectedCharacterIndex = 0;
-        SetFirstSelectedObject();
+        //SetFirstSelectedObject();
+        OnlineRoomManager.OnSendPLayerData_RPC += SetFirstSelectedObject;
         OnlineRoomManager.OnPlayerListUpdateEvent  += UpdatePlayerUI;
         CanvasManager.Instance.PlayerController.UI.Back.performed += OnlineMenuManager.Instance.ReturnToLobby;
         CanvasManager.Instance.PlayerController.UI.Confirm.performed += SelectCharacter;
@@ -78,8 +81,6 @@ public class OnlineRoomUIHandler : MonoBehaviour
             if (playerArray[i].PlayerData != null)
                 _characters[playerArray[i].PlayerData.CharacterID].ChangeCharacterAvailability(false, playerArray[i].PhotonData.NickName);
         }
-
-        SetFirstSelectedObject();
     }
     
     private void SetPlayerUiReadyStatus(OnlinePlayer player,bool  isReady)

@@ -229,7 +229,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CreateRoom/ResetSettings",
+                    "name": "Triangular",
                     "type": "Button",
                     "id": "457bc783-c215-40aa-b101-8aad4ad05add",
                     "expectedControlType": "Button",
@@ -367,7 +367,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "CreateRoom/ResetSettings",
+                    "action": "Triangular",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -378,7 +378,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "CreateRoom/ResetSettings",
+                    "action": "Triangular",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
