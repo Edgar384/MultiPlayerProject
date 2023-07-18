@@ -14,7 +14,7 @@ public class CreateNewRoom : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        CanvasManager.Instance.PlayerController.UI.CreateRoomResetSettings.performed += CreateRoom;
+        CanvasManager.Instance.PlayerController.UI.Triangular.performed += CreateRoom;
     }
 
     public void CreateRoom(CallbackContext callbackContext)
