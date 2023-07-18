@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using Temp;
 using UnityEngine;
 
@@ -11,6 +10,8 @@ namespace GamePlayLogic
 {
     public class OnlineGameManager : MonoBehaviourPun
     {
+        public static event Action OnEndGame;
+        
         [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private RestFallHandler _restFallHandler;
 
@@ -30,7 +31,10 @@ namespace GamePlayLogic
         private void EndGame(EventData obj)
         {
             if (obj.Code == Consts.EndGameCode)
+            {
                 Debug.Log("End Game");
+                OnEndGame?.Invoke();
+            }
         }
 
         private void OnPlayerFall(LocalPlayer localPlayer)

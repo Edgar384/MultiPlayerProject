@@ -5,6 +5,7 @@ using UnityEngine;
 public class AbilityCaster : MonoBehaviour
 {
     private List<BaseAbility> _abilities;
+    
 
     private void Update()
     {
