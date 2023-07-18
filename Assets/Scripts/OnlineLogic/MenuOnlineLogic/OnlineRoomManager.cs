@@ -176,6 +176,9 @@ namespace GarlicStudios.Online.Managers
 
             for (int i = 0; i < players.Length; i++)
             {
+                if (players[i].ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+                    continue;
+                
                 var onlinePLayer = new OnlinePlayer(players[i]);
                 onlinePLayer.SetReadyStatus(isReday[i]);
                 ConnectedPlayers.Add(players[i].ActorNumber, onlinePLayer);
