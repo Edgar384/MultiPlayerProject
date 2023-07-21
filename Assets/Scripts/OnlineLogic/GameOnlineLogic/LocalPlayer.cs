@@ -50,7 +50,7 @@ namespace DefaultNamespace
             OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
             OnlinePlayer.SetPhotonView(photonView);
             Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.Owner.ActorNumber}");
-            OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
+            OnlineGameManager.LocalPlayers.TryAdd(photonView.Owner.ActorNumber, this);
         }
 
         public int CompareTo(LocalPlayer other)
