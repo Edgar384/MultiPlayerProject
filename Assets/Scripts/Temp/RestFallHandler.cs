@@ -7,9 +7,11 @@ namespace Temp
 {
     public class RestFallHandler : MonoBehaviourPun
     {
+        [SerializeField] private ParticleSystem _fallParticleSystem;
+        [SerializeField] private ParticleSystem[] _respawnParticleSystems;
         public event Action<LocalPlayer> OnRestCarEvent;
 
-        [SerializeField] private Transform _resetPos;
+        [SerializeField] private Transform[] _resetPos;
 
         private void RestCar(LocalPlayer player)
         {
@@ -18,13 +20,20 @@ namespace Temp
     
         private void OnTriggerEnter(Collider other)
         {
-            if (!PhotonNetwork.IsMasterClient)
-                return;
-            
+            // if (!PhotonNetwork.IsMasterClient)
+            //     return;
+            //
             if (other.gameObject.TryGetComponent(out LocalPlayer player))
             {
+                _fallParticleSystem.transform.position = player.transform.position;
+                _fallParticleSystem.Play();
                 Debug.Log("RestCar");
-                player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,_resetPos.position.x,_resetPos.position.y,_resetPos.position.z);
+                var resetPos = _resetPos[UnityEngine.Random.Range(0, _resetPos.Length)];
+
+                _respawnParticleSystems[player.OnlinePlayer.PlayerData.CharacterID].transform.position = resetPos.position;
+                _respawnParticleSystems[player.OnlinePlayer.PlayerData.CharacterID].Play();
+                
+                player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,resetPos.position.x,resetPos.position.y,resetPos.position.z);
                 RestCar(player);
             }
         }

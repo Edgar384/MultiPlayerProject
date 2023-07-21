@@ -8,6 +8,8 @@ namespace PG_Physics.Wheel
     {
         private const string ADD_KNOCKBACK_RPC = nameof(AddKnockBack_RPC);
         private const string ON_KNOCKBACK_EVENT_RPC = nameof(OnKnockBackEvent_RPC);
+
+        [SerializeField] private ParticleSystem _particleSystem;
         
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _knockBackForceMultiplier;
@@ -72,12 +74,15 @@ namespace PG_Physics.Wheel
         {
             if (_isKnockBackMode)
                 return;
-            
-            if (!photonView.IsMine) return;
 
+            if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
+
+            _particleSystem.transform.position = other.contacts[0].point;
+            _particleSystem.Play();
+            
             _isKnockBackMode = true;
             
-            if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
+            if (!photonView.IsMine) return;
             
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
             
