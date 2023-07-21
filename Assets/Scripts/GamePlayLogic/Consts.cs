@@ -2,6 +2,6 @@
 {
     public class Consts
     {
-        public static readonly byte EndGameCode = 0;
+        public const byte EndGameCode = 0;
     }
 }

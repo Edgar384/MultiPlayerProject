@@ -8,7 +8,7 @@ namespace GamePlayLogic
 {
     public class TimeManager : MonoBehaviourPun , IPunObservable
     {
-
+        public static event Action OnTimeEnd;
         [SerializeField] private float _time;
 
         private bool _isTimeEnded;
@@ -31,7 +31,7 @@ namespace GamePlayLogic
             {
                 _isTimeEnded = true;
                 TimeGame = 0;
-                PhotonNetwork.RaiseEvent(Consts.EndGameCode, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+                OnTimeEnd?.Invoke();
             }
         }
 

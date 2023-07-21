@@ -61,6 +61,7 @@ MonoBehaviour:
   - EndGame
   - SendPLayerData_RPC
   - UpdateUI
+  - EndGame_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

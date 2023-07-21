@@ -9,7 +9,6 @@ public class OnlineManager : MonoBehaviourPunCallbacks
     public static event Action OnConnectedToMasterEvent;
     public static event Action<Player> OnMasterClientSwitchedEvent;
 
-    private const string GAME_STARTED_RPC = nameof(GameStarted);
     private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
     
     [SerializeField] private float _timeLeftForStartGame = 0;
@@ -39,24 +38,24 @@ public class OnlineManager : MonoBehaviourPunCallbacks
         EnterNameHandler.OnNicknameEntered -= ConnectedToMaster;
     }
 
-    private void Update()
-    {
-        if (!_isGameStarted)
-        {
-            if (_isCountingForStartGame)
-            {
-                _timeLeftForStartGame -= Time.deltaTime;
-                if (_timeLeftForStartGame <= 0)
-                {
-                    _isCountingForStartGame = false;
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        photonView.RPC(GAME_STARTED_RPC, RpcTarget.AllViaServer);
-                    }
-                }
-            }  
-        }
-    }
+    // private void Update()
+    // {
+    //     if (!_isGameStarted)
+    //     {
+    //         if (_isCountingForStartGame)
+    //         {
+    //             _timeLeftForStartGame -= Time.deltaTime;
+    //             if (_timeLeftForStartGame <= 0)
+    //             {
+    //                 _isCountingForStartGame = false;
+    //                 if (PhotonNetwork.IsMasterClient)
+    //                 {
+    //                     photonView.RPC(GAME_STARTED_RPC, RpcTarget.AllViaServer);
+    //                 }
+    //             }
+    //         }  
+    //     }
+    // }
 
 #if UNITY_EDITOR
     [ContextMenu("ConnectedToMaster")]

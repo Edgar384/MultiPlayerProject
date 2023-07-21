@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DefaultNamespace;
-using ExitGames.Client.Photon;
 using Photon.Pun;
 using Temp;
 using UnityEngine;
@@ -20,21 +19,24 @@ namespace GamePlayLogic
         private void Awake()
         {
             _restFallHandler.OnRestCarEvent += OnPlayerFall;
-            PhotonNetwork.NetworkingClient.EventReceived += EndGame;
+            TimeManager.OnTimeEnd += EndGame;
         }
 
         private void OnDestroy()
         {
-            PhotonNetwork.NetworkingClient.EventReceived += EndGame;
         }
 
-        private void EndGame(EventData obj)
+        private void EndGame()
         {
-            if (obj.Code == Consts.EndGameCode)
-            {
-                Debug.Log("End Game");
-                OnEndGame?.Invoke();
-            }
+            if (PhotonNetwork.IsMasterClient)
+                photonView.RPC(nameof(EndGame_RPC), RpcTarget.AllViaServer);
+        }
+        
+        [PunRPC]
+        private void EndGame_RPC()
+        {
+            Debug.Log("End Game"); 
+            OnEndGame?.Invoke();
         }
 
         private void OnPlayerFall(LocalPlayer localPlayer)
