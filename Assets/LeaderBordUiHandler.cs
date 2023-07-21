@@ -19,7 +19,7 @@ public class LeaderBordUiHandler : MonoBehaviour
     {
         List<LocalPlayer> result = new List<LocalPlayer>();
 
-        var players = OnlineGameManager.LocalPlayers.Values.ToArray();
+          var players = OnlineGameManager.LocalPlayers.Values.ToArray();
         
         Array.Sort(players);
 

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using GamePlayLogic;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
@@ -9,7 +8,7 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback , IComparer<LocalPlayer>
+    public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback,IComparable<LocalPlayer>
     {
         [SerializeField] private PlayerCarInput _playerCarInput;
         [SerializeField] private KnockBackHandler _knockBackHandler; 
@@ -54,33 +53,16 @@ namespace DefaultNamespace
             OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
         }
 
-        public int Compare(LocalPlayer x, LocalPlayer y)
+        public int CompareTo(LocalPlayer other)
         {
-            if (x == null)
-            {
-                return 1;
-            }
-            if (y == null)
-            {
+            if (other == null)
                 return -1;
-            }
-            
-            //add null check
-            if (x.ScoreHandler.Score == y.ScoreHandler.Score)
-            {
-                return 0;
-            }
 
-            if (x.ScoreHandler.Score < y.ScoreHandler.Score)
-            {
-                return 1;
-            }
-            if (x.ScoreHandler.Score > y.ScoreHandler.Score)
-            {
+            if (ScoreHandler.Score > other.ScoreHandler.Score)
                 return -1;
-            }
-            
-            return  0;
+            if (ScoreHandler.Score < other.ScoreHandler.Score)
+                return 1;
+            return 0;
         }
     }
 }
