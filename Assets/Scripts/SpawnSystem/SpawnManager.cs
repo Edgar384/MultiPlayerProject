@@ -28,19 +28,20 @@ namespace SpawnSystem
             _spawnPointDictionary = new Dictionary<int, SpawnPoint>();
 
             foreach (var spawnPoint in _spawnPoints)
-            {
                 RegisterSpawnPoint(spawnPoint);
-            }
+        }
 
-            if(OnlineRoomManager.Player is not null) 
-                SpawnPlayer(OnlineRoomManager.Player);
+        private void Start()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
+            foreach (var connectedPlayer in OnlineRoomManager.ConnectedPlayers)
+                SpawnPlayer(connectedPlayer.Value);
         }
 
         public void SpawnPlayer(OnlinePlayer onlinePlayer)
         {
-            // if (onlinePlayer.InScene)
-            //     return;
-            
             SpawnPoint spawnPoint = AskForRandomSpawnPoint();
 
             if (spawnPoint is null)
@@ -52,6 +53,8 @@ namespace SpawnSystem
             var localPlayer = PhotonNetwork.Instantiate(onlinePlayer.PlayerData.PreFabName,
                 spawnPoint.GetPosition,
                 quaternion.identity).GetComponent<LocalPlayer>();
+            
+            localPlayer.photonView.TransferOwnership(onlinePlayer.PhotonData);
             
             localPlayer.SetOnlinePlayer(onlinePlayer);
 

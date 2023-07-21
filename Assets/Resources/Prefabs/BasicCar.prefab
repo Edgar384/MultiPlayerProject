@@ -5126,7 +5126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc31bf146cd4f3bb4805dae7789bf34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particleSystem: {fileID: 0}
   _playerCarInput: {fileID: 114834290597317844}
   _knockBackHandler: {fileID: 1798502603497044538}
 --- !u!114 &9131333332235930690
@@ -5145,7 +5144,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 1
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4684570298209138249}

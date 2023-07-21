@@ -18,6 +18,7 @@ namespace GamePlayLogic
         public static bool IsGameRunning { get; private set; }
         private void Awake()
         {
+            LocalPlayers.Clear();
             _restFallHandler.OnRestCarEvent += OnPlayerFall;
             TimeManager.OnTimeEnd += EndGame;
             IsGameRunning  = true;
@@ -33,7 +34,6 @@ namespace GamePlayLogic
         private void EndGame_RPC()
         {
             IsGameRunning = false;
-            LocalPlayers.Clear();
             Debug.Log("End Game"); 
             OnEndGame?.Invoke();
         }
