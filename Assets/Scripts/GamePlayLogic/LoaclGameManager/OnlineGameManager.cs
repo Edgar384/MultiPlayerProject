@@ -15,11 +15,12 @@ namespace GamePlayLogic
         [SerializeField] private RestFallHandler _restFallHandler;
 
         public static readonly Dictionary<int, LocalPlayer> LocalPlayers = new();
-
+        public static bool IsGameRunning { get; private set; }
         private void Awake()
         {
             _restFallHandler.OnRestCarEvent += OnPlayerFall;
             TimeManager.OnTimeEnd += EndGame;
+            IsGameRunning  = true;
         }
 
         private void EndGame()
@@ -31,6 +32,8 @@ namespace GamePlayLogic
         [PunRPC]
         private void EndGame_RPC()
         {
+            IsGameRunning = false;
+            LocalPlayers.Clear();
             Debug.Log("End Game"); 
             OnEndGame?.Invoke();
         }
@@ -40,11 +43,6 @@ namespace GamePlayLogic
             _scoreManager.AddScore(localPlayer.KnockBackHandler.LeastAttackPlayerId);
         }
 
-        private void OnDisable()
-        {
-            LocalPlayers.Clear();
-        }
-        
         public void ResetGame()
         {
             OnlineManager.LoadGameLevel();

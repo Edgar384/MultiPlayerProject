@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using GamePlayLogic;
+using Photon.Pun;
 using UnityEngine;
 
 /// <summary>
@@ -54,6 +55,9 @@ public class PlayerCarInput : MonoBehaviourPun
 
     private void Update()
     {
+        if (!OnlineGameManager.IsGameRunning)
+            return;
+        
         if (!photonView.IsMine)
             return;
 
