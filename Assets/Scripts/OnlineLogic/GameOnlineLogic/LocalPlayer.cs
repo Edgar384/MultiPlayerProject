@@ -78,7 +78,7 @@ namespace DefaultNamespace
 
         public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
         {
-            throw new NotImplementedException();
+            Debug.LogError("OnOwnershipTransferFailed");
         }
     }
 }
