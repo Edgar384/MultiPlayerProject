@@ -20,9 +20,9 @@ namespace Temp
     
         private void OnTriggerEnter(Collider other)
         {
-            // if (!PhotonNetwork.IsMasterClient)
-            //     return;
-            //
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+            
             if (other.gameObject.TryGetComponent(out LocalPlayer player))
             {
                 _fallParticleSystem.transform.position = player.transform.position;

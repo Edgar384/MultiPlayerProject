@@ -11,8 +11,6 @@ namespace DefaultNamespace
 {
     public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback , IComparer<LocalPlayer>
     {
-        [SerializeField] private ParticleSystem _particleSystem;
-        
         [SerializeField] private PlayerCarInput _playerCarInput;
         [SerializeField] private KnockBackHandler _knockBackHandler; 
         //add ability handler
@@ -43,7 +41,6 @@ namespace DefaultNamespace
         [PunRPC]
         private void RestPlayer_RPC(float x,float y, float z)
         {
-            _particleSystem.Play();
             transform.position = new Vector3(x,y,z);
             _knockBackHandler.Rigidbody.velocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(Vector3.zero);
