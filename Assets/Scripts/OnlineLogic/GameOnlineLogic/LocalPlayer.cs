@@ -4,11 +4,12 @@ using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using PG_Physics.Wheel;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback,IComparable<LocalPlayer>
+    public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback,IComparable<LocalPlayer> , IPunOwnershipCallbacks
     {
         [SerializeField] private PlayerCarInput _playerCarInput;
         [SerializeField] private KnockBackHandler _knockBackHandler; 
@@ -47,10 +48,7 @@ namespace DefaultNamespace
         
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
-            OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
-            OnlinePlayer.SetPhotonView(photonView);
             Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.Owner.ActorNumber}");
-            OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
         }
 
         public int CompareTo(LocalPlayer other)
@@ -63,6 +61,23 @@ namespace DefaultNamespace
             if (ScoreHandler.Score < other.ScoreHandler.Score)
                 return 1;
             return 0;
+        }
+
+        public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
+        {
+            OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
+            OnlinePlayer.SetPhotonView(photonView);
+            OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
+        }
+
+        public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }
