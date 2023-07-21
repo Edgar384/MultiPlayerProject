@@ -72,37 +72,39 @@ namespace PG_Physics.Wheel
 
         private void OnCollisionEnter(Collision other)
         {
-            if (_isKnockBackMode)
-                return;
-
+            if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
+            
             if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
-
+            
             _particleSystem.transform.position = other.contacts[0].point;
             _particleSystem.Play();
             
-            _isKnockBackMode = true;
-            
-            if (!photonView.IsMine) return;
-            
-            if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
-            
-            if (_rigidbody.velocity.magnitude < car._rigidbody.velocity.magnitude) return;
-            
-            var velocity = _rigidbody.velocity;
-
-            int hitedPlayerId = car.photonView.Controller.ActorNumber;
-            
-            int attackPlayerId = photonView.Controller.ActorNumber;
-            
-            if (!OnlineRoomManager.ConnectedPlayers.TryGetValue(hitedPlayerId, out var player))
+            if (photonView.IsMine)
             {
-                Debug.LogError("Can not find player");
-                return;
+                int hitedPlayerId = car.photonView.Controller.ActorNumber;
+
+                if (!OnlineRoomManager.ConnectedPlayers.TryGetValue(hitedPlayerId, out var player))
+                {
+                    Debug.LogError("Can not find player");
+                    return;
+                }
+                
+                if (_rigidbody.velocity.magnitude < other.rigidbody.velocity.magnitude) return;
+                
+                int attackPlayerId = photonView.Controller.ActorNumber;
+                
+                player.PhotonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
+                
+                if (_isKnockBackMode)
+                    return;
+
+                if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
+                _isKnockBackMode = true;
+                var velocity = _rigidbody.velocity;
+
+                player.PhotonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,velocity.x,velocity.y,velocity.z,attackPlayerId);
+                photonView.RPC(ON_KNOCKBACK_EVENT_RPC,RpcTarget.AllViaServer,attackPlayerId,hitedPlayerId);
             }
-            
-            player.PhotonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
-            player.PhotonView.RPC(ADD_KNOCKBACK_RPC,player.PhotonData,velocity.x,velocity.y,velocity.z,attackPlayerId);
-            photonView.RPC(ON_KNOCKBACK_EVENT_RPC,RpcTarget.AllViaServer,attackPlayerId,hitedPlayerId);
         }
     }
 }

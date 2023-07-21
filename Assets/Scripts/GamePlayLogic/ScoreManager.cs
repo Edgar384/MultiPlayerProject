@@ -18,6 +18,9 @@ namespace GamePlayLogic
         private void Start()
         {
             Players = OnlineGameManager.LocalPlayers;
+            
+            foreach (var player in Players)
+                player.Value.ScoreHandler.ResetScore();
         }
 
 

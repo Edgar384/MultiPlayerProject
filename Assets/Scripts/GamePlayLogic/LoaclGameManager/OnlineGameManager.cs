@@ -22,10 +22,6 @@ namespace GamePlayLogic
             TimeManager.OnTimeEnd += EndGame;
         }
 
-        private void OnDestroy()
-        {
-        }
-
         private void EndGame()
         {
             if (PhotonNetwork.IsMasterClient)
@@ -49,5 +45,9 @@ namespace GamePlayLogic
             LocalPlayers.Clear();
         }
         
+        public void ResetGame()
+        {
+            OnlineManager.LoadGameLevel();
+        }
     }
 }

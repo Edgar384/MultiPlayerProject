@@ -48,7 +48,10 @@ public class CameraController : MonoBehaviour
 
     private void Update()=>
         GetCamaraPosition();
-    
+
+    private void OnDestroy() =>
+        _trackObjects.Clear();
+
 
     private void GetCamaraPosition()
     {
@@ -132,7 +135,6 @@ public class CameraController : MonoBehaviour
             Debug.Log(newCamPosition);
             Debug.DrawLine(transform.position,midPosition,Color.red);
         }
-            
 #endif
     }
 

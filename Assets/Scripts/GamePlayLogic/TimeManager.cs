@@ -25,9 +25,12 @@ namespace GamePlayLogic
         {
             if (!PhotonNetwork.IsMasterClient)
                 return;
-            
+
+            if (_isTimeEnded)
+                return;
+
             TimeGame -= Time.deltaTime;
-            if (TimeGame <= 0 && !_isTimeEnded)
+            if (TimeGame <= 0)
             {
                 _isTimeEnded = true;
                 TimeGame = 0;
