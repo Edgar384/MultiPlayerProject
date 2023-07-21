@@ -73,6 +73,7 @@ namespace DefaultNamespace
             OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
             OnlinePlayer.SetPhotonView(photonView);
             OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
+            Debug.Log($"{OnlinePlayer.ActorNumber} is now owner of {gameObject.name} photonViewId: {photonView.ViewID}");
         }
 
         public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
