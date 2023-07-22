@@ -51,7 +51,7 @@ public class GameplayUiInput : MonoBehaviour
         
     }
 
-    //For leaderboard
+    //For pausemenu
     private void QuitGame(CallbackContext callbackContext)
     {
         if (_leaderBordUiHandler.gameObject.activeInHierarchy)

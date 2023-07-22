@@ -38,10 +38,12 @@ public class OnlineRoomUIHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        OnlineRoomManager.OnSendPLayerData_RPC -= SetFirstSelectedObject;
         OnCharacterSelected -= _onlineRoomManager.OnCharacterSelect;
         CanvasManager.Instance.PlayerController.UI.Back.performed -= OnlineMenuManager.Instance.ReturnToLobby;
         CanvasManager.Instance.PlayerController.UI.Confirm.performed -= SelectCharacter;
         CanvasManager.Instance.PlayerController.UI.Navigate.performed -= ChangeCarPreviewCallBack;
+        CanvasManager.Instance.PlayerController.UI.Triangular.performed -= StartGame;
         OnlineRoomManager.OnPlayerListUpdateEvent  -= UpdatePlayerUI;
     }
 
