@@ -30,7 +30,7 @@ public class GameUiHandler : MonoBehaviour
             }
 
             //if he has the same as the highscore, the leading id is not -1 and not himself... we can understand that someone has the same score as this player. So we reset the leading id.
-            else if (players[players[i].OnlinePlayer.PlayerData.CharacterID].ScoreHandler.Score == highestScore && leadingPlayerID != -1 && leadingPlayerID != players[players[i].OnlinePlayer.PlayerData.CharacterID].PlayerId)
+            else if (players[i].ScoreHandler.Score == highestScore && leadingPlayerID != -1 && leadingPlayerID != players[i].PlayerId)
                 leadingPlayerID = -1;
         }
 
