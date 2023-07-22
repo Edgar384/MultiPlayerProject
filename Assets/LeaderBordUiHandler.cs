@@ -11,10 +11,23 @@ public class LeaderBordUiHandler : MonoBehaviour
 {
     [SerializeField] private List<ResultsObject> results;
     [SerializeField] private GameObject _resetGameButton;
-
+    private PlayerController _playerController;
     private void Awake()
     {
         gameObject.SetActive(false);
+    }
+
+
+    private void OnEnable()
+    {
+        _playerController = new PlayerController();
+        _playerController.UI.Enable();
+        _playerController.UI.Triangular.performed += StartGame;
+    }
+
+    private void OnDisable()
+    {
+        _playerController.UI.Triangular.performed -= StartGame;
     }
 
     public void TurnOn()
@@ -34,15 +47,10 @@ public class LeaderBordUiHandler : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void StartNewGameInput(CallbackContext callbackContext)
+    private void StartGame(CallbackContext callbackContext)
     {
         if (PhotonNetwork.IsMasterClient)
-            StartGame();
-    }
-
-    private void StartGame()
-    {
-        OnlineManager.LoadGameLevel();
+            OnlineManager.LoadGameLevel();
     }
 
 

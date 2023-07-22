@@ -28,6 +28,7 @@ public class GameplayUiInput : MonoBehaviour
     private void OnDestroy()
     {
         _playerController.UI.PauseOptions.performed -= ChangePauseMenuState;
+        _playerController.UI.Back.performed -= QuitGame;
         OnlineGameManager.OnEndGame -= OpenLeaderboard;
     }
 
@@ -47,7 +48,7 @@ public class GameplayUiInput : MonoBehaviour
     {
         _leaderBordUiHandler.gameObject.SetActive(true);
         _leaderBordUiHandler.TurnOn();
-        _playerController.UI.Triangular.performed += _leaderBordUiHandler.StartNewGameInput;
+        
     }
 
     //For leaderboard

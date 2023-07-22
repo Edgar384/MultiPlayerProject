@@ -17,6 +17,11 @@ public class CreateNewRoom : MonoBehaviourPunCallbacks
         CanvasManager.Instance.PlayerController.UI.Triangular.performed += CreateRoom;
     }
 
+    private void OnDestroy()
+    {
+        CanvasManager.Instance.PlayerController.UI.Triangular.performed -= CreateRoom;
+    }
+
     public void CreateRoom(CallbackContext callbackContext)
     {
         if (CanvasManager.Instance.EventSystem.currentSelectedGameObject == this.gameObject && _roomName.text != null)
