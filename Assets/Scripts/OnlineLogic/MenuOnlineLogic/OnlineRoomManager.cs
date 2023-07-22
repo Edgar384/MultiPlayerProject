@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace.SciptableObject.PlayerData;
+using GamePlayLogic;
 using GarlicStudios.Online.Data;
 using Photon.Pun;
 using Photon.Realtime;
@@ -166,6 +167,9 @@ namespace GarlicStudios.Online.Managers
             }
 
             ConnectedPlayers.Remove(otherPlayer.ActorNumber);
+            if (OnlineGameManager.LocalPlayers.ContainsKey(otherPlayer.ActorNumber))
+                OnlineGameManager.LocalPlayers.Remove(otherPlayer.ActorNumber);
+            
             OnPlayerListUpdateEvent?.Invoke();
         }
         
