@@ -134,7 +134,13 @@ public class OnlineManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel(1);
         }
     }
-
+    
+    
+    public static void LoadLoadingLevel()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel(2);
+    }
     #endregion
     
     #region RPCS

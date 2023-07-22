@@ -17,6 +17,8 @@ namespace GarlicStudios.Online.Data
         private PlayerData _playerData;
 
         private  PhotonView _photonView;
+
+        public bool IsInLoading { get; set; }
         
         public bool IsMasterClient => _photonData.IsMasterClient;
         public int ActorNumber { get;}
@@ -37,7 +39,7 @@ namespace GarlicStudios.Online.Data
             UserId = photonDataData.UserId;
             NickName = photonDataData.NickName;
             IsReady = false;
-            
+            IsInLoading = false;
         }
 
         public void SetPlayerData(PlayerData playerData)
@@ -53,6 +55,7 @@ namespace GarlicStudios.Online.Data
 
         public void SetPhotonView(PhotonView photonView)
         {
+            IsInLoading = false;
             _photonView = photonView;
         }
 
