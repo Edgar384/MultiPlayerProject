@@ -12,11 +12,6 @@ public class LeaderBordUiHandler : MonoBehaviour
     [SerializeField] private List<ResultsObject> results;
     [SerializeField] private GameObject _resetGameButton;
     private PlayerController _playerController;
-    private void Awake()
-    {
-        gameObject.SetActive(false);
-    }
-
 
     private void OnEnable()
     {
