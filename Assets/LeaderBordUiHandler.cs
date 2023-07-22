@@ -42,7 +42,7 @@ public class LeaderBordUiHandler : MonoBehaviour
 
     private void StartGame()
     {
-        PhotonNetwork.LoadLevel(1);
+        OnlineManager.LoadGameLevel();
     }
 
 
