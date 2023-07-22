@@ -7592,8 +7592,8 @@ MonoBehaviour:
   _playerDatas:
   - {fileID: 11400000, guid: 93162323c536bf24fa1d3697d955e1e2, type: 2}
   - {fileID: 11400000, guid: 88e138f4e9f22ab40ac352d5d8aa4845, type: 2}
-  - {fileID: 11400000, guid: 9cba22775255f5d4f9783792c994c918, type: 2}
   - {fileID: 11400000, guid: d18473bf8fb1f804ebefe12cefcc2137, type: 2}
+  - {fileID: 11400000, guid: 9cba22775255f5d4f9783792c994c918, type: 2}
   _uiHandler: {fileID: 373627079}
 --- !u!1 &1138173974
 GameObject:
