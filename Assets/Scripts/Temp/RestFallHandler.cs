@@ -13,11 +13,6 @@ namespace Temp
 
         [SerializeField] private Transform[] _resetPos;
 
-        private void RestCar(LocalPlayer player)
-        {
-            OnRestCarEvent?.Invoke(player);
-        }
-    
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent(out LocalPlayer player))
@@ -34,7 +29,7 @@ namespace Temp
                 
                 photonView.RPC(nameof(RestPlayerVFX_RPC),RpcTarget.AllViaServer,index);
                 player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,resetPos.x,resetPos.y,resetPos.z);
-                RestCar(player);
+                OnRestCarEvent?.Invoke(player);
             }
         }
 

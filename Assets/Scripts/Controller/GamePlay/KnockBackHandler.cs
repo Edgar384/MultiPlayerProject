@@ -73,7 +73,9 @@ namespace PG_Physics.Wheel
         private void OnCollisionEnter(Collision other)
         {
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
-            
+
+            _leastAttackPlayerId = car.photonView.Owner.ActorNumber;
+
             if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
             
             _particleSystem.transform.position = other.contacts[0].point;
@@ -81,8 +83,6 @@ namespace PG_Physics.Wheel
             
             if (photonView.IsMine)
             {
-                photonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,car.photonView.Owner.ActorNumber);
-                
                 int hitedPlayerId = car.photonView.Controller.ActorNumber;
 
                 if (!OnlineRoomManager.ConnectedPlayers.TryGetValue(hitedPlayerId, out var player))
