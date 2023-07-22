@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DefaultNamespace;
-using GamePlayLogic;
 using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
@@ -49,15 +47,11 @@ namespace SpawnSystem
                 Debug.Log("No spawn point available");
                 return;
             }
-            
-            var localPlayer = PhotonNetwork.Instantiate(onlinePlayer.PlayerData.PreFabName,
-                spawnPoint.GetPosition,
-                quaternion.identity).GetComponent<LocalPlayer>();
-            
-            localPlayer.photonView.TransferOwnership(onlinePlayer.PhotonData);
-            
-            localPlayer.SetOnlinePlayer(onlinePlayer);
 
+            PhotonNetwork.Instantiate(onlinePlayer.PlayerData.PreFabName,
+                spawnPoint.GetPosition,
+                quaternion.identity);
+            
             photonView.RPC(SET_SPAWN_POINT_STATUS,RpcTarget.AllViaServer,spawnPoint.ID);
         }
 
