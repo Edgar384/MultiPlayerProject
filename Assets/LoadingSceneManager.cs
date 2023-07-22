@@ -1,13 +1,13 @@
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
+using UnityEngine;
 
 public class LoadingSceneManager : MonoBehaviourPun
 {
     // Start is called before the first frame update
     void Start()
     {
-        if (photonView.IsMine)
-            photonView.RPC(nameof(UpdateLoadStatus), RpcTarget.AllViaServer);
+        photonView.RPC(nameof(UpdateLoadStatus), RpcTarget.AllViaServer,PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     // Update is called once per frame
@@ -23,12 +23,12 @@ public class LoadingSceneManager : MonoBehaviourPun
         }   
         
         OnlineManager.LoadGameLevel();
+        Destroy(gameObject);
     }
 
     [PunRPC]
-    private void UpdateLoadStatus()
+    private void UpdateLoadStatus(int playerId)
     {
-        int actorId = PhotonNetwork.LocalPlayer.ActorNumber;
-        OnlineRoomManager.ConnectedPlayers[actorId].IsInLoading = true;
+        OnlineRoomManager.ConnectedPlayers[playerId].IsInLoading = true;
     }
 }
