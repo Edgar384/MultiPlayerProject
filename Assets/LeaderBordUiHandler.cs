@@ -38,7 +38,7 @@ public class LeaderBordUiHandler : MonoBehaviour
             results[i].gameObject.SetActive(true);
             results[i].RefreshVisuals(players[i].OnlinePlayer.PlayerData,players[i].OnlinePlayer.NickName,players[i].ScoreHandler.Score.ToString());
         }
-        OnlineGameManager.LocalPlayers.Clear();
+        
         gameObject.SetActive(true);
     }
 

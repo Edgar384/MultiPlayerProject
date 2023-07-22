@@ -18,6 +18,7 @@ namespace GamePlayLogic
         public static bool IsGameRunning { get; private set; }
         private void Awake()
         {
+            LocalPlayers.Clear();
             _restFallHandler.OnRestCarEvent += OnPlayerFall;
             TimeManager.OnTimeEnd += EndGame;
             IsGameRunning  = true;
@@ -46,6 +47,11 @@ namespace GamePlayLogic
         private void OnPlayerFall(LocalPlayer localPlayer)
         {
             _scoreManager.AddScore(localPlayer.KnockBackHandler.LeastAttackPlayerId);
+        }
+
+        public void ResetGame()
+        {
+            OnlineManager.LoadGameLevel();
         }
     }
 }
