@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShoeCar
   m_EditorClassIdentifier: 
   _preFabName: ShoeCar
-  _characterID: 2
-  _playerPic: {fileID: 21300000, guid: f82ad957a8bc5d14dbfdfdbefb64f65a, type: 3}
-  _playerBackground: {fileID: 21300000, guid: 659d98d8aeee1fe4a981f648b793339c, type: 3}
-  _playerColor: {r: 0.95294124, g: 0.18431373, b: 0.15294118, a: 1}
+  _characterID: 3
+  _playerPic: {fileID: 21300000, guid: d1008c563aa085145876bc5492625307, type: 3}
+  _playerBackground: {fileID: 21300000, guid: 0a16afc42e6972c409f9f4e8d5aee188, type: 3}
+  _playerColor: {r: 0.7372549, g: 0.454902, b: 0.9568628, a: 1}
