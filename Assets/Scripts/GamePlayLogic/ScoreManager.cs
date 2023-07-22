@@ -33,17 +33,16 @@ namespace GamePlayLogic
         [PunRPC]
         private void AddScoreToPlayer(int playerId)
         {
-            Debug.Log($"Add score to {playerId}");
             if (Players.TryGetValue(playerId, out var player))
             {
-                Debug.Log($"Add score to player {playerId}");
                 player.ScoreHandler.AddScore(1);
+                Debug.Log($"Add score to player {playerId} new score {player.ScoreHandler.Score}");
             }
 
             if (!PhotonNetwork.IsMasterClient) return;
             
-            if(CheckIfAPlayerWon(out var winnerId))
-                OnPlayerWon?.Invoke(winnerId);
+            // if(CheckIfAPlayerWon(out var winnerId))
+            //     OnPlayerWon?.Invoke(winnerId);
         }
         
         
