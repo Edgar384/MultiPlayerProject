@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
 using GamePlayLogic;
+using Photon.Pun;
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 public class LeaderBordUiHandler : MonoBehaviour
 {
     [SerializeField] private List<ResultsObject> results;
+    [SerializeField] private GameObject _resetGameButton;
 
     private void Awake()
     {
-        OnlineGameManager.OnEndGame += TurnOn;
         gameObject.SetActive(false);
     }
 
-    private void TurnOn()
+    public void TurnOn()
     {
         List<LocalPlayer> result = new List<LocalPlayer>();
 
@@ -29,5 +31,26 @@ public class LeaderBordUiHandler : MonoBehaviour
         }
         
         gameObject.SetActive(true);
+    }
+
+    public void StartNewGameInput(CallbackContext callbackContext)
+    {
+        if (PhotonNetwork.IsMasterClient)
+            StartGame();
+    }
+
+    private void StartGame()
+    {
+        //Start game again
+    }
+
+
+    private void Update()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            _resetGameButton.SetActive(true);
+
+        else
+            _resetGameButton.SetActive(false);
     }
 }

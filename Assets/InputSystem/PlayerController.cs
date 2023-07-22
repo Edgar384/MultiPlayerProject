@@ -258,6 +258,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause/Options"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6610fff-16a1-47de-a5fd-543de920d2b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -403,6 +412,28 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""Triangular"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9db227ed-cb72-423e-90e8-dae83155442f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause/Options"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e79e43ec-0061-4707-8757-44ba9f9724c3"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause/Options"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -445,6 +476,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
         m_UI_Triangular = m_UI.FindAction("Triangular", throwIfNotFound: true);
+        m_UI_PauseOptions = m_UI.FindAction("Pause/Options", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -588,6 +620,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Confirm;
     private readonly InputAction m_UI_Back;
     private readonly InputAction m_UI_Triangular;
+    private readonly InputAction m_UI_PauseOptions;
     public struct UIActions
     {
         private @PlayerController m_Wrapper;
@@ -596,6 +629,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         public InputAction @Confirm => m_Wrapper.m_UI_Confirm;
         public InputAction @Back => m_Wrapper.m_UI_Back;
         public InputAction @Triangular => m_Wrapper.m_UI_Triangular;
+        public InputAction @PauseOptions => m_Wrapper.m_UI_PauseOptions;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -617,6 +651,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Triangular.started += instance.OnTriangular;
             @Triangular.performed += instance.OnTriangular;
             @Triangular.canceled += instance.OnTriangular;
+            @PauseOptions.started += instance.OnPauseOptions;
+            @PauseOptions.performed += instance.OnPauseOptions;
+            @PauseOptions.canceled += instance.OnPauseOptions;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -633,6 +670,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Triangular.started -= instance.OnTriangular;
             @Triangular.performed -= instance.OnTriangular;
             @Triangular.canceled -= instance.OnTriangular;
+            @PauseOptions.started -= instance.OnPauseOptions;
+            @PauseOptions.performed -= instance.OnPauseOptions;
+            @PauseOptions.canceled -= instance.OnPauseOptions;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -682,5 +722,6 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         void OnConfirm(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
         void OnTriangular(InputAction.CallbackContext context);
+        void OnPauseOptions(InputAction.CallbackContext context);
     }
 }
