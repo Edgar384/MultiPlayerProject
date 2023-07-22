@@ -1,3 +1,4 @@
+using System.Globalization;
 using GamePlayLogic;
 using System.Linq;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class GameUiHandler : MonoBehaviour
 {
     [SerializeField] private PlayerUIHandler[] _playerUIHandlers;
-    [SerializeField] private GameObject _timer; //Until i have Jonix timer
+    [SerializeField] private GameTextLayers _timer; //Until i have Jonix timer
     private int highestScore = 0;
     private int leadingPlayerID = -1;
 
@@ -30,6 +31,10 @@ public class GameUiHandler : MonoBehaviour
             else if (players[i].ScoreHandler.Score == highestScore && leadingPlayerID != -1 && leadingPlayerID != players[i].PlayerId)
                 leadingPlayerID = -1;
         }
+
+        int time = (int)TimeManager.TimeGame;
+        
+        _timer.ChangeText(time.ToString());
 
         for (int i = 0; i < players.Count; i++)
         {

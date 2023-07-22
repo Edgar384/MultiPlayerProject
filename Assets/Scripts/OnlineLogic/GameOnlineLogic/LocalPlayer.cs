@@ -48,6 +48,9 @@ namespace DefaultNamespace
         
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
+            OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
+            OnlinePlayer.SetPhotonView(photonView);
+            OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
             Debug.Log($"{gameObject.name} is instantiated with viewID {photonView.Owner.ActorNumber}");
         }
 
@@ -70,9 +73,6 @@ namespace DefaultNamespace
 
         public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
         {
-            OnlinePlayer = OnlineRoomManager.ConnectedPlayers[photonView.Owner.ActorNumber];
-            OnlinePlayer.SetPhotonView(photonView);
-            OnlineGameManager.LocalPlayers.Add(photonView.Owner.ActorNumber,this);
             Debug.Log($"{OnlinePlayer.ActorNumber} is now owner of {gameObject.name} photonViewId: {photonView.ViewID}");
         }
 
