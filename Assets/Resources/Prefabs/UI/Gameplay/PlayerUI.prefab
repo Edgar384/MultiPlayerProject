@@ -74,7 +74,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -48.35
+  m_Spacing: -78.3
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -194,7 +194,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 124.5076, y: 159.093}
+  m_SizeDelta: {x: 290, y: 265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1787091600973122643
 CanvasRenderer:
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7d7ec16430993714aac308f48b67a4a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b9fd43dc7b6c115498fedc8ca8108be0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -244,12 +244,12 @@ PrefabInstance:
     - target: {fileID: 3593393586397271448, guid: 424dff180439dd64baf8bb36113572a8,
         type: 3}
       propertyPath: m_text
-      value: 0
+      value: 00
       objectReference: {fileID: 0}
     - target: {fileID: 3593393586397271448, guid: 424dff180439dd64baf8bb36113572a8,
         type: 3}
       propertyPath: m_fontSize
-      value: 135
+      value: 119.6
       objectReference: {fileID: 0}
     - target: {fileID: 3593393586397271448, guid: 424dff180439dd64baf8bb36113572a8,
         type: 3}
@@ -454,12 +454,12 @@ PrefabInstance:
     - target: {fileID: 3593393587420107483, guid: 424dff180439dd64baf8bb36113572a8,
         type: 3}
       propertyPath: m_text
-      value: 0
+      value: 00
       objectReference: {fileID: 0}
     - target: {fileID: 3593393587420107483, guid: 424dff180439dd64baf8bb36113572a8,
         type: 3}
       propertyPath: m_fontSize
-      value: 135
+      value: 119.6
       objectReference: {fileID: 0}
     - target: {fileID: 3593393587420107483, guid: 424dff180439dd64baf8bb36113572a8,
         type: 3}
