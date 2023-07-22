@@ -24,17 +24,28 @@ namespace Temp
             {
                 _fallParticleSystem.transform.position = player.transform.position;
                 _fallParticleSystem.Play();
-                Debug.Log("RestCar");
-                var resetPos = _resetPos[UnityEngine.Random.Range(0, _resetPos.Length)];
-
-                _respawnParticleSystems[player.OnlinePlayer.PlayerData.CharacterID].transform.position = resetPos.position;
-                _respawnParticleSystems[player.OnlinePlayer.PlayerData.CharacterID].Play();
                 
                 if (!PhotonNetwork.IsMasterClient)
                     return;
-                player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,resetPos.position.x,resetPos.position.y,resetPos.position.z);
+
+                int index = UnityEngine.Random.Range(0, _resetPos.Length);
+                
+                var resetPos = _resetPos[index].position;
+                
+                photonView.RPC(nameof(RestPlayerVFX_RPC),RpcTarget.AllViaServer,resetPos.x,resetPos.y,resetPos.z,index);
+                player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,resetPos.x,resetPos.y,resetPos.z);
                 RestCar(player);
             }
         }
+
+
+        [PunRPC]
+        private void RestPlayerVFX_RPC(float x, float y, float z,int vfxIndex)
+        {
+            var resetPos = new Vector3(x, y, z);
+            _respawnParticleSystems[vfxIndex].transform.position = resetPos;
+            _respawnParticleSystems[vfxIndex].Play();
+        }
+
     }
 }
