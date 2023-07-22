@@ -10,14 +10,16 @@ public class GameUiHandler : MonoBehaviour
     private int highestScore = 0;
     private int leadingPlayerID = -1;
 
-    private void Awake()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
         var players = OnlineGameManager.LocalPlayers.Values.ToList();
+
+        for (int i = 0; i < players.Count; i++) //Turn on/off players UI
+        {
+            _playerUIHandlers[players[i].OnlinePlayer.PlayerData.CharacterID].gameObject.SetActive(true);
+        }
+
         for (int i = 0; i < players.Count; i++)
         {
             //Check if is the same as highestScore

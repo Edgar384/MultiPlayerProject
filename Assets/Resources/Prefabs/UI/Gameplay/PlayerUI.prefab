@@ -53,6 +53,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5a567a6214b964b9e456de1214736e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 0}
+  _playerImage: {fileID: 721660547830898012}
   PlayerScore: {fileID: 6140535718098275560}
 --- !u!114 &964337799678266141
 MonoBehaviour:
