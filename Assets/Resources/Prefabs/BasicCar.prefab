@@ -5356,7 +5356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Body: {fileID: 4646879546700360}
-  MaxAngle: 10
+  MaxAngle: 15
   AngleVelocityMultiplayer: 0.2
   RearAngleVelocityMultiplayer: 0.4
   MaxTiltOnSpeed: 60
