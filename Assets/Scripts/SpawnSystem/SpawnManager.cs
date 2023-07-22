@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using Unity.Mathematics;
@@ -12,14 +11,10 @@ namespace SpawnSystem
     [Serializable]
     public class SpawnManager : MonoBehaviourPun
     {
-        private const string  SPAWN_PLAYER = nameof(SpawnPlayer);
-        private const string  SET_SPAWN_POINT_STATUS = nameof(SetSpawnPointStatus_RPC);
-        
         [SerializeField] private SpawnPoint[] _spawnPoints;
         
         private int _spawnPointCount = 0;
         private Dictionary<int,SpawnPoint> _spawnPointDictionary;
-        
         
         private void Awake()
         {
@@ -31,31 +26,21 @@ namespace SpawnSystem
 
         private void Start()
         {
-            if (!PhotonNetwork.IsMasterClient)
-                return;
-
-            foreach (var connectedPlayer in OnlineRoomManager.ConnectedPlayers)
-                SpawnPlayer(connectedPlayer.Value);
+            photonView.RPC(nameof(AskForRandomSpawnPoint),RpcTarget.MasterClient,OnlineRoomManager.Player.PhotonData.ActorNumber);
         }
-
-        public void SpawnPlayer(OnlinePlayer onlinePlayer)
+        
+        [PunRPC]
+        public void SpawnPlayer(float x,float y,float z)
         {
-            SpawnPoint spawnPoint = AskForRandomSpawnPoint();
-
-            if (spawnPoint is null)
-            {
-                Debug.Log("No spawn point available");
-                return;
-            }
-
-            PhotonNetwork.Instantiate(onlinePlayer.PlayerData.PreFabName,
-                spawnPoint.GetPosition,
-                quaternion.identity);
+            Vector3 spawnPoint = new Vector3(x,y,z);
             
-            photonView.RPC(SET_SPAWN_POINT_STATUS,RpcTarget.AllViaServer,spawnPoint.ID);
+            PhotonNetwork.Instantiate(OnlineRoomManager.Player.PlayerData.PreFabName,
+                spawnPoint,
+                quaternion.identity);
         }
-
-        private SpawnPoint AskForRandomSpawnPoint()
+        
+        [PunRPC]
+        private void AskForRandomSpawnPoint(int playerId)
         {
             List<SpawnPoint> availableSpawnPoints = new List<SpawnPoint>();
 
@@ -65,13 +50,13 @@ namespace SpawnSystem
                     availableSpawnPoints.Add(keyValuePair.Value);
             }
 
-            if (availableSpawnPoints.Count == 0)
-                return null;
-            
-            SpawnPoint chosenSpawnPoint =
-                availableSpawnPoints[Random.Range(0, availableSpawnPoints.Count)];
-            
-            return chosenSpawnPoint;
+            if (availableSpawnPoints.Count != 0)
+            {
+                var chosenSpawnPoint = availableSpawnPoints[Random.Range(0, availableSpawnPoints.Count)];
+                
+                photonView.RPC(nameof(SetSpawnPointStatus_RPC),RpcTarget.AllViaServer,chosenSpawnPoint.ID);
+                photonView.RPC(nameof(SpawnPlayer),OnlineRoomManager.ConnectedPlayers[playerId].PhotonData,chosenSpawnPoint.GetPosition.x,chosenSpawnPoint.GetPosition.y,chosenSpawnPoint.GetPosition.z);
+            }
         }
         
         [PunRPC]

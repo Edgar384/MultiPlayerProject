@@ -15,7 +15,7 @@ namespace SpawnSystem
 
         public bool IsTaken => _isTaken;
 
-        public Vector2 GetPosition => _spawnPoint.position;
+        public Vector3 GetPosition => _spawnPoint.position;
 
         public void Init(int id)
         {
