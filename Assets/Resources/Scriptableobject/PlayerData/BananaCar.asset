@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _preFabName: BananaCar
   _characterID: 0
-  _playerPic: {fileID: 21300000, guid: 7d7ec16430993714aac308f48b67a4a7, type: 3}
+  _playerPic: {fileID: 21300000, guid: b9fd43dc7b6c115498fedc8ca8108be0, type: 3}
   _playerBackground: {fileID: 21300000, guid: 5dec4c8ec27515843a8fb44a42ee3e34, type: 3}
   _playerColor: {r: 0.9843138, g: 0.9490197, b: 0.24313727, a: 1}
