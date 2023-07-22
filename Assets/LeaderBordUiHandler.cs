@@ -45,7 +45,7 @@ public class LeaderBordUiHandler : MonoBehaviour
     private void StartGame(CallbackContext callbackContext)
     {
         if (PhotonNetwork.IsMasterClient)
-            OnlineManager.LoadGameLevel();
+            OnlineManager.LoadLoadingLevel();
     }
 
 
