@@ -48,5 +48,10 @@ namespace GamePlayLogic
         {
             _scoreManager.AddScore(localPlayer.KnockBackHandler.LeastAttackPlayerId);
         }
+
+        public void ResetGame()
+        {
+            OnlineManager.LoadGameLevel();
+        }
     }
 }
