@@ -61,6 +61,15 @@ public class CameraController : MonoBehaviour
         float wordTopZ = 0;
         float wordBottomZ = 0;
 
+        for (int i = 0; i < _trackObjects.Count; i++)
+        {
+            if (_trackObjects[i] == null)
+            {
+                _trackObjects.RemoveAt(i);
+                i--;
+            }
+        }
+
         foreach (var objectPosition in _trackObjects.Select(trackObject => trackObject.transform.position))
         {
             if (objectPosition.x < wordLeftX || wordLeftX == 0)
