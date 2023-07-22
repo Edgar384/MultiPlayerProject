@@ -16,7 +16,6 @@ namespace GamePlayLogic
         public void AddScore(int score)
         {
             _score += score;
-            Debug.Log($"Add score {_score}");
         }
 
 
