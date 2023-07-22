@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GamePlayLogic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -8,16 +9,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 {
     public static event Action OnConnectedToMasterEvent;
     public static event Action<Player> OnMasterClientSwitchedEvent;
-
-    private const string COUNTDOWN_STARTED_RPC = nameof(CountdownStarted);
     
-    [SerializeField] private float _timeLeftForStartGame = 0;
-    
-    private bool _isCountingForStartGame;
-    
-
-    private bool _isGameStarted;
-
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -27,7 +19,6 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        _isGameStarted = false;
         CanvasManager.Instance.OnlineMenuManager.OnOnlineCanvasDisabled += DisconnectPlayer;
         EnterNameHandler.OnNicknameEntered += ConnectedToMaster;
     }
@@ -37,25 +28,6 @@ public class OnlineManager : MonoBehaviourPunCallbacks
         CanvasManager.Instance.OnlineMenuManager.OnOnlineCanvasDisabled -= DisconnectPlayer;
         EnterNameHandler.OnNicknameEntered -= ConnectedToMaster;
     }
-
-    // private void Update()
-    // {
-    //     if (!_isGameStarted)
-    //     {
-    //         if (_isCountingForStartGame)
-    //         {
-    //             _timeLeftForStartGame -= Time.deltaTime;
-    //             if (_timeLeftForStartGame <= 0)
-    //             {
-    //                 _isCountingForStartGame = false;
-    //                 if (PhotonNetwork.IsMasterClient)
-    //                 {
-    //                     photonView.RPC(GAME_STARTED_RPC, RpcTarget.AllViaServer);
-    //                 }
-    //             }
-    //         }  
-    //     }
-    // }
 
 #if UNITY_EDITOR
     [ContextMenu("ConnectedToMaster")]
@@ -118,52 +90,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
     #region GameManagnet
 
-    public void StartGameCountdown()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC(COUNTDOWN_STARTED_RPC,
-                RpcTarget.AllViaServer);
-        }
-    }
-    
     public static void LoadGameLevel()
     {
         if (PhotonNetwork.IsMasterClient)
-        {
             PhotonNetwork.LoadLevel(1);
-        }
     }
 
     #endregion
-    
-    #region RPCS
-
-    [PunRPC]
-    private void CountdownStarted()
-    {
-        _isCountingForStartGame = true;
-    }
-    
-    [PunRPC]
-    private void GameStarted()
-    {
-        _isCountingForStartGame = false;
-        _isGameStarted = true;
-        Debug.Log("Game Started!!! WHOW");
-    }
-    
-    #endregion
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(_timeLeftForStartGame);
-        }
-        else if (stream.IsReading)
-        {
-            _timeLeftForStartGame = (float)stream.ReceiveNext();
-        }
-    }
 }
