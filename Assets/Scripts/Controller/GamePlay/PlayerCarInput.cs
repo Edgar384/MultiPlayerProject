@@ -56,7 +56,10 @@ public class PlayerCarInput : MonoBehaviourPun
     private void Update()
     {
         if (!OnlineGameManager.IsGameRunning)
+        {
+            _controlledCar.UpdateControls(0, 0, true);
             return;
+        }
         
         if (!photonView.IsMine)
             return;
