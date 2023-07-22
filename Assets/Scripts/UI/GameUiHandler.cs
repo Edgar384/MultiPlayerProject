@@ -25,12 +25,12 @@ public class GameUiHandler : MonoBehaviour
             //Check if is the same as highestScore
             if (players[i].ScoreHandler.Score > highestScore)
             {
-                highestScore = players[i].ScoreHandler.Score;
-                leadingPlayerID = players[i].PlayerId;
+                highestScore = players[players[i].OnlinePlayer.PlayerData.CharacterID].ScoreHandler.Score;
+                leadingPlayerID = players[players[i].OnlinePlayer.PlayerData.CharacterID].PlayerId;
             }
 
             //if he has the same as the highscore, the leading id is not -1 and not himself... we can understand that someone has the same score as this player. So we reset the leading id.
-            else if (players[i].ScoreHandler.Score == highestScore && leadingPlayerID != -1 && leadingPlayerID != players[i].PlayerId)
+            else if (players[players[i].OnlinePlayer.PlayerData.CharacterID].ScoreHandler.Score == highestScore && leadingPlayerID != -1 && leadingPlayerID != players[players[i].OnlinePlayer.PlayerData.CharacterID].PlayerId)
                 leadingPlayerID = -1;
         }
 
@@ -41,10 +41,10 @@ public class GameUiHandler : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             if (i == leadingPlayerID)
-                _playerUIHandlers[i].UpdateUI(players[i], true);
+                _playerUIHandlers[players[i].OnlinePlayer.PlayerData.CharacterID].UpdateUI(players[i], true);
 
             else
-                _playerUIHandlers[i].UpdateUI(players[i], false);
+                _playerUIHandlers[players[i].OnlinePlayer.PlayerData.CharacterID].UpdateUI(players[i], false);
         }
     }
 }

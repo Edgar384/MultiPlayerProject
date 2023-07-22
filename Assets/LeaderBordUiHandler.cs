@@ -27,6 +27,7 @@ public class LeaderBordUiHandler : MonoBehaviour
 
         for (int i = 0; i < players.Length; i++)
         {
+            results[i].gameObject.SetActive(true);
             results[i].RefreshVisuals(players[i].OnlinePlayer.PlayerData,players[i].OnlinePlayer.NickName,players[i].ScoreHandler.Score.ToString());
         }
         
