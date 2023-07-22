@@ -81,6 +81,8 @@ namespace PG_Physics.Wheel
             
             if (photonView.IsMine)
             {
+                photonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,car.photonView.Owner.ActorNumber);
+                
                 int hitedPlayerId = car.photonView.Controller.ActorNumber;
 
                 if (!OnlineRoomManager.ConnectedPlayers.TryGetValue(hitedPlayerId, out var player))
@@ -92,8 +94,6 @@ namespace PG_Physics.Wheel
                 if (_rigidbody.velocity.magnitude < other.rigidbody.velocity.magnitude) return;
                 
                 int attackPlayerId = photonView.Controller.ActorNumber;
-                
-                player.PhotonView.RPC(nameof(UpdateLastHitPlayer),RpcTarget.AllViaServer,attackPlayerId);
                 
                 if (_isKnockBackMode)
                     return;
