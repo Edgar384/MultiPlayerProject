@@ -32,7 +32,7 @@ namespace Temp
                 
                 var resetPos = _resetPos[index].position;
                 
-                photonView.RPC(nameof(RestPlayerVFX_RPC),RpcTarget.AllViaServer,resetPos.x,resetPos.y,resetPos.z,index);
+                photonView.RPC(nameof(RestPlayerVFX_RPC),RpcTarget.AllViaServer,index);
                 player.photonView.RPC("RestPlayer_RPC", player.OnlinePlayer.PhotonData,resetPos.x,resetPos.y,resetPos.z);
                 RestCar(player);
             }
@@ -40,10 +40,9 @@ namespace Temp
 
 
         [PunRPC]
-        private void RestPlayerVFX_RPC(float x, float y, float z,int vfxIndex)
+        private void RestPlayerVFX_RPC(int vfxIndex)
         {
-            var resetPos = new Vector3(x, y, z);
-            _respawnParticleSystems[vfxIndex].transform.position = resetPos;
+            _respawnParticleSystems[vfxIndex].transform.position = _resetPos[vfxIndex].position;
             _respawnParticleSystems[vfxIndex].Play();
         }
 
