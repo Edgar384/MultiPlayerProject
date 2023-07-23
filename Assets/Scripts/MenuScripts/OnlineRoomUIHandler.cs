@@ -90,12 +90,15 @@ public class OnlineRoomUIHandler : MonoBehaviour
         {
             if (currentCharacterOnHover.CheckIfCharacterIsFree())
             {
+                CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
+                CanvasManager.Instance.MenusAudioHandler.PlayCarChosen();
                 currentCharacterOnHover.ChangeCharacterAvailability(false,PhotonNetwork.NickName);
                 OnCharacterSelected?.Invoke(currentCharacterOnHover.CharacterID,true);
             }
 
             else
             {
+                CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
                 currentCharacterOnHover.ChangeCharacterAvailability(true, PhotonNetwork.NickName);
                 OnCharacterSelected?.Invoke(currentCharacterOnHover.CharacterID,false);
             }
@@ -120,6 +123,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
         yield return new WaitForEndOfFrame();
         if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _characters[_selectedCharacterIndex].gameObject)
         {
+            CanvasManager.Instance.MenusAudioHandler.PlayButtonSwitch();
             CanvasManager.Instance.EventSystem.currentSelectedGameObject.TryGetComponent<CharacterSelectionUI>(out CharacterSelectionUI currentCharacterOnHover);
             _selectedCharacterIndex = currentCharacterOnHover.CharacterID;
             _carPreviewHandler.ChangeCarPreview(_selectedCharacterIndex);

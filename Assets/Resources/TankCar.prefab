@@ -65,5 +65,25 @@ PrefabInstance:
       propertyPath: _knockBackForceMultiplier
       value: 1750
       objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.98823535
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.7686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.47058827
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a6673dcc919014e80de19c053f4a01, type: 3}

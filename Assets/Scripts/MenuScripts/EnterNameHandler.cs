@@ -38,6 +38,7 @@ public class EnterNameHandler : MonoBehaviour
     {
         if (_nicknameInputField.text != string.Empty)
         {
+            CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
             OnNicknameEntered?.Invoke(_nicknameInputField.text);
         }
         gameObject.SetActive(false);

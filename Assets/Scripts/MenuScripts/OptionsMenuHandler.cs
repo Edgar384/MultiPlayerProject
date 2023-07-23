@@ -140,6 +140,7 @@ public class OptionsMenuHandler : MonoBehaviour
 
     public void ApplyChanges(CallbackContext callbackContext)
     {
+        CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
         SetResolution();
         SetVolume();
         SetQuality();
@@ -149,13 +150,20 @@ public class OptionsMenuHandler : MonoBehaviour
     {
         Vector2 input = CanvasManager.Instance.PlayerController.UI.Navigate.ReadValue<Vector2>();
         if (input.x == 0)
-            return;
+            CanvasManager.Instance.MenusAudioHandler.PlayButtonSwitch();
 
-        else if(input.x == -1)
+        else if (input.x == -1)
+        {
             MoveToLeftOption();
+            CanvasManager.Instance.MenusAudioHandler.PlayButtonSwitch();
+        }
 
         else if (input.x == 1)
+        {
             MoveToRightOption();
+            CanvasManager.Instance.MenusAudioHandler.PlayButtonSwitch();
+        }
+
     }
 
     private void MoveToLeftOption()

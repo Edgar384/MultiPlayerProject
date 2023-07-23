@@ -105,6 +105,26 @@ PrefabInstance:
       propertyPath: m_TeleportEnabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.30588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.9960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138695103656167245, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9960785
+      objectReference: {fileID: 0}
     - target: {fileID: 9131333332235930690, guid: 79a6673dcc919014e80de19c053f4a01,
         type: 3}
       propertyPath: ObservedComponents.Array.size
