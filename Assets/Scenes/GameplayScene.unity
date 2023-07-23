@@ -195,7 +195,7 @@ PrefabInstance:
     - target: {fileID: 6394733997618043618, guid: ec0af7a31ff450242bc5f7ae8bcc4eeb,
         type: 3}
       propertyPath: m_Volume
-      value: 0.9
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8919480806328225000, guid: ec0af7a31ff450242bc5f7ae8bcc4eeb,
         type: 3}
@@ -474,9 +474,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 136017c3c1973394a941498afe1ed95b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 667ce05d5bc0710479dafdcd608a986d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.45
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1974,7 +1974,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304950687}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 5, y: 700, z: 700}
@@ -1987,7 +1987,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304950687}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 5, y: 700, z: 700}
@@ -2000,7 +2000,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304950687}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 700, y: 700, z: 5}
@@ -2013,7 +2013,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304950687}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 700, y: 700, z: 5}
@@ -4150,7 +4150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f793ff3552444cebd7f76e29047607c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: 60
+  _time: 90
 --- !u!4 &543450653408306087 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3896949156568125305, guid: bbcba42b4a88eb5488d80fad9484be05,

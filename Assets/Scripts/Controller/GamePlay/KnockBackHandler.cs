@@ -56,7 +56,6 @@ namespace PG_Physics.Wheel
         private void OnKnockBackEvent_RPC(int attackPlayerId,int hitedPlayerId)
         {
             Debug.Log($"{attackPlayerId} hit {hitedPlayerId} and add a knock back");
-            GameplayAudioHandler.Instace.PlayClashSound();
         }
         
         [PunRPC]
@@ -75,7 +74,7 @@ namespace PG_Physics.Wheel
         private void OnCollisionEnter(Collision other)
         {
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
-
+            GameplayAudioHandler.Instace.PlayClashSound();
             if (_overMusrom || car._overMusrom)
             {
                 if (_overMusrom)
@@ -83,7 +82,7 @@ namespace PG_Physics.Wheel
                     _particleSystem.transform.position = other.contacts[0].point;
                     _particleSystem.Play();
 
-                    var velocity = -car.Rigidbody.velocity.normalized * 20;
+                    var velocity = -car.Rigidbody.velocity.normalized * _knockBackForceMultiplier;
                     car.photonView.RPC(ADD_KNOCKBACK_RPC,car.photonView.Owner,velocity.x,velocity.y,velocity.z,-1);
                 }
                 
