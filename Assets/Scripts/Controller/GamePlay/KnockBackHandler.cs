@@ -62,6 +62,7 @@ namespace PG_Physics.Wheel
         private void AddKnockBack_RPC(float x,float y , float z ,int attackPlayerId)
         {
             _isKnockBackMode = true;
+            GameplayAudioHandler.Instace.PlayClashSound();
             Debug.Log($"Add a knock back from {attackPlayerId}");
             _rigidbody.AddForce(Vector3.up * _knockBackForceMultiplier, ForceMode.Impulse);
             _rigidbody.AddForce(new Vector3(x,y,z) * _knockBackForceMultiplier, ForceMode.Impulse);

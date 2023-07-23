@@ -187,6 +187,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -120.4823
       objectReference: {fileID: 0}
+    - target: {fileID: 6394733997618043618, guid: ec0af7a31ff450242bc5f7ae8bcc4eeb,
+        type: 3}
+      propertyPath: Priority
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394733997618043618, guid: ec0af7a31ff450242bc5f7ae8bcc4eeb,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 8919480806328225000, guid: ec0af7a31ff450242bc5f7ae8bcc4eeb,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -466,7 +476,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 136017c3c1973394a941498afe1ed95b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.45
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3957,7 +3967,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 70
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -3995,7 +4005,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4056,7 +4066,7 @@ MonoBehaviour:
   _5_SecondsLeft: {fileID: 8300000, guid: c29199b08ff66d0468f871c616e6d3bb, type: 3}
   _30_SecondsLeft: {fileID: 8300000, guid: 3bf55611b30bff94ebf352eb95065d47, type: 3}
   _splash: {fileID: 8300000, guid: d2b9285a864388d40aacc32d1c262d62, type: 3}
-  _clash_sound: {fileID: 8300000, guid: 94b45f1a868914040a08a7efb8dcee13, type: 3}
+  _clashSound: {fileID: 8300000, guid: 94b45f1a868914040a08a7efb8dcee13, type: 3}
 --- !u!1 &2070573374
 GameObject:
   m_ObjectHideFlags: 0

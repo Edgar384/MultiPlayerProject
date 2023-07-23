@@ -10,6 +10,9 @@ public class GameUiHandler : MonoBehaviour
     private int highestScore = 0;
     private int leadingPlayerID = -1;
 
+    private bool _is30SecondsReached;
+    private bool _is5SecondsReached;
+
     // Update is called once per frame
     void Update()
     {
@@ -34,9 +37,23 @@ public class GameUiHandler : MonoBehaviour
                 leadingPlayerID = -1;
         }
 
+        GameplayAudioHandler.Instace.PlayLeadingSound(leadingPlayerID);
+
         int time = (int)TimeManager.TimeGame;
         
         _timer.ChangeText(time.ToString());
+
+        if (time==30 && !_is30SecondsReached)
+        {
+            _is30SecondsReached = true;
+            GameplayAudioHandler.Instace.Play30SecondsLeft();
+        }
+
+        else if (time == 5 && !_is5SecondsReached)
+        {
+            _is5SecondsReached = true;
+            GameplayAudioHandler.Instace.Play5SecondsLeft();
+        }
 
         for (int i = 0; i < players.Count; i++)
         {
