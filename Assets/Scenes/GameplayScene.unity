@@ -1473,6 +1473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 848088220}
   - component: {fileID: 848088219}
+  - component: {fileID: 848088221}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -1591,6 +1592,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &848088221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848088218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecda2a67c6626fc4ca3560a941b436ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  _leadingPlayer:
+  - {fileID: 8300000, guid: 44c3c2116014a744d930118362194622, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _5_SecondsLeft: {fileID: 0}
+  _30_SecondsLeft: {fileID: 0}
+  _splash: {fileID: 0}
+  _clash_sound: {fileID: 0}
 --- !u!1 &1181834064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,9 +1643,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6465419589618329368}
+  - {fileID: 1850676857}
   - {fileID: 1629957650}
   - {fileID: 1185907398}
-  - {fileID: 1850676857}
   m_Father: {fileID: 588027611}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
