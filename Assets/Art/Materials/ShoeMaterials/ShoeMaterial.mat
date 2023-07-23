@@ -47,6 +47,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - AlphaClip:
+        m_Texture: {fileID: 2800000, guid: 5fb905be444f57d468c748305ba4048e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaClip:
+        m_Texture: {fileID: 2800000, guid: 5fb905be444f57d468c748305ba4048e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Base:
         m_Texture: {fileID: 2800000, guid: 5fb905be444f57d468c748305ba4048e, type: 3}
         m_Scale: {x: 1, y: 1}

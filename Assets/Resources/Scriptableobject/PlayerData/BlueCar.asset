@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389feb6df1c04fae91dd368bb8ac8fa8, type: 3}
   m_Name: BlueCar
   m_EditorClassIdentifier: 
-  _preFabName: HotDogCar
+  _preFabName: TankCar
   _characterID: 1
   _playerPic: {fileID: 21300000, guid: d6284ad1c9f55ba488491f20bcdd79c3, type: 3}
   _playerBackground: {fileID: 21300000, guid: 6865d4dc177548f40b3ac7fe9559d010, type: 3}
