@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 
+[DefaultExecutionOrder(-999)]
 public class CanvasManager: MonoBehaviour
 {
 
@@ -22,9 +23,13 @@ public class CanvasManager: MonoBehaviour
     [SerializeField] private OnlineMenuManager _onlineCanvas;
     [SerializeField] private OptionsMenuHandler _settingsCanvas;
 
+    [Header("Audio Manager")]
+    [SerializeField] private MenusAudioHandler _manusAudioHandler;
+
     public OnlineMenuManager OnlineMenuManager => _onlineCanvas;
     public EventSystem EventSystem => _eventSystem;
     public InputSystemUIInputModule InputSystemUIInputModule => _uiInputModule;
+    public MenusAudioHandler MenusAudioHandler => _manusAudioHandler;
 
     private bool _keyBoardMode = true;
     public PlayerController PlayerController { get; private set; }
@@ -54,63 +59,32 @@ public class CanvasManager: MonoBehaviour
     {
         _mainMenuCanvas.gameObject.SetActive(false);
         _settingsCanvas.gameObject.SetActive(false);
+        _manusAudioHandler.PlayButtonClick();
         OnPlayerPressedPlay?.Invoke(true);
     }
 
     public void OpenSettings()
     {
+        _manusAudioHandler.PlayButtonClick();
         _mainMenuCanvas.gameObject.SetActive(false);
         _settingsCanvas.gameObject.SetActive(true);
     }
 
     public void ReturnToMainMenu()
     {
+        
         ResetScene();
     }
 
     public void ReturnToMainMenu(CallbackContext callbackContext)
     {
+        _manusAudioHandler.PlayButtonClick();
         ResetScene();
     }
 
     public void ExitGame()
     {
+        _manusAudioHandler.PlayButtonClick();
         Application.Quit();
     }
-
-    private void GetControllerButtons()
-    {
-        string[] controllerNames = Input.GetJoystickNames();
-
-        if (controllerNames.Length > 0)
-        {
-            _keyBoardMode = false;
-
-            foreach (var controllerName in controllerNames)
-            {
-                if (controllerName.Length == 19)
-                {
-                    Debug.Log("<color=#00ff00>PS4 CONTROLLER IS CONNECTED</color>");
-                }
-
-                if (controllerName.Length == 33)
-                {
-                    Debug.Log("<color=#00ff00>XBOX ONE CONTROLLER IS CONNECTED</color>");
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("<color=#ff0000>Non CONTROLLER IS CONNECTED</color>");
-        }
-    }
-
-    private void CheckControllerInput()
-    {
-        PlayerController = new PlayerController();
-        PlayerController.UI.Enable();
-        GetControllerButtons();
-        //CanvasManager.Instance.InputSystemUIInputModule.actionsAsset.a
-    }
-
 }

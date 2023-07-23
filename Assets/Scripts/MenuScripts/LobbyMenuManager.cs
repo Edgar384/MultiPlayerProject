@@ -56,11 +56,13 @@ public class LobbyMenuManager : MonoBehaviour
 
     public void CreateRoom()
     {
+        CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
         OnRoomCreated?.Invoke(_roomNameInput.text);
     }
 
     public void JoinRoom()
     {
+        CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
         OnJoinedRoom?.Invoke(_roomNameInput.text);
     }
 
@@ -109,8 +111,10 @@ public class LobbyMenuManager : MonoBehaviour
     private void CheckInput(CallbackContext callbackContext)
     {
         Vector2 input = CanvasManager.Instance.PlayerController.UI.Navigate.ReadValue<Vector2>();
-        if (input.x == 0)
-            return;
+        if (input.y == -1 || input.y == 1)
+        {
+            CanvasManager.Instance.MenusAudioHandler.PlayButtonSwitch();
+        }
 
         else if (input.x == -1) //Left
             MoveToLeftOption();
@@ -123,6 +127,7 @@ public class LobbyMenuManager : MonoBehaviour
     {
         if (CanvasManager.Instance.EventSystem.currentSelectedGameObject != _roomNameInput)
         {
+            CanvasManager.Instance.MenusAudioHandler.PlayButtonSwitch();
             CanvasManager.Instance.EventSystem.SetSelectedGameObject(_roomNameInput.gameObject);
             _createRoomButton.SetActive(true);
         }
@@ -134,6 +139,7 @@ public class LobbyMenuManager : MonoBehaviour
         {
             if (CanvasManager.Instance.EventSystem.currentSelectedGameObject == _roomNameInput.gameObject)
             {
+                CanvasManager.Instance.MenusAudioHandler.PlayButtonSwitch();
                 CanvasManager.Instance.EventSystem.SetSelectedGameObject(_lobbyRoomUIListHandler.GetRoom(0).gameObject);
                 _createRoomButton.SetActive(false);
             }
