@@ -19,6 +19,7 @@ namespace Temp
             {
                 _fallParticleSystem.transform.position = player.transform.position;
                 _fallParticleSystem.Play();
+                GameplayAudioHandler.Instace.PlaySplashSound();
                 
                 if (!PhotonNetwork.IsMasterClient)
                     return;

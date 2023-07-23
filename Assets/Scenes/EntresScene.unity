@@ -8935,9 +8935,9 @@ RectTransform:
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 325.5808, y: 16.3204}
-  m_SizeDelta: {x: -976.3417, y: -357.0278}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1292.7, y: 556}
+  m_SizeDelta: {x: 929.4996, y: 612.2452}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!328 &1466768118
 VideoPlayer:
