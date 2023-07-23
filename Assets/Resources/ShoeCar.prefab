@@ -494,6 +494,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1798502603497044538, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: _magnitudeTrchholl
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798502603497044538, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: _knockBackForceMultiplier
+      value: 1750
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a6673dcc919014e80de19c053f4a01, type: 3}
 --- !u!4 &265395010694694791 stripped
