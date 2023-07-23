@@ -8,7 +8,8 @@ namespace PG_Physics.Wheel
     {
         private const string ADD_KNOCKBACK_RPC = nameof(AddKnockBack_RPC);
         private const string ON_KNOCKBACK_EVENT_RPC = nameof(OnKnockBackEvent_RPC);
-
+        [SerializeField] private bool _overMusrom;
+        
         [SerializeField] private ParticleSystem _particleSystem;
         
         [SerializeField] private Rigidbody _rigidbody;
@@ -74,6 +75,20 @@ namespace PG_Physics.Wheel
         {
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
 
+            if (_overMusrom || car._overMusrom)
+            {
+                if (_overMusrom)
+                {
+                    _particleSystem.transform.position = other.contacts[0].point;
+                    _particleSystem.Play();
+
+                    var velocity = -car.Rigidbody.velocity.normalized * 20;
+                    car.photonView.RPC(ADD_KNOCKBACK_RPC,car.photonView.Owner,velocity.x,velocity.y,velocity.z,-1);
+                }
+                
+                return;
+            }
+            
             _leastAttackPlayerId = car.photonView.Owner.ActorNumber;
 
             if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;

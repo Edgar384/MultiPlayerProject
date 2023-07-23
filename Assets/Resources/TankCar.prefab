@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1348947134348214, guid: 79a6673dcc919014e80de19c053f4a01, type: 3}
       propertyPath: m_Name
-      value: BasicCar
+      value: TankCar
       objectReference: {fileID: 0}
     - target: {fileID: 4400517460069692, guid: 79a6673dcc919014e80de19c053f4a01, type: 3}
       propertyPath: m_RootOrder
@@ -54,6 +54,16 @@ PrefabInstance:
     - target: {fileID: 4400517460069692, guid: 79a6673dcc919014e80de19c053f4a01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798502603497044538, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: _magnitudeTrchholl
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798502603497044538, guid: 79a6673dcc919014e80de19c053f4a01,
+        type: 3}
+      propertyPath: _knockBackForceMultiplier
+      value: 1750
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a6673dcc919014e80de19c053f4a01, type: 3}
