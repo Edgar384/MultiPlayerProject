@@ -69,6 +69,8 @@ public class OnlineRoomUIHandler : MonoBehaviour
             if (playerArray[i].PlayerData != null)
                 _characters[playerArray[i].PlayerData.CharacterID].ChangeCharacterAvailability(false, playerArray[i].PhotonData.NickName);
         }
+        if(!OnlineRoomManager.Player.IsReady)
+        SetFirstSelectedObject();
     }
 
     private void SetFirstSelectedObject()
