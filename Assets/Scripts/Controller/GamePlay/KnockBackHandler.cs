@@ -85,7 +85,7 @@ namespace PG_Physics.Wheel
                 if (_overMusrom)
                 {
                     var velocity = -car.Rigidbody.velocity.normalized * _knockBackForceMultiplier;
-                    car.photonView.RPC(ADD_KNOCKBACK_RPC,car.photonView.Owner,velocity.x,velocity.y,velocity.z,-1);
+                    car.photonView.RPC(ADD_KNOCKBACK_RPC,car.photonView.Owner,velocity.x,velocity.y,velocity.z,_leastAttackPlayerId);
                 }
                 
                 return;
