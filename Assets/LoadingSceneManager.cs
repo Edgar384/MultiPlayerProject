@@ -1,6 +1,5 @@
 using GarlicStudios.Online.Managers;
 using Photon.Pun;
-using UnityEngine;
 
 public class LoadingSceneManager : MonoBehaviourPun
 {

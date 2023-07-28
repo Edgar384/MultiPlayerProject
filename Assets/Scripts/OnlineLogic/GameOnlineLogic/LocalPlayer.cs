@@ -4,12 +4,11 @@ using GarlicStudios.Online.Data;
 using GarlicStudios.Online.Managers;
 using PG_Physics.Wheel;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback,IComparable<LocalPlayer> , IPunOwnershipCallbacks
+    public class LocalPlayer : MonoBehaviourPun , IPunInstantiateMagicCallback,IComparable<LocalPlayer> 
     {
         [SerializeField] private PlayerCarInput _playerCarInput;
         [SerializeField] private KnockBackHandler _knockBackHandler; 
@@ -27,7 +26,7 @@ namespace DefaultNamespace
             ScoreHandler = new ScoreHandler();
         }
 
-        public void SetOnlinePlayer(OnlinePlayer onlinePlayer)
+        private void SetOnlinePlayer(OnlinePlayer onlinePlayer)
         {
             OnlinePlayer = onlinePlayer;
         }
@@ -65,21 +64,6 @@ namespace DefaultNamespace
             if (ScoreHandler.Score < other.ScoreHandler.Score)
                 return 1;
             return 0;
-        }
-
-        public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
-        {
-            Debug.Log($"{OnlinePlayer.ActorNumber} is now owner of {gameObject.name} photonViewId: {photonView.ViewID}");
-        }
-
-        public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
-        {
-            Debug.LogError("OnOwnershipTransferFailed");
         }
     }
 }
