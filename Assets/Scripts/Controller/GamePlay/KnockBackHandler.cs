@@ -74,15 +74,17 @@ namespace PG_Physics.Wheel
         private void OnCollisionEnter(Collision other)
         {
             if (!other.gameObject.TryGetComponent<KnockBackHandler>(out var car)) return;
-
+            if (_rigidbody.velocity.magnitude > _magnitudeTrchholl)
+            {
+                GameplayAudioHandler.Instace.PlayClashSound();
+                _particleSystem.transform.position = other.contacts[0].point;
+                _particleSystem.Play();
+            }
             if (_overMusrom || car._overMusrom)
             {
                 if (_overMusrom)
                 {
-                    _particleSystem.transform.position = other.contacts[0].point;
-                    _particleSystem.Play();
-
-                    var velocity = -car.Rigidbody.velocity.normalized * 20;
+                    var velocity = -car.Rigidbody.velocity.normalized * _knockBackForceMultiplier;
                     car.photonView.RPC(ADD_KNOCKBACK_RPC,car.photonView.Owner,velocity.x,velocity.y,velocity.z,-1);
                 }
                 
@@ -92,9 +94,6 @@ namespace PG_Physics.Wheel
             _leastAttackPlayerId = car.photonView.Owner.ActorNumber;
 
             if(_rigidbody.velocity.magnitude < _magnitudeTrchholl) return;
-            
-            _particleSystem.transform.position = other.contacts[0].point;
-            _particleSystem.Play();
             
             if (photonView.IsMine)
             {

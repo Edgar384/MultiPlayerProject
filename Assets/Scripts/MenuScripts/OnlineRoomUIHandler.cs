@@ -69,6 +69,8 @@ public class OnlineRoomUIHandler : MonoBehaviour
             if (playerArray[i].PlayerData != null)
                 _characters[playerArray[i].PlayerData.CharacterID].ChangeCharacterAvailability(false, playerArray[i].PhotonData.NickName);
         }
+        if(!OnlineRoomManager.Player.IsReady)
+        SetFirstSelectedObject();
     }
 
     private void SetFirstSelectedObject()
@@ -78,6 +80,7 @@ public class OnlineRoomUIHandler : MonoBehaviour
             if (_characters[i].CheckIfCharacterIsFree())
             {
                 CanvasManager.Instance.EventSystem.SetSelectedGameObject(_characters[i].gameObject);
+                _carPreviewHandler.ChangeCarPreview(i);
                 _selectedCharacterIndex = i;
                 return;
             }

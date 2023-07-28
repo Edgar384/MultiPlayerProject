@@ -15,7 +15,8 @@ namespace GarlicStudios.Online.Managers
         private const int NUMBER_OF_CARS = 4;
         private const string UPDATE_READY_LIST = nameof(UpdatePlayerReadyList_RPC);
         private const string SEND_CAR_DATA = nameof(SendCarData_RPC);
-        
+
+        public static event Action OnCharacterSelected;
         public static event Action OnPlayerListUpdateEvent;
         public static event Action<Player> OnPlayerEnteredRoomEvent;
         public static event Action<Player> OnPlayerLeftRoomEvent;

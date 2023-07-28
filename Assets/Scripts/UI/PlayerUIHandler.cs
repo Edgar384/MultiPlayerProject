@@ -9,6 +9,7 @@ public class PlayerUIHandler : MonoBehaviour
 
     [SerializeField] PlayerData playerData;
     [SerializeField] Image _playerImage;
+    [SerializeField] Image _crown;
     //public GameTextLayers PlayerName; //There is no name in the figma, only picture and score
     public GameTextLayers PlayerScore;
 
@@ -29,5 +30,10 @@ public class PlayerUIHandler : MonoBehaviour
     {
         //PlayerName.ChangeText(localPlayer.OnlinePlayer.NickName);
         PlayerScore.ChangeText(localPlayer.ScoreHandler.Score.ToString());
+        if(isLeading )
+            _crown.gameObject.SetActive(true);
+
+        else
+            _crown.gameObject.SetActive(false);
     }
 }

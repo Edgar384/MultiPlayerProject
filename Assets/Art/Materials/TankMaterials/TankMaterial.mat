@@ -33,7 +33,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShoeMaterial
+  m_Name: TankMaterial
   m_Shader: {fileID: -6465566751694194690, guid: d8980bffb0b120c4799ea16805115d1a,
     type: 3}
   m_ValidKeywords: []
@@ -48,15 +48,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - AlphaClip:
-        m_Texture: {fileID: 2800000, guid: 5fb905be444f57d468c748305ba4048e, type: 3}
+        m_Texture: {fileID: 2800000, guid: b8dd98debe6c2e0499262a88b0dc54d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaClip:
-        m_Texture: {fileID: 2800000, guid: 5fb905be444f57d468c748305ba4048e, type: 3}
+        m_Texture: {fileID: 2800000, guid: d35a3dfb00e63ee44a603085936f97f8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base:
-        m_Texture: {fileID: 2800000, guid: 5fb905be444f57d468c748305ba4048e, type: 3}
+        m_Texture: {fileID: 2800000, guid: d35a3dfb00e63ee44a603085936f97f8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -88,7 +88,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
-        m_Texture: {fileID: 2800000, guid: f548668fd51b08a45a0bd23e1de1f64a, type: 3}
+        m_Texture: {fileID: 2800000, guid: f4f840534a37eab42b8453c6c2dc8d59, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -100,7 +100,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: e6b960e449688ca4fb67ca20eb44b7f3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 49d8cec896183e74ba928cde3959a438, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -116,7 +116,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Roughness:
-        m_Texture: {fileID: 2800000, guid: 8c62062bb5f9a0c42891fa228519e76a, type: 3}
+        m_Texture: {fileID: 2800000, guid: cbbaa89a59c31c042a1aadc5cb678e81, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_bd57902acaf4432cb12d69d582a2bd22_Texture_1:
+        m_Texture: {fileID: 2800000, guid: d35a3dfb00e63ee44a603085936f97f8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
@@ -137,6 +141,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip_1: 0
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _BumpScale: 1
@@ -146,6 +151,7 @@ Material:
     - _GlossMapScale: 0.833
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _MetalicFloat: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -163,6 +169,6 @@ Material:
     - _C2: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color_1: {r: 0, g: 0, b: 0, a: 0}
-    - _Color_2: {r: 1, g: 1, b: 1, a: 0}
+    - _Color_2: {r: 0.45466864, g: 0.5283019, b: 0.41566396, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

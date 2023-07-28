@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameplayAudioHandler : MonoBehaviour
@@ -11,8 +9,9 @@ public class GameplayAudioHandler : MonoBehaviour
     [SerializeField] AudioClip _5_SecondsLeft;
     [SerializeField] AudioClip _30_SecondsLeft;
     [SerializeField] AudioClip _splash;
-    [SerializeField] AudioClip _clash_sound;
+    [SerializeField] AudioClip _clashSound;
 
+    private int lastLeaderSoundPlayed = -1;
     private void Awake()
     {
         Instace = this;
@@ -20,7 +19,9 @@ public class GameplayAudioHandler : MonoBehaviour
 
     public void PlayLeadingSound(int leadingID)
     {
-        switch(leadingID) 
+        if (lastLeaderSoundPlayed == leadingID)
+            return;
+        switch (leadingID)
         {
             case -1: break;
             case 0: _audioSource.PlayOneShot(_leadingPlayer[0]); break;
@@ -29,11 +30,14 @@ public class GameplayAudioHandler : MonoBehaviour
             case 3: _audioSource.PlayOneShot(_leadingPlayer[3]); break;
             case 4: _audioSource.PlayOneShot(_leadingPlayer[4]); break;
         }
+
+        lastLeaderSoundPlayed = leadingID;
     }
-        
+
     public void Play30SecondsLeft() { _audioSource.PlayOneShot(_30_SecondsLeft); }
 
     public void Play5SecondsLeft() { _audioSource.PlayOneShot(_5_SecondsLeft); }
 
     public void PlaySplashSound() { _audioSource.PlayOneShot(_splash); }
+    public void PlayClashSound() { _audioSource.PlayOneShot(_clashSound); }
 }
