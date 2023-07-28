@@ -21,6 +21,7 @@ public class LobbyMenuManager : MonoBehaviour
     [Header("Name")]
     [SerializeField] private Image _currentPlayerNameImage;
     [SerializeField] private EnterNameHandler _enterNameHandler;
+    [SerializeField] private TMP_Text _nicknameText;
     [SerializeField] private Sprite[] _playerNameImages = new Sprite[2]; //0=color, 1=grey
 
     [Header("Rooom Join")]
@@ -88,6 +89,7 @@ public class LobbyMenuManager : MonoBehaviour
     private void ChangeToPlayerConnectedVisuals()
     {
         _isConnected = true;
+        _nicknameText.text = PhotonNetwork.LocalPlayer.NickName;
         _currentPlayerNameImage.sprite = _playerNameImages[1]; //change sprite to gray
         _joinRoomImage.color = normalColor;
         _createRoomImage.color = normalColor;

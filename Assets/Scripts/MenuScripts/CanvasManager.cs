@@ -55,12 +55,12 @@ public class CanvasManager: MonoBehaviour
         _settingsCanvas.gameObject.SetActive(false);
         OnReturnedToMainMenu?.Invoke();
     }
-    public void Play()
+    public void Play(bool isNewPlayer)
     {
         _mainMenuCanvas.gameObject.SetActive(false);
         _settingsCanvas.gameObject.SetActive(false);
         _manusAudioHandler.PlayButtonClick();
-        OnPlayerPressedPlay?.Invoke(true);
+        OnPlayerPressedPlay?.Invoke(isNewPlayer);
     }
 
     public void OpenSettings()

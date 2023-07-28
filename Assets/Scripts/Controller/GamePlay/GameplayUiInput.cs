@@ -1,4 +1,5 @@
 using GamePlayLogic;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,7 +61,9 @@ public class GameplayUiInput : MonoBehaviour
 
     public void QuitGame()
     {
-        SceneManager.LoadScene(0);
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel(0);
+        //CanvasManager.Instance.Play(false);
     }
         
 }

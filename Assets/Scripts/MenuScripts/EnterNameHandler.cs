@@ -14,7 +14,7 @@ public class EnterNameHandler : MonoBehaviour
     public static event Action<string> OnNicknameEntered;
 
     [SerializeField] private TMP_InputField _nicknameInputField;
-    
+
     private Navigation _noneNavigation = new Navigation();
     private Navigation _autoNavigation = new Navigation();
 
