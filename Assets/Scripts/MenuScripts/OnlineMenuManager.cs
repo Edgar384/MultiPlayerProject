@@ -1,4 +1,6 @@
+using GamePlayLogic;
 using GarlicStudios.Online.Managers;
+using Photon.Pun;
 using System;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
@@ -67,6 +69,8 @@ public class OnlineMenuManager : MonoBehaviour
 
     public void ReturnToLobby(CallbackContext callbackContext)
     {
+        PhotonNetwork.LeaveRoom();
         TurnOnLobby(false);
+        PhotonNetwork.JoinLobby();
     }
 }
