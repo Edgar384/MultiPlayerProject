@@ -79,6 +79,8 @@ public class LobbyMenuManager : MonoBehaviour
     private void ChangeToNewPlayerVisuals()
     {
         CanvasManager.Instance.EventSystem.firstSelectedGameObject = _enterNameHandler.GameObject();
+        _enterNameHandler.SetActive(true);
+        _nicknameText.text = string.Empty;
         _currentPlayerNameImage.sprite = _playerNameImages[0]; //change sprite to color
         _currentPlayerNameImage.color = normalColor;
         _lobbyLogo.color = grayColor;

@@ -62,6 +62,8 @@ public class OnlineMenuManager : MonoBehaviour
         if (!_lobby.isActiveAndEnabled && !_carSelection.isActiveAndEnabled)
             return;
         CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
+        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.Disconnect();
         _lobby.gameObject.SetActive(false);
         _carSelection.gameObject.SetActive(false);
         OnOnlineCanvasDisabled?.Invoke();
