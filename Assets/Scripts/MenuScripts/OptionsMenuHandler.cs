@@ -80,6 +80,7 @@ public class OptionsMenuHandler : MonoBehaviour
     public void SetResolution()
     {
         Resolution resolution = _possibleResolutions[_currentTextResolutionIndex];
+        SetWindowScreenStatus();
         Screen.SetResolution(resolution.width, resolution.height, _isFullScreen);
     }
     #endregion
@@ -102,9 +103,9 @@ public class OptionsMenuHandler : MonoBehaviour
         }
     }
 
-    public void SetWindowScreenStatus(bool isFullScreen)
+    public void SetWindowScreenStatus()
     {
-        Screen.fullScreen = isFullScreen;
+        Screen.fullScreen = _isFullScreen;
     }
     #endregion
 
@@ -126,20 +127,21 @@ public class OptionsMenuHandler : MonoBehaviour
     #region Volume
     public void SetVolume()
     {
-        //_audioMixer.SetFloat("Volume", _changedVolume);
-        _currentVolume = _changedVolume;
+        _currentVolume = _changedVolume/100;
         AudioListener.volume = _currentVolume;
-        _handleImage.SetNativeSize();
     }
 
     public void SetVolumeStatusText(float volume)
     {
+        _handleImage.SetNativeSize();
+        _changedVolume = volume;
         _audioText.text = volume.ToString();
     }
     #endregion
 
     public void ApplyChanges(CallbackContext callbackContext)
     {
+        _handleImage.SetNativeSize(); 
         CanvasManager.Instance.MenusAudioHandler.PlayButtonClick();
         SetResolution();
         SetVolume();
@@ -202,6 +204,7 @@ public class OptionsMenuHandler : MonoBehaviour
     /// <param name="switchOption"></param>
     private void NextOption(int switchOption)
     {
+        _handleImage.SetNativeSize();
         switch (switchOption)
         {
             case 0: //Resolutions
@@ -218,6 +221,7 @@ public class OptionsMenuHandler : MonoBehaviour
                     if (_currentTextWindowModeIndex == _windowModeTexts.Count)
                         _currentTextWindowModeIndex = 0;
                     _windowModeText.text = _windowModeTexts[_currentTextWindowModeIndex];
+                    _isFullScreen = !_isFullScreen;
                     break;
                 }
             case 2: //Quality
@@ -237,6 +241,7 @@ public class OptionsMenuHandler : MonoBehaviour
     /// <param name="switchOption"></param>
     private void PreviousOption(int switchOption)
     {
+        _handleImage.SetNativeSize();
         switch (switchOption)
         {
             case 0: //Resolutions
@@ -253,6 +258,7 @@ public class OptionsMenuHandler : MonoBehaviour
                     if (_currentTextWindowModeIndex == -1)
                         _currentTextWindowModeIndex = _windowModeTexts.Count-1;
                     _windowModeText.text = _windowModeTexts[_currentTextWindowModeIndex];
+                    _isFullScreen = !_isFullScreen;
                     break;
                 }
             case 2: //Quality
