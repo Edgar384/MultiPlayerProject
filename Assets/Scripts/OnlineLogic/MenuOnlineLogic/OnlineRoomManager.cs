@@ -49,6 +49,13 @@ namespace GarlicStudios.Online.Managers
             ConnectedPlayers = new Dictionary<int, OnlinePlayer>();
         }
 
+        public static void ClearData()
+        {
+            ConnectedPlayers.Clear();
+            MasterClient = null;
+            Player = null;  
+        }
+
         public void OnCharacterSelect(int carIndex, bool isReady)
         {
             photonView.RPC(UPDATE_READY_LIST,RpcTarget.AllViaServer,PhotonNetwork.LocalPlayer.ActorNumber,carIndex,isReady);

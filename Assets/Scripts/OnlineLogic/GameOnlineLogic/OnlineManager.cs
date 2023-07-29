@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GarlicStudios.Online.Managers;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -184,7 +185,8 @@ public class OnlineManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+        OnlineRoomManager.ClearData();
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
         {
             OnlineManager.Instance = null;
             Destroy(this.gameObject);

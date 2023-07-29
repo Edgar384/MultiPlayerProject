@@ -70,7 +70,6 @@ public class OnlineMenuManager : MonoBehaviour
     public void ReturnToLobby(CallbackContext callbackContext)
     {
         PhotonNetwork.LeaveRoom();
-        TurnOnLobby(false);
-        PhotonNetwork.JoinLobby();
+        TurnOnLobby(true);
     }
 }
