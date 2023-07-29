@@ -81,7 +81,7 @@ public class CanvasManager: MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.LeaveRoom();
+            //PhotonNetwork.LeaveRoom();
             StartCoroutine(PlayForConnected());
         }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OnlineManager : MonoBehaviourPunCallbacks
 {
@@ -177,6 +178,17 @@ public class OnlineManager : MonoBehaviourPunCallbacks
         else if (stream.IsReading)
         {
             _timeLeftForStartGame = (float)stream.ReceiveNext();
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+        {
+            OnlineManager.Instance = null;
+            Destroy(this.gameObject);
+            SceneManager.LoadScene(0);
         }
     }
 }

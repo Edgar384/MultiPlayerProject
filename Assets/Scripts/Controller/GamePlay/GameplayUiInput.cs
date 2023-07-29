@@ -69,9 +69,6 @@ public class GameplayUiInput : MonoBehaviour
 
     public void QuitGame()
     {
-        Destroy(OnlineManager.Instance.gameObject);
-        OnlineManager.Instance = null;
-        SceneManager.LoadScene(0);
+        PhotonNetwork.LeaveRoom();
     }
-        
 }
