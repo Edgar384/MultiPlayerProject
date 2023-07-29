@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class OnlineManager : MonoBehaviourPunCallbacks
 {
+    public static OnlineManager Instance;
     public static event Action OnConnectedToMasterEvent;
     public static event Action<Player> OnMasterClientSwitchedEvent;
 
@@ -20,8 +21,14 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         
+        if(Instance is null)
+        {
+           DontDestroyOnLoad(gameObject);
+           Instance = this;
+        }
+        else
+            Destroy(gameObject);
         PhotonNetwork.AutomaticallySyncScene  = true;
     }
 

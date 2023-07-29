@@ -22,14 +22,16 @@ public class GameplayUiInput : MonoBehaviour
         _playerController = new PlayerController();
         _playerController.UI.Enable();
         _playerController.UI.PauseOptions.performed += ChangePauseMenuState;
-        _playerController.UI.Back.performed += QuitGame;
+        _playerController.UI.Confirm.performed += QuitGameFromPause;
+        _playerController.UI.Back.performed += QuitGameFromLeaderboard;
         OnlineGameManager.OnEndGame += OpenLeaderboard;
     }
 
     private void OnDestroy()
     {
         _playerController.UI.PauseOptions.performed -= ChangePauseMenuState;
-        _playerController.UI.Back.performed -= QuitGame;
+        _playerController.UI.Confirm.performed -= QuitGameFromPause;
+        _playerController.UI.Back.performed -= QuitGameFromLeaderboard;
         OnlineGameManager.OnEndGame -= OpenLeaderboard;
     }
 
@@ -53,7 +55,13 @@ public class GameplayUiInput : MonoBehaviour
     }
 
     //For pausemenu
-    private void QuitGame(CallbackContext callbackContext)
+    private void QuitGameFromPause(CallbackContext callbackContext)
+    {
+        if (_pauseMenu.gameObject.activeInHierarchy)
+            QuitGame();
+    }
+
+    private void QuitGameFromLeaderboard(CallbackContext callbackContext)
     {
         if (_leaderBordUiHandler.gameObject.activeInHierarchy)
             QuitGame();
@@ -61,9 +69,9 @@ public class GameplayUiInput : MonoBehaviour
 
     public void QuitGame()
     {
-        PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel(0);
-        //CanvasManager.Instance.Play(false);
+        Destroy(OnlineManager.Instance.gameObject);
+        OnlineManager.Instance = null;
+        SceneManager.LoadScene(0);
     }
         
 }

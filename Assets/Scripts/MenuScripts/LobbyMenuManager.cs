@@ -67,13 +67,13 @@ public class LobbyMenuManager : MonoBehaviour
         OnJoinedRoom?.Invoke(_roomNameInput.text);
     }
 
-    public void ChangeLobbyVisual(bool isNewPlayer)
+    public void ChangeLobbyVisual(bool isConnected)
     {
-        if (isNewPlayer)
-            ChangeToNewPlayerVisuals();
+        if (isConnected)
+            ChangeToPlayerConnectedVisuals();
 
         else
-            ChangeToPlayerConnectedVisuals();
+            ChangeToNewPlayerVisuals();
     }
 
     private void ChangeToNewPlayerVisuals()
@@ -89,6 +89,7 @@ public class LobbyMenuManager : MonoBehaviour
     private void ChangeToPlayerConnectedVisuals()
     {
         _isConnected = true;
+        _enterNameHandler.gameObject.SetActive(false);
         _nicknameText.text = PhotonNetwork.LocalPlayer.NickName;
         _currentPlayerNameImage.sprite = _playerNameImages[1]; //change sprite to gray
         _joinRoomImage.color = normalColor;

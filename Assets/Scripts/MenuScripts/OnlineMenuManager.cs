@@ -37,11 +37,11 @@ public class OnlineMenuManager : MonoBehaviour
         _lobby.OnRoomCreated -= TurnOnRoom;
     }
 
-    public void TurnOnLobby(bool isNewPlayer)
+    public void TurnOnLobby(bool isConnected)
     {
         _lobby.gameObject.SetActive(true);
         _carSelection.gameObject.SetActive(false);
-        _lobby.ChangeLobbyVisual(isNewPlayer);
+        _lobby.ChangeLobbyVisual(isConnected);
     }
 
     private void TurnOnRoom(string roomName)

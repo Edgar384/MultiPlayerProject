@@ -1,4 +1,7 @@
+using Photon.Pun;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -8,7 +11,6 @@ using static UnityEngine.InputSystem.InputAction;
 [DefaultExecutionOrder(-999)]
 public class CanvasManager: MonoBehaviour
 {
-
     public event Action<bool> OnPlayerPressedPlay;
     public event Action OnReturnedToMainMenu;
 
@@ -38,10 +40,14 @@ public class CanvasManager: MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        ResetScene();
         _onlineCanvas.OnOnlineCanvasDisabled += ReturnToMainMenu;
         PlayerController = new PlayerController();
         PlayerController.UI.Enable();
+    }
+
+    private void Start()
+    {
+        CheckIfConnected();
     }
 
     private void OnDestroy()
@@ -55,12 +61,32 @@ public class CanvasManager: MonoBehaviour
         _settingsCanvas.gameObject.SetActive(false);
         OnReturnedToMainMenu?.Invoke();
     }
-    public void Play(bool isNewPlayer)
+
+    private IEnumerator PlayForConnected()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Play(true);
+    }
+
+    public void Play(bool isConnected)
     {
         _mainMenuCanvas.gameObject.SetActive(false);
         _settingsCanvas.gameObject.SetActive(false);
+        if(!isConnected)
         _manusAudioHandler.PlayButtonClick();
-        OnPlayerPressedPlay?.Invoke(isNewPlayer);
+        OnPlayerPressedPlay?.Invoke(isConnected);
+    }
+
+    private void CheckIfConnected()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LeaveRoom();
+            StartCoroutine(PlayForConnected());
+        }
+
+        else
+            ResetScene();
     }
 
     public void OpenSettings()
