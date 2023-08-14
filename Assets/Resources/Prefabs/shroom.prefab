@@ -117,8 +117,8 @@ MonoBehaviour:
   _overMusrom: 1
   _particleSystem: {fileID: 8009976010966746641}
   _rigidbody: {fileID: 1202148115344278893}
-  _knockBackForceMultiplier: 10
-  _magnitudeTrchholl: 0
+  _knockBackForceMultiplier: 15
+  _magnitudeTrchholl: 0.5
   _timeToClearAttackedPlayer: 0
 --- !u!114 &2664173592816309651
 MonoBehaviour:
